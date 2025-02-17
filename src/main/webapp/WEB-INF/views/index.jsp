@@ -29,20 +29,23 @@
     .nav > ul .nav-link {
         display: inline-grid;
     }
-    .nav-item {
+    .nav-item-box {
         display: none;
+    }
+    .nav-link {
+        min-width: 120px;
     }
 </style>
 <body>
 <script>
     $(function(){
-        let $nav = $('#nav_cont');
-        $nav.on('mouseover', function(){
-            $('.nav-item').css('display', 'block');
-        })
+        let $nav = $('.nav');
+        $nav.on('mouseenter', function(){
+            $('.nav-item-box').css('display', 'block');
+        });
         $nav.on('mouseleave', function(){
-            $('.nav-item').css('display', 'none');
-        })
+            $('.nav-item-box').css('display', 'none');
+        });
     })
 </script>
 <div class="header">
@@ -57,15 +60,14 @@
             </div>
         </div>
     </div>
-    <div class="row" style="background-color: #fabf62">
-        <div class="col-2" style="height: 100px"></div>
-        <div class="col-8" style="height: 100px">
-            <div id="nav_cont" class="container">
-                <nav class="nav">
+    <div class="row" style="background-color: #fabf62; height: 60px">
+        <div class="col-2"></div>
+        <div class="col-8">
+                <nav class="nav" style="position: absolute; z-index: 999; background-color: #fabf62;">
                     <ul>
                         <li class="nav-link">
                             <a href="#">교원</a>
-                            <div>
+                            <div class="nav-item-box">
                                 <p class="nav-item"><a href="#">교원 등록</a></p>
                                 <p class="nav-item"><a href="#">교원 목록</a></p>
                                 <p class="nav-item"><a href="#">교원 수정</a></p>
@@ -74,7 +76,7 @@
                         </li>
                         <li class="nav-link">
                             <a href="#">원생</a>
-                            <div>
+                            <div class="nav-item-box">
                                 <p class="nav-item"><a href="#">원생 등록</a></p>
                                 <p class="nav-item"><a href="#">원생 목록</a></p>
                                 <p class="nav-item"><a href="#">원생 수정</a></p>
@@ -83,20 +85,20 @@
                         </li>
                         <li class="nav-link">
                             <a href="#">학사</a>
-                            <div>
+                            <div class="nav-item-box">
                                 <p class="nav-item"><a href="#">학사 관리</a></p>
                             </div>
                         </li>
                         <li class="nav-link">
                             <a href="#">게시판</a>
-                            <div>
+                            <div class="nav-item-box">
                                 <p class="nav-item"><a href="#">공지사항</a></p>
                                 <p class="nav-item"><a href="#">자유게시판</a></p>
                             </div>
                         </li>
                         <li class="nav-link">
                             <a href="#">자료실</a>
-                            <div>
+                            <div class="nav-item-box">
                                 <p class="nav-item"><a href="#">학사일정</a></p>
                                 <p class="nav-item"><a href="#">식단표</a></p>
                                 <p class="nav-item"><a href="#">양식</a></p>
@@ -104,21 +106,20 @@
                         </li>
                         <li class="nav-link">
                             <a href="#">통계</a>
-                            <div>
+                            <div class="nav-item-box">
                                 <p class="nav-item"><a href="#">접속자 통계</a></p>
                             </div>
                         </li>
                         <li class="nav-link">
                             <a href="#">설정</a>
-                            <div>
+                            <div class="nav-item-box">
                                 <p class="nav-item"><a href="#">설정</a></p>
                             </div>
                         </li>
                     </ul>
                 </nav>
-            </div>
         </div>
-        <div class="col-2" style="height: 100px"></div>
+        <div class="col-2"></div>
     </div>
 </div>
 <div class="main-layout">
@@ -129,7 +130,7 @@
         </div>
     </div>
 </div>
-<div class="footer" style="height: 200px">
+<div class="footer" style="height: 200px; background-color: #b3b4b5">
 
 </div>
 </body>
