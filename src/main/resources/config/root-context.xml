@@ -16,5 +16,5 @@
 
  <aop:aspectj-autoproxy />
 
-<!-- <import resource="database-context.xml"/>-->
+ <import resource="database-context.xml"/>
 </beans>

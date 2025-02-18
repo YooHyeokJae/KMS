@@ -16,51 +16,17 @@
   <title>유치원 통합 관리 시스템</title>
 </head>
 <style>
+  /* ┌지울거┐ */
   div {
     border: 1px solid black;
-  }
-  .search_icon {
-    background-image: url('<c:url value="/resources/images/search_icon.png"/>');
-    background-size: contain;
-    background-repeat: no-repeat;
   }
   .test_text {
     font-size: 3em;
     text-align: center;
   }
-  .nav > ul .nav-link {
-    display: inline-grid;
-  }
-  .nav-item-box {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-
-    /* 처음에는 보이지 않도록 설정 */
-    opacity: 0;
-    visibility: hidden;
-    max-height: 0;
-    overflow: hidden;
-
-    /* 애니메이션 효과 */
-    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, visibility 0.4s;
-  }
-  .nav:hover .nav-item-box {
-    opacity: 1;
-    visibility: visible;
-    max-height: 200px; /* 충분히 큰 값 설정 */
-  }
-  .nav-link {
-    min-width: 120px;
-  }
+  /* └지울거┘ */
 </style>
 <body>
-<script>
-  $(function(){
-
-  })
-</script>
 <div class="header">
   <tiles:insertAttribute name="header" />
 </div>

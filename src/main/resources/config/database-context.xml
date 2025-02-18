@@ -8,10 +8,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/test_yhj" />
-        <property name="username" value="yhj" />
-        <property name="password" value="4351" />
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/kms_db" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
     </bean>
 
     <bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">

@@ -1,4 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style>
+  .search_icon {
+    background-image: url('<c:url value="/resources/images/search_icon.png"/>');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .nav > ul .nav-link {
+    display: inline-grid;
+  }
+  .nav-item-box {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    /* 처음에는 보이지 않도록 설정 */
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+
+    /* 애니메이션 효과 */
+    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, visibility 0.4s;
+  }
+  .nav:hover .nav-item-box {
+    opacity: 1;
+    visibility: visible;
+    max-height: 200px; /* 충분히 큰 값 설정 */
+  }
+  .nav-link {
+    min-width: 120px;
+  }
+</style>
 <div class="container">
   <div class="row">
     <div class="col-2" style="height: 100px">
