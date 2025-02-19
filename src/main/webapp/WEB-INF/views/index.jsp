@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <div class="container">
     <div class="row">
         <div class="col-8" style="height: 800px">
-
+            <p>test: ${test}</p>
         </div>
         <div class="col-4" style="height: 800px">
             <form action="<c:url value="/login/"/>" method="post">
