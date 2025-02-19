@@ -1,24 +1,27 @@
 package com.hj.controller;
 
 import com.hj.service.TestService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Slf4j
+import javax.annotation.Resource;
+
 @Controller
 public class IndexController {
 
-    @Autowired
-    TestService loginService;
+    Logger log = LoggerFactory.getLogger(IndexController.class);
+
+    @Resource(name="testService")
+    private TestService testService;
 
     @GetMapping("/")
     public String index(Model model){
-        log.debug("index");
+        log.info("index");
         int keyCd = 1;
-        String test = loginService.test(keyCd);
+        String test = testService.test(keyCd);
         log.debug("test: {}", test);
         model.addAttribute("test", test);
         return "index";

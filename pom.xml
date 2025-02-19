@@ -12,7 +12,7 @@
     <java-version>1.8</java-version>
     <org.springframework-version>5.3.29</org.springframework-version>
     <org.aspectj-version>1.9.19</org.aspectj-version>
-    <org.slf4j-version>2.0.7</org.slf4j-version>
+    <org.slf4j.version>1.7.32</org.slf4j.version>
   </properties>
   <dependencies>
     <!-- Spring -->
@@ -43,17 +43,17 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${org.slf4j-version}</version>
+      <version>${org.slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.2.10</version> <!-- 자바 8에서 호환되는 버전 -->
+      <version>1.2.9</version>
     </dependency>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <version>1.2.10</version> <!-- 자바 8에서 호환되는 버전 -->
+      <groupId>org.logback-extensions</groupId>
+      <artifactId>logback-ext-spring</artifactId>
+      <version>0.1.5</version>
     </dependency>
     <!-- @Inject -->
     <dependency>

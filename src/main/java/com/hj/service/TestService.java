@@ -1,16 +1,17 @@
 package com.hj.service;
 
 import com.hj.mapper.TestMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class TestService {
 
-    @Autowired
-    TestMapper loginMapper;
+    @Resource(name="testMapper")
+    TestMapper testMapper;
 
     public String test(int keyCd) {
-        return loginMapper.test(keyCd);
+        return testMapper.test(keyCd);
     }
 }
