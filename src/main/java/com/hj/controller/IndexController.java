@@ -14,16 +14,9 @@ public class IndexController {
 
     Logger log = LoggerFactory.getLogger(IndexController.class);
 
-    @Resource(name="testService")
-    private TestService testService;
-
     @GetMapping("/")
     public String index(Model model){
         log.info("index");
-        int keyCd = 1;
-        String test = testService.test(keyCd);
-        log.debug("test: {}", test);
-        model.addAttribute("test", test);
         return "index";
     }
 }

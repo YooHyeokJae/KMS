@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
   .search_icon {
-    background-image: url('<c:url value="/resources/images/search_icon.png"/>');
+    <%--background-image: url('<c:url value="/resources/images/search_icon.png"/>');--%>
     background-size: contain;
     background-repeat: no-repeat;
   }
@@ -26,7 +26,7 @@
   .nav:hover .nav-item-box {
     opacity: 1;
     visibility: visible;
-    max-height: 200px; /* 충분히 큰 값 설정 */
+    max-height: 200px;
   }
   .nav-link {
     min-width: 120px;
@@ -49,12 +49,11 @@
     <nav class="nav" style="position: absolute; z-index: 999; background-color: #fabf62;">
       <ul>
         <li class="nav-link">
-          <a href="#">교원</a>
+          <a href="#">유치원</a>
           <div class="nav-item-box">
-            <p class="nav-item"><a href="#">교원 등록</a></p>
-            <p class="nav-item"><a href="#">교원 목록</a></p>
-            <p class="nav-item"><a href="#">교원 수정</a></p>
-            <p class="nav-item"><a href="#">교원 삭제</a></p>
+            <p class="nav-item"><a href="#">소개</a></p>
+            <p class="nav-item"><a href="#">교원</a></p>
+            <p class="nav-item"><a href="#">졸업생</a></p>
           </div>
         </li>
         <li class="nav-link">
@@ -97,6 +96,7 @@
           <a href="#">설정</a>
           <div class="nav-item-box">
             <p class="nav-item"><a href="#">설정</a></p>
+            <p class="nav-item"><a href="#">관리자 페이지</a></p>
           </div>
         </li>
       </ul>
