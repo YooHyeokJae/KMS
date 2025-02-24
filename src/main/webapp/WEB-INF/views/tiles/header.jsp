@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
   .search_icon {
@@ -37,9 +38,14 @@
     <div class="col-2" style="height: 100px">
       <a href="${pageContext.request.contextPath}/" class="test_text">Logo</a>
     </div>
-    <div class="col-10" style="height: 100px">
+    <div class="col-8" style="height: 100px">
       <label for="totalSearch"><input type="text" id="totalSearch" placeholder="검색어를 입력하세요."/></label>
       <input type="button" class="search_icon" style="width: 30px;" />
+    </div>
+    <div class="col-2" style="height: 100px">
+      <c:if test="${sessionScope.loginUser ne null}">
+        <p>${sessionScope.loginUser.name}님 환영합니다.</p>
+      </c:if>
     </div>
   </div>
 </div>
@@ -52,7 +58,7 @@
           <a href="#">유치원</a>
           <div class="nav-item-box">
             <p class="nav-item"><a href="#">소개</a></p>
-            <p class="nav-item"><a href="#">교원</a></p>
+            <p class="nav-item"><a href="<c:url value="/teacher/list"/>">교원</a></p>
             <p class="nav-item"><a href="#">졸업생</a></p>
           </div>
         </li>
@@ -96,7 +102,6 @@
           <a href="#">설정</a>
           <div class="nav-item-box">
             <p class="nav-item"><a href="#">설정</a></p>
-            <p class="nav-item"><a href="#">관리자 페이지</a></p>
           </div>
         </li>
       </ul>

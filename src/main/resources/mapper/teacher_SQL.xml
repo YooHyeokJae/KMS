@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hj.mapper.TeacherMapper">
+    <select id="getList" resultType="com.hj.vo.TeacherVo">
+        SELECT * FROM TEACHER ORDER BY REG_DATE DESC LIMIT #{start}, #{count}
+    </select>
+
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM TEACHER
+    </select>
+
+    <select id="getInfo" resultType="com.hj.vo.TeacherVo">
+        SELECT * FROM TEACHER WHERE ID = #{id}
+    </select>
+</mapper>

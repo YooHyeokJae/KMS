@@ -17,7 +17,6 @@
             </beans:list>
         </beans:property>
     </beans:bean>
-    <!-- UrlBasedViewResolver tilesViewResolver = new UrlBasedViewResolver(); -->
     <beans:bean id="tilesViewResolver"
                 class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <beans:property name="viewClass"
