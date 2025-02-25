@@ -39,8 +39,9 @@ public class TeacherController {
         params.put("start", start);
         params.put("count", count);
         List<TeacherVo> teacherVoList = this.teacherService.getList(params);
-        model.addAttribute("teacherVoList", teacherVoList);
+        model.addAttribute("count", count);
         model.addAttribute("totalCnt", totalCnt);
+        model.addAttribute("teacherVoList", teacherVoList);
         return "teacher/list";
     }
 

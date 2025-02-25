@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class TeacherVo {
     private String id;
     private String name;
+    private String profileImage;
     private String birth;
     private String auth;
     private String grade;
