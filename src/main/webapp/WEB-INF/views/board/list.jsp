@@ -1,6 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<style>
+    .trs:hover td{
+        background-color: #cecfd1;
+    }
+</style>
 <div class="container">
     <h2>
         <c:if test="${category eq 'notice'}">공지사항</c:if>
@@ -48,12 +53,20 @@
             </nav>
         </div>
         <div class="col-3 text-end">
-            <a href="<c:url value="/board/insert"/>" class="btn btn-primary">글작성</a>
+            <a href="<c:url value="/board/insert"/>" class="btn btn-primary" onclick="loginChk()">글작성</a>
         </div>
     </div>
 </div>
 
 <script>
+    let isLogin = ${not empty sessionScope.loginUser ? true : false};
+    function loginChk(){
+        if(!isLogin){
+            alert('로그인이 필요합니다.');
+            event.preventDefault();
+        }
+    }
+
     $('.trs').on('click', function(){
         let num = $(this).children().eq(0).text();
         location.href = "/board/detail?num="+num;
