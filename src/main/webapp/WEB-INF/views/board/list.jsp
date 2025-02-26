@@ -23,7 +23,7 @@
                 <tr class="text-center"><td colspan="6">등록된 게시글이 없습니다.</td></tr>
             </c:if>
             <c:forEach var="vo" items="${boardVoList}" varStatus="stat">
-                <tr>
+                <tr class="trs">
                     <td class="text-center">${vo.num}</td>
                     <td>${vo.title}</td>
                     <td>${vo.writerId}</td>
@@ -52,3 +52,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.trs').on('click', function(){
+        let num = $(this).children().eq(0).text();
+        location.href = "/board/detail?num="+num;
+    });
+</script>

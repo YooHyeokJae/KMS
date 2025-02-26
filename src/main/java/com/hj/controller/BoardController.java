@@ -2,16 +2,16 @@ package com.hj.controller;
 
 import com.hj.service.BoardService;
 import com.hj.vo.BoardVo;
-import com.hj.vo.TeacherVo;
+import com.hj.vo.ReplyVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class BoardController {
                        @RequestParam String cat,
                        @RequestParam(defaultValue="1") int page,
                        @RequestParam(defaultValue="10") int count) {
-        int totalCnt = this.boardService.getTotal();
+        int totalCnt = this.boardService.getTotal(cat);
         int pageBlock = 10;
         int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
         model.addAttribute("currentPage", page);
@@ -49,7 +49,43 @@ public class BoardController {
     }
 
     @GetMapping("/insert")
-    public String insert(Model model){
+    public String insert(){
         return "board/insert";
+    }
+
+    @PostMapping("/insert")
+    public String insert(@ModelAttribute BoardVo boardVo){
+        log.info("boardVo: {}", boardVo);
+        this.boardService.insertBoard(boardVo);
+        return "redirect:/board/list?cat="+boardVo.getCategory();
+    }
+
+    @GetMapping("/detail")
+    public String detail(Model model,
+                         @RequestParam int num,
+                         HttpServletRequest request,
+                         HttpServletResponse response) {
+        BoardVo boardVo = this.boardService.getBoardByNum(num, request, response);
+        model.addAttribute("boardVo", boardVo);
+        List<ReplyVo> replyVoList = this.boardService.getReplyListByBoardNum(num);
+        model.addAttribute("replyVoList", replyVoList);
+        BoardVo prev = this.boardService.getPrev(boardVo);
+        BoardVo next = this.boardService.getNext(boardVo);
+        log.info("prev: {}", prev);
+        log.info("next: {}", next);
+        model.addAttribute("prev", prev);
+        model.addAttribute("next", next);
+        return "board/detail";
+    }
+
+    @PostMapping("/insertReply")
+    @ResponseBody
+    public String insertReply(@RequestBody Map<String, Object> params){
+        ReplyVo replyVo = new ReplyVo();
+        replyVo.setBoardNum(Integer.parseInt((String) params.get("boardNum")));
+        replyVo.setContent((String) params.get("content"));
+        replyVo.setWriterId((String) params.get("writerId"));
+        this.boardService.insertReply(replyVo);
+        return "success";
     }
 }

@@ -3,10 +3,38 @@
 <mapper namespace="com.hj.mapper.BoardMapper">
 
     <select id="getTotal" resultType="int">
-        SELECT COUNT(*) FROM BOARD
+        SELECT COUNT(*) FROM BOARD WHERE CATEGORY = #{cat}
     </select>
 
     <select id="getList" resultType="com.hj.vo.BoardVo">
-        SELECT * FROM BOARD WHERE CATEGORY = #{cat} AND DEL_YN = 'N' LIMIT #{start}, #{count}
+        SELECT * FROM BOARD WHERE CATEGORY = #{cat} AND DEL_YN = 'N' ORDER BY REG_DATE DESC LIMIT #{start}, #{count}
+    </select>
+
+    <insert id="insertBoard">
+        INSERT INTO BOARD(CATEGORY, TITLE, CONTENT, WRITER_ID) VALUES(#{category}, #{title}, #{content}, #{writerId})
+    </insert>
+
+    <update id="viewBoard">
+        UPDATE BOARD SET VIEW_CNT = VIEW_CNT + 1 WHERE NUM = #{num}
+    </update>
+
+    <select id="getBoardByNum" resultType="com.hj.vo.BoardVo">
+        SELECT * FROM BOARD WHERE NUM = #{num}
+    </select>
+
+    <select id="getReplyListByBoardNum" resultType="com.hj.vo.ReplyVo">
+        SELECT * FROM REPLY WHERE BOARD_NUM = #{boardNum} AND DEL_YN = 'N' ORDER BY REG_DATE DESC
+    </select>
+
+    <insert id="insertReply">
+        INSERT INTO REPLY(BOARD_NUM, CONTENT, WRITER_ID) VALUES(#{boardNum}, #{content}, #{writerId})
+    </insert>
+
+    <select id="getPrev" resultType="com.hj.vo.BoardVo">
+        SELECT * FROM BOARD WHERE NUM <![CDATA[ < ]]> #{num} AND CATEGORY = #{category} ORDER BY REG_DATE DESC LIMIT 1
+    </select>
+
+    <select id="getNext" resultType="com.hj.vo.BoardVo">
+        SELECT * FROM BOARD WHERE NUM <![CDATA[ > ]]> #{num} AND CATEGORY = #{category} LIMIT 1
     </select>
 </mapper>
