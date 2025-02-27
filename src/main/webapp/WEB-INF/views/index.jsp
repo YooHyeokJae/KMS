@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <div class="container">
-    <div class="row">
-        <div class="col-8" style="height: 800px">
+    <div class="row" style="min-height: 800px">
+        <div class="col-8">
 
         </div>
-        <div class="col-4" style="height: 800px">
+        <div class="col-4">
             <c:if test="${sessionScope.loginUser eq null}">
                 <form action="<c:url value="/sign/login"/>" method="post">
                     <label for="userId">아이디: <input type="text" id="userId" name="userId" /></label>
@@ -17,6 +18,8 @@
             <c:if test="${sessionScope.loginUser ne null}">
                 <input type="button" id="logout" value="logout" />
             </c:if>
+
+            <div id='calendar'></div>
         </div>
     </div>
 </div>
@@ -184,4 +187,22 @@
             }
         })
     })
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let calendarEl = document.getElementById('calendar');
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridDay',
+            locale: 'ko',
+            height: 'auto',
+            headerToolbar: {
+                left: '',
+                center: '',
+                right: 'today prev,next'
+            },
+            dayHeaderFormat: { year: 'numeric', month: 'short', day: 'numeric' }
+        });
+        calendar.render();
+    });
 </script>

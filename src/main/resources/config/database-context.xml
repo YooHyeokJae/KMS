@@ -9,7 +9,7 @@
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/kms_db" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3305/kms_db" />
         <property name="username" value="root" />
         <property name="password" value="root" />
     </bean>
