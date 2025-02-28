@@ -3,8 +3,8 @@
 <div class="container">
     <div class="text-end">
         <a href="<c:url value="/board/list?cat=${boardVo.category}"/>" class="btn btn-secondary">목록</a>
-        <c:if test="${boardVo.writerId eq sessionScope.loginUser.id}"><input type="button" class="btn btn-warning" value="수정" /></c:if>
-        <c:if test="${boardVo.writerId eq sessionScope.loginUser.id}"><input type="button" class="btn btn-danger" value="삭제" /></c:if>
+        <c:if test="${boardVo.writerId eq sessionScope.loginUser.id}"><a href="<c:url value="/board/modify?num="/>${boardVo.num}" class="btn btn-warning" >수정</a></c:if>
+        <c:if test="${boardVo.writerId eq sessionScope.loginUser.id}"><a href="<c:url value="/board/delete?num="/>${boardVo.num}" class="btn btn-danger" onclick="deleteChk()" >삭제</a></c:if>
     </div>
     <br>
     <div class="row">
@@ -81,6 +81,11 @@
 </div>
 
 <script>
+    function deleteChk(){
+        if(!confirm('정말 삭제하시겠습니까?')){
+            event.preventDefault();
+        }
+    }
     $('#replyInsertBtn').on('click', function(){
         let data = {
             content: $('#reply').val(),

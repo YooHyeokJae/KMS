@@ -3,7 +3,7 @@
 <mapper namespace="com.hj.mapper.BoardMapper">
 
     <select id="getTotal" resultType="int">
-        SELECT COUNT(*) FROM BOARD WHERE CATEGORY = #{cat}
+        SELECT COUNT(*) FROM BOARD WHERE CATEGORY = #{cat} AND DEL_YN = 'N'
     </select>
 
     <select id="getList" resultType="com.hj.vo.BoardVo">
@@ -37,4 +37,12 @@
     <select id="getNext" resultType="com.hj.vo.BoardVo">
         SELECT * FROM BOARD WHERE NUM <![CDATA[ > ]]> #{num} AND CATEGORY = #{category} LIMIT 1
     </select>
+
+    <update id="modifyBoard">
+        UPDATE BOARD SET CATEGORY = #{category}, TITLE = #{title}, CONTENT = <![CDATA[ #{content} ]]>, UPD_DATE = SYSDATE() WHERE NUM = #{num}
+    </update>
+
+    <update id="deleteBoard">
+        UPDATE BOARD SET DEL_YN = 'Y', UPD_DATE = SYSDATE() WHERE NUM = #{num}
+    </update>
 </mapper>

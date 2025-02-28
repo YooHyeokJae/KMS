@@ -30,9 +30,9 @@ public class BoardService {
         this.boardMapper.insertBoard(boardVo);
     }
 
-    public BoardVo getBoardByNum(int num,
-                                 HttpServletRequest request,
-                                 HttpServletResponse response) {
+    public void countView(int num,
+                          HttpServletRequest request,
+                          HttpServletResponse response){
         // 조회 수 중복 방지
         Cookie oldCookie = null;
         Cookie[] cookies = request.getCookies();
@@ -65,7 +65,9 @@ public class BoardService {
             response.addCookie(newCookie);
             System.out.println(newCookie);
         }
+    }
 
+    public BoardVo getBoardByNum(int num) {
         return this.boardMapper.getBoardByNum(num);
     }
 
@@ -83,5 +85,13 @@ public class BoardService {
 
     public BoardVo getNext(BoardVo boardVo) {
         return this.boardMapper.getNext(boardVo);
+    }
+
+    public void modifyBoard(Map<String, Object> params) {
+        this.boardMapper.modifyBoard(params);
+    }
+
+    public void deleteBoard(int num) {
+        this.boardMapper.deleteBoard(num);
     }
 }

@@ -65,7 +65,8 @@ public class BoardController {
                          @RequestParam int num,
                          HttpServletRequest request,
                          HttpServletResponse response) {
-        BoardVo boardVo = this.boardService.getBoardByNum(num, request, response);
+        this.boardService.countView(num, request, response);
+        BoardVo boardVo = this.boardService.getBoardByNum(num);
         model.addAttribute("boardVo", boardVo);
         List<ReplyVo> replyVoList = this.boardService.getReplyListByBoardNum(num);
         model.addAttribute("replyVoList", replyVoList);
@@ -87,5 +88,27 @@ public class BoardController {
         replyVo.setWriterId((String) params.get("writerId"));
         this.boardService.insertReply(replyVo);
         return "success";
+    }
+
+    @GetMapping("/modify")
+    public String modify(Model model,
+                         @RequestParam int num){
+        BoardVo boardVo = this.boardService.getBoardByNum(num);
+        model.addAttribute("boardVo", boardVo);
+        return "board/modify";
+    }
+
+    @PostMapping("/modify")
+    public String modifyPost(Model model,
+                         @RequestParam Map<String, Object> params){
+        this.boardService.modifyBoard(params);
+        return "redirect:/board/detail?num="+params.get("num");
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam int num){
+        BoardVo boardVo = this.boardService.getBoardByNum(num);
+        this.boardService.deleteBoard(num);
+        return "redirect:/board/list?cat="+boardVo.getCategory();
     }
 }

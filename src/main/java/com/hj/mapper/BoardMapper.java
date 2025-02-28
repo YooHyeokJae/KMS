@@ -26,4 +26,8 @@ public interface BoardMapper {
     BoardVo getPrev(BoardVo boardVo);
     
     BoardVo getNext(BoardVo boardVo);
+
+    void modifyBoard(Map<String, Object> params);
+
+    void deleteBoard(int num);
 }
