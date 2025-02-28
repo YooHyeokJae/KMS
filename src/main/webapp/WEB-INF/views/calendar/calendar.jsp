@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <style>
@@ -25,13 +26,11 @@
     <div id='calendar'></div>
 
     <div id="eventList">
-        <h3>
-            <span id="selectedDay"></span>
-            <span id="closeBtn">X</span>
+        <h3 style="display: flex; justify-content: space-between">
+            <span id="selectedDay" style="margin-left: 10px;"></span>
+            <a class="btn btn-light" id="closeBtn" style="margin-right: 10px;">X</a>
         </h3>
-        <ul id="eventItems">
-
-        </ul>
+        <ul id="eventItems"></ul>
     </div>
 </div>
 
@@ -45,12 +44,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="text" id="newEventTitle" />
-                <input type="text" id="newEventDate" />
+                <input type="hidden" id="writerId" value="${sessionScope.loginUser.id}" />
+                <input type="text" class="newEventElement" id="newEventTitle" />
+                <input type="date" class="newEventElement" id="newEventStrDate" />
+                <input type="date" class="newEventElement" id="newEventEndDate" />
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="newEventModalReset()">닫기</button>
                 <button type="button" class="btn btn-primary" id="addEvent">추가</button>
             </div>
         </div>
@@ -69,7 +70,7 @@
             height: '600px',
             headerToolbar: {
                 left: 'prev,next today',
-                center: '',
+                center: 'title',
                 right: 'addEvent dayGridMonth,dayGridWeek,dayGridDay'
             },
             customButtons: {
@@ -80,17 +81,26 @@
                     }
                 }
             },
-            dateClick: function(info){
-                $('#selectedDay').text(info.dateStr);
-                if (!isPanelVisible) {
-                    $('#eventList').addClass('visible');
-                    $('#calendarContainer').css('gap', '10px');
-                    setTimeout(function(){
-                        calendar.render();
-                    }, 300);
-                    isPanelVisible = true;
-                }
-            }
+            events:[
+                <c:forEach var="event" items="${eventList}" varStatus="stat">
+                {
+                    id: "${event.num}",
+                    title: "${event.title}",
+                    start: "${fn:replace(event.strDate, 'T', ' ')}",
+                    end: "${fn:replace(event.endDate, 'T', ' ')}",
+                    allDay: true
+                },
+                </c:forEach>
+            ],
+            selectable: true,
+            select: function(info){
+                let endDate = new Date(info.endStr);
+                endDate.setDate(endDate.getDate() - 1);
+                $('#newEventStrDate').val(info.startStr);
+                $('#newEventEndDate').val(endDate.toISOString().split('T')[0]);
+            },
+            dateClick: openEventList,
+            eventClick: openEventList
         });
         calendar.render();
     });
@@ -104,18 +114,75 @@
         isPanelVisible = false;
     });
 
+    function openEventList(info){
+        let dateStr = info.dateStr ? info.dateStr : info.event.startStr;
+        $.ajax({
+            url: '/calendar/getEvents',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify({
+                date: dateStr
+            }),
+            type: 'post',
+            success: function(result){
+                let str = '';
+                for(let i=0; i<result.length; i++){
+                    str += '<li>';
+                    str += result[i].title;
+                    str += '</li>';
+                }
+                $('#eventItems').html(str);
+                $('#selectedDay').text(dateStr);
+                if (!isPanelVisible) {
+                    $('#eventList').addClass('visible');
+                    $('#calendarContainer').css('gap', '10px');
+                    setTimeout(function(){
+                        calendar.render();
+                    }, 300);
+                    isPanelVisible = true;
+                }
+                $('#newEventStrDate').val(info.dateStr);
+                $('#newEventEndDate').val(info.dateStr);
+            }
+        });
+    }
+
     function openAddEventModal(){
+        let writerId = $('#writerId').val();
+        if(writerId === ''){
+            alert('로그인이 필요합니다.');
+            return;
+        }
         $('#newEventBtn').click();
     }
 
     $('#addEvent').on('click', function(){
+        let writerId = $('#writerId').val();
         let newEventTitle = $('#newEventTitle').val();
-        let newEventDate = $('#newEventDate').val();
-        calendar.addEvent({
+        let newEventStrDate = $('#newEventStrDate').val();
+        let newEventEndDate = $('#newEventEndDate').val();
+        let endDate = new Date(newEventEndDate);
+        endDate.setDate(endDate.getDate()+1);
+        let data = {
+            writerId: writerId,
             title: newEventTitle,
-            start: newEventDate,
+            start: newEventStrDate,
+            end: endDate.toISOString().split('T')[0],
             allDay: true
-        });
-        $('#newEventModal').modal('hide');
+        }
+        $.ajax({
+            url: '/calendar/addEvent',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function(result){
+                calendar.addEvent(data);
+                newEventModalReset();
+                $('#newEventModal').modal('hide');
+            }
+        })
     });
+
+    function newEventModalReset(){
+        $('.newEventElement').val('');
+    }
 </script>

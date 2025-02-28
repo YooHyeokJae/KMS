@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hj.mapper.CalendarMapper">
+
+    <select id="getEvents" resultType="com.hj.vo.CalendarVo">
+        SELECT *
+        FROM CALENDAR
+        WHERE (GUBUN = 'ALL' OR WRITER_ID = #{id})
+        <if test="date != null"> AND #{date} BETWEEN STR_DATE AND DATE_SUB(END_DATE, INTERVAL 1 DAY)</if>
+    </select>
+
+    <insert id="addEvent">
+        INSERT INTO CALENDAR(WRITER_ID, TITLE, STR_DATE, END_DATE, GUBUN) VALUES(#{writerId}, #{title}, #{start}, #{end}, #{gubun})
+    </insert>
+</mapper>
