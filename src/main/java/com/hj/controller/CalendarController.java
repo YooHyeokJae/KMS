@@ -27,8 +27,10 @@ public class CalendarController {
     public String calendar(Model model,
                            HttpSession session) {
         UserVo userVo = (UserVo) session.getAttribute("loginUser");
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", userVo.getId());
+        Map<String, Object> params = new HashMap<>();
+        if(userVo != null) {
+            params.put("id", userVo.getId());
+        }
         List<CalendarVo> eventList = this.calendarService.getEvents(params);
         model.addAttribute("eventList", eventList);
         return "calendar/calendar";
