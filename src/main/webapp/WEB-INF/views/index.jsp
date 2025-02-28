@@ -9,14 +9,20 @@
         <div class="col-4">
             <c:if test="${sessionScope.loginUser eq null}">
                 <form action="<c:url value="/sign/login"/>" method="post">
-                    <label for="userId">아이디: <input type="text" id="userId" name="userId" /></label>
-                    <label for="userPw">비밀번호: <input type="password" id="userPw" name="userPw" /></label>
+                    <div class="mb-3 d-flex align-items-center">
+                        <label for="userId" class="form-label mb-0 me-2" style="width: 100px;">아이디: </label>
+                        <input type="text" class="form-control" id="userId" name="userId" />
+                    </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <label for="userPw" class="form-label mb-0 me-2" style="width: 100px;">비밀번호: </label>
+                        <input type="password" class="form-control" id="userPw" name="userPw" />
+                    </div>
                     <input type="submit" value="login" class="btn btn-primary" />
                     <input type="button" value="signup" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#signupModal" />
                 </form>
             </c:if>
             <c:if test="${sessionScope.loginUser ne null}">
-                <input type="button" id="logout" value="logout" />
+                <input type="button" class="btn btn-primary" id="logout" value="logout" />
             </c:if>
 
             <div id='calendar'></div>
@@ -175,18 +181,6 @@
         $('#pwAlert').text('');
         $('#signupForm')[0].reset();
     });
-
-    $('#logout').on('click', function(){
-        $.ajax({
-            url: '/sign/logout',
-            type: 'post',
-            success: function(result){
-                if(result === 'logout'){
-                    location.reload();
-                }
-            }
-        })
-    })
 </script>
 
 <script>

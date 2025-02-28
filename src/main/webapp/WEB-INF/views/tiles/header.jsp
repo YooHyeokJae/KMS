@@ -38,13 +38,25 @@
     <div class="col-2" style="height: 100px">
       <a href="${pageContext.request.contextPath}/" class="test_text">Logo</a>
     </div>
-    <div class="col-8" style="height: 100px">
+    <div class="col-6" style="height: 100px">
       <label for="totalSearch"><input type="text" id="totalSearch" placeholder="검색어를 입력하세요."/></label>
       <input type="button" class="search_icon" style="width: 30px;" />
     </div>
-    <div class="col-2" style="height: 100px">
+    <div class="col-4" style="height: 100px">
       <c:if test="${sessionScope.loginUser ne null}">
         <p>${sessionScope.loginUser.name}님 환영합니다.</p>
+        <input type="button" class="btn btn-primary" id="logout" value="logout" />
+      </c:if>
+      <c:if test="${sessionScope.loginUser eq null}">
+        <form action="<c:url value="/sign/login"/>" method="post">
+          <div class="mb-3 d-flex align-items-center">
+            <label for="headerId" class="form-label me-2" ></label>
+            <input type="text" class="form-control" id="headerId" name="userId" placeholder="userID" />
+            <label for="headerPw" class="form-label me-2" ></label>
+            <input type="password" class="form-control" id="headerPw" name="userPw" placeholder="password" />
+            <input type="submit" class="btn btn-primary ms-2" value="login" />
+          </div>
+        </form>
       </c:if>
     </div>
   </div>
@@ -109,3 +121,18 @@
   </div>
   <div class="col-2"></div>
 </div>
+
+
+<script>
+  $(document).on('click', '#logout', function(){
+    $.ajax({
+      url: '/sign/logout',
+      type: 'post',
+      success: function(result){
+        if(result === 'logout'){
+          location.href = '/';
+        }
+      }
+    })
+  });
+</script>
