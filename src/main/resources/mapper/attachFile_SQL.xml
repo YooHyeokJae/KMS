@@ -5,4 +5,12 @@
     <insert id="uploadFile">
         INSERT INTO ATTACH_FILE(GLOBAL_CODE, ORIGINAL_FILE_NAME, STORED_FILE_NAME, EXTENSION, CONTENT_TYPE, FILE_SIZE) VALUES(#{globalCode}, #{originalFileName}, #{storedFileName}, #{extension}, #{contentType}, #{fileSize})
     </insert>
+
+    <select id="findByGlobalCode" resultType="com.hj.vo.AttachFileVo">
+        SELECT * FROM ATTACH_FILE WHERE GLOBAL_CODE = #{globalCode} AND DEL_YN = 'N'
+    </select>
+
+    <update id="deleteByGlobalCode">
+        UPDATE ATTACH_FILE SET DEL_YN = 'Y' WHERE GLOBAL_CODE = #{globalCode}
+    </update>
 </mapper>

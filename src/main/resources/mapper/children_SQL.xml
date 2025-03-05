@@ -10,7 +10,7 @@
     </select>
 
     <select id="getInfo" resultType="com.hj.vo.ChildVo">
-        SELECT CHILD.*, ATTACH_FILE.STORED_FILE_NAME AS PROFILE_PATH FROM CHILD LEFT JOIN ATTACH_FILE ON (CHILD.NUM = ATTACH_FILE.GLOBAL_CODE) WHERE CHILD.NUM = #{num}
+        SELECT CHILD.*, ATTACH_FILE.STORED_FILE_NAME AS PROFILE_PATH FROM CHILD LEFT JOIN ATTACH_FILE ON (CONCAT('child/', CHILD.NUM) = ATTACH_FILE.GLOBAL_CODE AND DEL_YN = 'N') WHERE CHILD.NUM = #{num}
     </select>
 
     <select id="getNextNum" resultType="int">
@@ -20,4 +20,8 @@
     <insert id="insertChild">
         INSERT INTO CHILD(NUM, NAME, BIRTH, ENTRY_DATE, GRADE) VALUES(#{num}, #{name}, #{birth}, #{entryDate}, #{grade})
     </insert>
+
+    <update id="modifyChild">
+        UPDATE CHILD SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE = #{grade}, UPD_DATE = SYSDATE() WHERE NUM = #{num}
+    </update>
 </mapper>

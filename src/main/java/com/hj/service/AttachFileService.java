@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,13 +25,13 @@ public class AttachFileService {
 
     public void uploadFile(MultipartFile multipartFile, String globalCode) {
         String ext = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
-        String storedFileName = fileDir + UUID.randomUUID() + ext;
+        String storedFileName = UUID.randomUUID() + ext;
         try {
             multipartFile.transferTo(new File(storedFileName));
 
             AttachFileVo attachFileVo = new AttachFileVo();
             attachFileVo.setGlobalCode(globalCode);
-            attachFileVo.setStoredFileName(storedFileName);
+            attachFileVo.setStoredFileName(fileDir + storedFileName);
             attachFileVo.setOriginalFileName(multipartFile.getOriginalFilename());
             attachFileVo.setExtension(ext);
             attachFileVo.setContentType(multipartFile.getContentType());
@@ -39,5 +40,13 @@ public class AttachFileService {
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+    }
+
+    public List<AttachFileVo> findByGlobalCode(String globalCode) {
+        return this.attachFileMapper.findByGlobalCode(globalCode);
+    }
+
+    public void deleteByGlobalCode(String globalCode) {
+        this.attachFileMapper.deleteByGlobalCode(globalCode);
     }
 }

@@ -32,4 +32,8 @@ public class ChildrenService {
     public void insertChild(ChildVo childVo) {
         this.childrenMapper.insertChild(childVo);
     }
+
+    public void modifyChild(ChildVo childVo) {
+        this.childrenMapper.modifyChild(childVo);
+    }
 }

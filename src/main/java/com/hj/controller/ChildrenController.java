@@ -2,6 +2,7 @@ package com.hj.controller;
 
 import com.hj.service.AttachFileService;
 import com.hj.service.ChildrenService;
+import com.hj.vo.AttachFileVo;
 import com.hj.vo.ChildVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,22 +70,47 @@ public class ChildrenController {
                          @RequestParam String grade,
                          @RequestParam String birth,
                          @RequestParam String entryDate) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         int num = this.childrenService.getNextNum();
         // 원생 객체 저장
         ChildVo childVo = new ChildVo();
         childVo.setNum(num);
         childVo.setName(name);
-        childVo.setBirth(sdf.parse(birth));
-        childVo.setEntryDate(sdf.parse(entryDate));
+        childVo.setBirth(LocalDate.parse(birth));
+        childVo.setEntryDate(LocalDate.parse(entryDate));
         childVo.setGrade(grade);
         this.childrenService.insertChild(childVo);
 
         // 파일 업로드
         if(profileImage != null){
             // db에 파일 정보 저장
-            this.attachFileService.uploadFile(profileImage, String.valueOf(num));
+            this.attachFileService.uploadFile(profileImage, "child/"+num);
         }
         return "redirect:/children/list";
+    }
+
+    @PostMapping("/modify")
+    @ResponseBody
+    public String modify(@RequestParam String num,
+                         @RequestParam(required = false) MultipartFile profileImage,
+                         @RequestParam String name,
+                         @RequestParam String grade,
+                         @RequestParam String birth,
+                         @RequestParam String entryDate) {
+        ChildVo childVo = new ChildVo();
+        childVo.setNum(Integer.parseInt(num));
+        childVo.setName(name);
+        childVo.setBirth(LocalDate.parse(birth));
+        childVo.setEntryDate(LocalDate.parse(entryDate));
+        childVo.setGrade(grade);
+        this.childrenService.modifyChild(childVo);
+
+        if(profileImage != null){
+            List<AttachFileVo> attachFileVoList = this.attachFileService.findByGlobalCode("child/"+num);
+            if(!attachFileVoList.isEmpty()){
+                this.attachFileService.deleteByGlobalCode("child/"+num);
+            }
+            this.attachFileService.uploadFile(profileImage, "child/"+num);
+        }
+        return "success";
     }
 }

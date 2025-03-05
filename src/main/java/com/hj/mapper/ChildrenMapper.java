@@ -17,4 +17,6 @@ public interface ChildrenMapper {
     void insertChild(ChildVo childVo);
 
     int getNextNum();
+
+    void modifyChild(ChildVo childVo);
 }
