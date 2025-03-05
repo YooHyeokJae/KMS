@@ -5,6 +5,11 @@
     <div class="row" style="min-height: 800px">
         <div class="col-8">
 
+            <form action="<c:url value="/test"/>" method="post" enctype="multipart/form-data">
+                <input type="file" name="uploadFile" />
+                <input type="text" name="text" />
+                <input type="submit" value="test" />
+            </form>
         </div>
         <div class="col-4">
             <c:if test="${sessionScope.loginUser eq null}">

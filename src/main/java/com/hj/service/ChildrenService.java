@@ -1,0 +1,35 @@
+package com.hj.service;
+
+import com.hj.mapper.ChildrenMapper;
+import com.hj.vo.ChildVo;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class ChildrenService {
+    @Resource(name="childrenMapper")
+    private ChildrenMapper childrenMapper;
+
+    public int getTotal() {
+        return this.childrenMapper.getTotal();
+    }
+
+    public List<ChildVo> getList(Map<String, Object> params) {
+        return this.childrenMapper.getList(params);
+    }
+
+    public ChildVo getInfo(int num) {
+        return this.childrenMapper.getInfo(num);
+    }
+
+    public int getNextNum() {
+        return this.childrenMapper.getNextNum();
+    }
+
+    public void insertChild(ChildVo childVo) {
+        this.childrenMapper.insertChild(childVo);
+    }
+}

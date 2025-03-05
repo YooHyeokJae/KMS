@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hj.mapper.ChildrenMapper">
+    <select id="getList" resultType="com.hj.vo.ChildVo">
+        SELECT * FROM CHILD ORDER BY REG_DATE DESC LIMIT #{start}, #{count}
+    </select>
+
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM CHILD WHERE GRADUATED = 'N'
+    </select>
+
+    <select id="getInfo" resultType="com.hj.vo.ChildVo">
+        SELECT CHILD.*, ATTACH_FILE.STORED_FILE_NAME AS PROFILE_PATH FROM CHILD LEFT JOIN ATTACH_FILE ON (CHILD.NUM = ATTACH_FILE.GLOBAL_CODE) WHERE CHILD.NUM = #{num}
+    </select>
+
+    <select id="getNextNum" resultType="int">
+        SELECT MAX(NUM)+1 FROM CHILD
+    </select>
+
+    <insert id="insertChild">
+        INSERT INTO CHILD(NUM, NAME, BIRTH, ENTRY_DATE, GRADE) VALUES(#{num}, #{name}, #{birth}, #{entryDate}, #{grade})
+    </insert>
+</mapper>
