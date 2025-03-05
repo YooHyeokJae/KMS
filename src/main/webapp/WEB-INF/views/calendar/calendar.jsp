@@ -48,7 +48,10 @@
                 <input type="text" class="newEventElement" id="newEventTitle" />
                 <input type="date" class="newEventElement" id="newEventStrDate" />
                 <input type="date" class="newEventElement" id="newEventEndDate" />
-
+                <c:if test="${sessionScope.loginUser.id eq 'admin'}">
+                    <input type="radio" id="all" name="gubun" value="ALL" checked><label for="all">전체일정</label>
+                    <input type="radio" id="personal" name="gubun" value="PERSONAL"><label for="personal">개인일정</label>
+                </c:if>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="newEventModalReset()">닫기</button>
@@ -157,6 +160,7 @@
 
     $('#addEvent').on('click', function(){
         let writerId = $('#writerId').val();
+        let gubun = $('input[name="gubun"]:checked').val();
         let newEventTitle = $('#newEventTitle').val();
         let newEventStrDate = $('#newEventStrDate').val();
         let newEventEndDate = $('#newEventEndDate').val();
@@ -164,6 +168,7 @@
         endDate.setDate(endDate.getDate()+1);
         let data = {
             writerId: writerId,
+            gubun: gubun,
             title: newEventTitle,
             start: newEventStrDate,
             end: endDate.toISOString().split('T')[0],
