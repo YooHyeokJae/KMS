@@ -36,4 +36,8 @@ public class ChildrenService {
     public void modifyChild(ChildVo childVo) {
         this.childrenMapper.modifyChild(childVo);
     }
+
+    public void insertChildBatch(List<ChildVo> childVoList) {
+        this.childrenMapper.insertChildBatch(childVoList);
+    }
 }

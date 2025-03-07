@@ -3,6 +3,7 @@
 <div class="container">
     <c:if test="${sessionScope.loginUser.auth eq 'A'}">
         <a href="#" onclick="insertChild()">원생 등록</a>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#insertModal">일괄 등록</a>
     </c:if>
     <table id="listTable" class="table table-striped table-hover">
         <thead>
@@ -50,6 +51,27 @@
 <form id="openPopup" target="popup" action="" method="post">
     <input type="hidden" name="num" value=""/>
 </form>
+
+<div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="<c:url value="/children/insertBatch"/>" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="insertModalLabel">원생 일괄 등록</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" name="file" accept=".xls,.xlsx" value="파일 선택"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     let form = $('#openPopup');
 

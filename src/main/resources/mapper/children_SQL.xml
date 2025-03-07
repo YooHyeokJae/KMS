@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.mapper.ChildrenMapper">
     <select id="getList" resultType="com.hj.vo.ChildVo">
-        SELECT * FROM CHILD ORDER BY REG_DATE DESC LIMIT #{start}, #{count}
+        SELECT * FROM CHILD ORDER BY REG_DATE, NUM DESC LIMIT #{start}, #{count}
     </select>
 
     <select id="getTotal" resultType="int">
@@ -24,4 +24,11 @@
     <update id="modifyChild">
         UPDATE CHILD SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE = #{grade}, UPD_DATE = SYSDATE() WHERE NUM = #{num}
     </update>
+    
+    <insert id="insertChildBatch">
+        INSERT INTO CHILD(NUM, NAME, BIRTH, ENTRY_DATE, GRADE)
+        <foreach collection="childVoList" item="childVo" separator=", " open=" VALUES " >
+            (#{childVo.num}, #{childVo.name}, #{childVo.birth}, #{childVo.entryDate}, #{childVo.grade})
+        </foreach>
+    </insert>
 </mapper>

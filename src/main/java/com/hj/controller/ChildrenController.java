@@ -2,8 +2,15 @@ package com.hj.controller;
 
 import com.hj.service.AttachFileService;
 import com.hj.service.ChildrenService;
+import com.hj.util.Utils;
 import com.hj.vo.AttachFileVo;
 import com.hj.vo.ChildVo;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,6 +22,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -112,5 +122,42 @@ public class ChildrenController {
             this.attachFileService.uploadFile(profileImage, "child/"+num);
         }
         return "success";
+    }
+
+    @PostMapping("/insertBatch")
+    public String insertBatch(@RequestParam MultipartFile file){
+        List<ChildVo> childVoList = new ArrayList<>();
+        int startNum = this.childrenService.getNextNum();
+        try {
+            InputStream inputStream = file.getInputStream();
+            Workbook workbook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            for (int i=2; i<=sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if(row == null) continue;
+                Cell numCell = row.getCell(0);
+                Cell nameCell = row.getCell(1);
+                Cell birthCell = row.getCell(2);
+                Cell entryDateCell = row.getCell(3);
+                Cell gradeCell = row.getCell(4);
+
+                ChildVo childVo = new ChildVo();
+                childVo.setNum(startNum + (i-2));
+                childVo.setName(Utils.getCellValueAsString(nameCell));
+                childVo.setBirth(LocalDate.parse(Utils.getCellValueAsString(birthCell)));
+                childVo.setEntryDate(LocalDate.parse(Utils.getCellValueAsString(entryDateCell)));
+                childVo.setGrade(Utils.getCellValueAsString(gradeCell));
+
+                childVoList.add(childVo);
+            }
+
+            workbook.close();
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+
+        this.childrenService.insertChildBatch(childVoList);
+        return "redirect:/children/list";
     }
 }
