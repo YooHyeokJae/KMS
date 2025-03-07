@@ -48,7 +48,7 @@
                 <input type="text" class="newEventElement" id="newEventTitle" />
                 <input type="date" class="newEventElement" id="newEventStrDate" />
                 <input type="date" class="newEventElement" id="newEventEndDate" />
-                <c:if test="${sessionScope.loginUser.id eq 'admin'}">
+                <c:if test="${sessionScope.loginUser.auth eq 'A'}">
                     <input type="radio" id="all" name="gubun" value="ALL" checked><label for="all">전체일정</label>
                     <input type="radio" id="personal" name="gubun" value="PERSONAL"><label for="personal">개인일정</label>
                 </c:if>

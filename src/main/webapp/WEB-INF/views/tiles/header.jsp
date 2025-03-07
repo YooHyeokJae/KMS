@@ -1,11 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
-  .search_icon {
-    background-image: url('<c:url value="/resources/images/search_icon.png"/>');
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
   .nav > ul .nav-link {
     display: inline-grid;
   }
@@ -40,7 +35,7 @@
     </div>
     <div class="col-6" style="height: 100px">
       <label for="totalSearch"><input type="text" id="totalSearch" placeholder="검색어를 입력하세요."/></label>
-      <input type="button" class="search_icon" style="width: 30px;" />
+      <button class="btn btn-light" id="totalSearchBtn"><i class="bi bi-search"></i></button>
     </div>
     <div class="col-4" style="height: 100px">
       <c:if test="${sessionScope.loginUser ne null}">
@@ -93,7 +88,7 @@
           <div class="nav-item-box">
             <p class="nav-item"><a href="${pageContext.request.contextPath}/calendar/">학사일정</a></p>
             <p class="nav-item"><a href="#">식단표</a></p>
-            <p class="nav-item"><a href="#">양식</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/board/form">양식</a></p>
           </div>
         </li>
         <li class="nav-link">

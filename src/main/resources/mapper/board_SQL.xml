@@ -7,11 +7,15 @@
     </select>
 
     <select id="getList" resultType="com.hj.vo.BoardVo">
-        SELECT * FROM BOARD WHERE CATEGORY = #{cat} AND DEL_YN = 'N' ORDER BY REG_DATE DESC LIMIT #{start}, #{count}
+        SELECT BOARD.*, ATTACH_FILE.FILE_SIZE AS FILE_SIZE FROM BOARD LEFT JOIN ATTACH_FILE ON(CONCAT('board/', BOARD.NUM) = ATTACH_FILE.GLOBAL_CODE AND ATTACH_FILE.DEL_YN = 'N') WHERE CATEGORY = #{cat} AND BOARD.DEL_YN = 'N' ORDER BY BOARD.REG_DATE DESC LIMIT #{start}, #{count}
+    </select>
+
+    <select id="getNextNum" resultType="int">
+        SELECT MAX(NUM)+1 FROM BOARD
     </select>
 
     <insert id="insertBoard">
-        INSERT INTO BOARD(CATEGORY, TITLE, CONTENT, WRITER_ID) VALUES(#{category}, #{title}, #{content}, #{writerId})
+        INSERT INTO BOARD(NUM, CATEGORY, TITLE, CONTENT, WRITER_ID) VALUES(#{num}, #{category}, #{title}, #{content}, #{writerId})
     </insert>
 
     <update id="viewBoard">

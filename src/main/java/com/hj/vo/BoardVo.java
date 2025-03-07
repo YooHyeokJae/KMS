@@ -16,4 +16,6 @@ public class BoardVo {
     private String delYn;
     private LocalDateTime regDate;
     private LocalDateTime updDate;
+
+    private long fileSize;
 }

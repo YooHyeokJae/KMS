@@ -13,6 +13,8 @@ public interface BoardMapper {
 
     int getTotal(String cat);
 
+    int getNextNum();
+
     void insertBoard(BoardVo boardVo);
 
     void viewBoard(int num);

@@ -1,17 +1,21 @@
 package com.hj.controller;
 
+import com.hj.service.AttachFileService;
 import com.hj.service.BoardService;
 import com.hj.vo.BoardVo;
 import com.hj.vo.ReplyVo;
+import com.hj.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +25,10 @@ import java.util.Map;
 public class BoardController {
     Logger log = LoggerFactory.getLogger(BoardController.class);
 
-    @Resource
+    @Resource(name="boardService")
     private BoardService boardService;
+    @Resource(name="attachFileService")
+    private AttachFileService attachFileService;
 
     @GetMapping("/list")
     public String list(Model model,
@@ -55,7 +61,7 @@ public class BoardController {
 
     @PostMapping("/insert")
     public String insert(@ModelAttribute BoardVo boardVo){
-        log.info("boardVo: {}", boardVo);
+        boardVo.setNum(this.boardService.getNextNum());
         this.boardService.insertBoard(boardVo);
         return "redirect:/board/list?cat="+boardVo.getCategory();
     }
@@ -110,5 +116,48 @@ public class BoardController {
         BoardVo boardVo = this.boardService.getBoardByNum(num);
         this.boardService.deleteBoard(num);
         return "redirect:/board/list?cat="+boardVo.getCategory();
+    }
+
+    @GetMapping("/form")
+    public String form(Model model,
+                       @RequestParam(defaultValue="1") int page,
+                       @RequestParam(defaultValue="10") int count) {
+        String cat = "form";
+        int totalCnt = this.boardService.getTotal(cat);
+        int pageBlock = 10;
+        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageStart", pageStart);
+        model.addAttribute("count", count);
+        model.addAttribute("totalCnt", totalCnt);
+        model.addAttribute("pageBlock", pageBlock);
+        int start = (page-1)*count;
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("count", count);
+        params.put("cat", cat);
+        List<BoardVo> boardVoList = this.boardService.getList(params);
+        model.addAttribute("category", cat);
+        model.addAttribute("boardVoList", boardVoList);
+        return "board/form";
+    }
+
+    @PostMapping("/uploadForm")
+    @ResponseBody
+    public String uploadForm(HttpSession session,
+                             @RequestParam("files[]") MultipartFile[] files){
+        UserVo userVo = (UserVo) session.getAttribute("loginUser");
+        int startNum = this.boardService.getNextNum();
+        for(MultipartFile file : files){
+            BoardVo boardVo = new BoardVo();
+            boardVo.setNum(startNum++);
+            boardVo.setCategory("form");
+            boardVo.setTitle(file.getOriginalFilename());
+            boardVo.setWriterId(userVo.getId());
+
+            this.attachFileService.uploadFile(file, "board/" + boardVo.getNum());
+            this.boardService.insertBoard(boardVo);
+        }
+        return "success";
     }
 }
