@@ -10,9 +10,9 @@
                 <th>교원번호</th>
                 <th>이름</th>
                 <th>생년월일</th>
-                <th>권한</th>
+                <th>전공</th>
                 <th>학급</th>
-                <th>삭제여부</th>
+                <th>퇴직여부</th>
                 <th>최초등록일</th>
                 <th>최종수정일</th>
             </tr>
@@ -23,7 +23,7 @@
                    <td>${teacherVo.id}</td>
                    <td>${teacherVo.name}</td>
                    <td>${teacherVo.birth}</td>
-                   <td>${teacherVo.auth}</td>
+                   <td>${teacherVo.major}</td>
                    <td>${teacherVo.grade}</td>
                    <td>${teacherVo.delYn}</td>
                    <td>${teacherVo.regDate}</td>

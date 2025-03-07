@@ -64,7 +64,7 @@
         <li class="nav-link">
           <a href="#">유치원</a>
           <div class="nav-item-box">
-            <p class="nav-item"><a href="#">소개</a></p>
+            <p class="nav-item"><a href="<c:url value="/company"/>">소개</a></p>
             <p class="nav-item"><a href="<c:url value="/teacher/list"/>">교원</a></p>
             <p class="nav-item"><a href="<c:url value="/children/list"/>">원생</a></p>
             <p class="nav-item"><a href="#">졸업생</a></p>

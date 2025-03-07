@@ -10,7 +10,7 @@ public class TeacherVo {
     private String name;
     private String profileImage;
     private String birth;
-    private String auth;
+    private String major;
     private String grade;
     private String delYn;
     private LocalDateTime regDate;

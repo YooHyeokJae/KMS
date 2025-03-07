@@ -34,8 +34,8 @@
             <tr>
                 <td>학급</td>
                 <td>${teacherVo.grade}</td>
-                <td>권한</td>
-                <td>${teacherVo.auth}</td>
+                <td>전공</td>
+                <td>${teacherVo.major}</td>
             </tr>
             <tr>
                 <td>임용일</td>

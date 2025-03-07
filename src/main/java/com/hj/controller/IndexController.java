@@ -28,6 +28,11 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/company")
+    public String company(Model model){
+        return "company";
+    }
+
     @PostMapping("/test")
     public String test(HttpServletRequest request) throws ServletException, IOException {
         return "redirect:/";
