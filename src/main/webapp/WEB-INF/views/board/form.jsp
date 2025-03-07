@@ -34,7 +34,7 @@
                     <td class="text-center"><a href="<c:url value="/download/board/${vo.num}"/>"><i class="bi bi-download"></i></a></td>
                     <td>${vo.writerId}</td>
                     <td class="text-center"><fmt:formatNumber value="${vo.fileSize / 1024 + 1}" maxFractionDigits="0" /> KB</td>
-                    <td class="text-center">${fn:replace(vo.regDate, 'T', ' ')}</td>
+                    <td class="text-center">${fn:substring(vo.regDate, 0, 10)}</td>
                 </tr>
             </c:forEach>
         </tbody>
