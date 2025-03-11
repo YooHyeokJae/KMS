@@ -12,5 +12,6 @@ public class CalendarVo {
     private LocalDateTime strDate;
     private LocalDateTime endDate;
     private String auth;
+    private String gubun;
     private String delYn;
 }

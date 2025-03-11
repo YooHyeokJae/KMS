@@ -91,7 +91,8 @@
                     title: "${event.title}",
                     start: "${fn:replace(event.strDate, 'T', ' ')}",
                     end: "${fn:replace(event.endDate, 'T', ' ')}",
-                    allDay: true
+                    allDay: true,
+                    <c:if test="${event.gubun eq 'PERSONAL'}">color: "#f27575"</c:if>
                 },
                 </c:forEach>
             ],
