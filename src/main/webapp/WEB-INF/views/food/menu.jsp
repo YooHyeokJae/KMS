@@ -26,7 +26,7 @@
      }
     .fc-insert-button{
         background-color: #28a745 !important;  /* 배경색 */
-        border-color: #28a745 !important;  /* 배경색 */
+        border-color: #28a745 !important;      /* 배경색 */
         color: white !important;               /* 글자색 */
         border-radius: 5px !important;         /* 버튼 둥글게 */
         font-weight: bold !important;          /* 글자 굵게 */
@@ -34,7 +34,7 @@
     }
     .fc-download-button{
         background-color: #007bff !important;  /* 배경색 */
-        border-color: #007bff !important;  /* 배경색 */
+        border-color: #007bff !important;      /* 배경색 */
         color: white !important;               /* 글자색 */
         border-radius: 5px !important;         /* 버튼 둥글게 */
         font-weight: bold !important;          /* 글자 굵게 */
@@ -272,6 +272,8 @@
 
 <script>
     function downloadByExcel(yearMonth){
-        location.href = '/food/download?yearMonth='+yearMonth;
+        let year = yearMonth.split('년 ')[0];
+        let month = yearMonth.split('년 ')[1];
+        location.href = '/food/download?year='+year+'&month='+month;
     }
 </script>
