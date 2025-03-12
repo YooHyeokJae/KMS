@@ -1,6 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+<style>
+    .no-events-message{
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    .fc-event-main {
+        width: 100%;
+        min-height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    #calendar{
+        width: 50%;
+        justify-self: center;
+    }
+</style>
 <div class="container">
     <div class="row" style="min-height: 800px">
         <div class="col-8">
@@ -196,11 +217,46 @@
             locale: 'ko',
             height: 'auto',
             headerToolbar: {
-                left: '',
-                center: '',
-                right: 'today prev,next'
+                left: 'prev',
+                center: 'today',
+                right: 'next'
             },
-            dayHeaderFormat: { year: 'numeric', month: 'short', day: 'numeric' }
+            dayHeaderFormat: { year: 'numeric', month: 'short', day: 'numeric' },
+            events: [
+                <c:forEach var="food" items="${foodVoList}" varStatus="stat">
+                {
+                    title: "",
+                    customHtml: "${food.meal}",
+                    start: "${fn:replace(food.mealDate, 'T', ' ')}",
+                    end: "${fn:replace(food.mealDate, 'T', ' ')}",
+                    allDay: true,
+                    color: "transparent",
+                    textColor: "#000000"
+                },
+                </c:forEach>
+            ],
+            eventContent: function (eventInfo) {
+                return {html: eventInfo.event.extendedProps.customHtml }
+            },
+            datesSet: function (info) {
+                setTimeout(() => {
+                    let eventElements = document.querySelectorAll('.fc-event');
+                    let existingMessage = document.querySelector('.no-events-message');
+
+                    // 기존 메시지 삭제 (중복 방지)
+                    if (existingMessage) {
+                        existingMessage.remove();
+                    }
+
+                    // 이벤트가 없으면 메시지 추가
+                    if (eventElements.length === 0) {
+                        let noEventMessage = document.createElement('div');
+                        noEventMessage.classList.add('no-events-message');
+                        noEventMessage.innerText = '오늘은 식단을\n제공하지 않습니다.';
+                        document.querySelector('.fc-daygrid-body').appendChild(noEventMessage);
+                    }
+                }, 10);
+            }
         });
         calendar.render();
     });

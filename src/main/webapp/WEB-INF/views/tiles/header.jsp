@@ -87,7 +87,7 @@
           <a href="#">자료실</a>
           <div class="nav-item-box">
             <p class="nav-item"><a href="${pageContext.request.contextPath}/calendar/">학사일정</a></p>
-            <p class="nav-item"><a href="#">식단표</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/food/">식단표</a></p>
             <p class="nav-item"><a href="${pageContext.request.contextPath}/board/form">양식</a></p>
           </div>
         </li>

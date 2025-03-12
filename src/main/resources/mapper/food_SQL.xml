@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hj.mapper.FoodMapper">
+
+    <select id="selectAll" resultType="com.hj.vo.FoodVo">
+        SELECT * FROM FOOD
+    </select>
+
+    <select id="select" resultType="com.hj.vo.FoodVo">
+        SELECT * FROM FOOD WHERE MEAL_DATE = #{mealDate}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO FOOD(MEAL_DATE, MEAL) VALUES(#{mealDate}, #{meal})
+    </insert>
+
+    <update id="update">
+        UPDATE FOOD SET MEAL = #{meal} WHERE MEAL_DATE = #{mealDate}
+    </update>
+
+    <select id="selectByYearMonth" resultType="com.hj.vo.FoodVo">
+        SELECT * FROM FOOD WHERE MEAL_DATE LIKE CONCAT(#{yearMonth}, '%')
+    </select>
+</mapper>
