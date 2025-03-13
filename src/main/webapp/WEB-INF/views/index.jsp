@@ -253,6 +253,7 @@
                         let noEventMessage = document.createElement('div');
                         noEventMessage.classList.add('no-events-message');
                         noEventMessage.innerText = '오늘은 식단을\n제공하지 않습니다.';
+                        noEventMessage.style.backgroundColor = $('td[role="gridcell"]').css('backgroundColor');
                         document.querySelector('.fc-daygrid-body').appendChild(noEventMessage);
                     }
                 }, 10);
