@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hj.mapper.EducationMapper">
+    <select id="getNextDailyPlanNum" resultType="int">
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM DAILY_PLAN
+    </select>
+
+    <select id="getNextActivityNum" resultType="int">
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM ACTIVITY
+    </select>
+
+    <insert id="insertDailyPlan">
+        INSERT INTO DAILY_PLAN(NUM, SEQ, ACTIVITY_DATE, TEACHER_ID, LOCATION, TARGET, GRADE, SUBJECT, GOALS, MATERIALS, REG_DATE, UPD_DATE)
+        VALUES(#{num}, #{seq}, #{activityDate}, #{teacherId}, #{location}, #{target}, #{grade}, #{subject}, #{goals}, #{materials}, SYSDATE(), SYSDATE())
+    </insert>
+
+    <insert id="insertActivity">
+        INSERT INTO ACTIVITY(NUM, PLAN_NUM, ACTIVITY_TIME, CONTENT, NOTE, REG_DATE, UPD_DATE)
+        VALUES(#{num}, #{planNum}, #{activityTime}, #{content}, #{note}, SYSDATE(), SYSDATE())
+    </insert>
+
+    <select id="getAllDailyPlan" resultType="com.hj.vo.DailyPlanVo">
+        SELECT * FROM DAILY_PLAN ORDER BY REG_DATE DESC
+    </select>
+</mapper>

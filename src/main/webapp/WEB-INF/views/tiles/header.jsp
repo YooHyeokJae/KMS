@@ -73,7 +73,9 @@
         <li class="nav-link">
           <a href="#">학사</a>
           <div class="nav-item-box">
-            <p class="nav-item"><a href="#">학사 관리</a></p>
+            <p class="nav-item"><a href="<c:url value="/education/dailyPlan/"/>">일일 계획안</a></p>
+            <p class="nav-item"><a href="<c:url value="/education/activityRecord/"/>">활동기록</a></p>
+            <p class="nav-item"><a href="<c:url value="/education/counsel/"/>">상담</a></p>
           </div>
         </li>
         <li class="nav-link">
