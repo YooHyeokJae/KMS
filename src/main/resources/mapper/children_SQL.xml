@@ -14,7 +14,7 @@
     </select>
 
     <select id="getNextNum" resultType="int">
-        SELECT MAX(NUM)+1 FROM CHILD
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM CHILD
     </select>
 
     <insert id="insertChild">
