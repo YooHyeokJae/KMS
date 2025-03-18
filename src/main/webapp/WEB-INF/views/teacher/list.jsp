@@ -4,37 +4,39 @@
     <c:if test="${sessionScope.loginUser.auth eq 'A'}">
         <a href="#">교원 등록</a>
     </c:if>
-    <table id="listTable" class="table table-striped table-hover">
-        <thead>
-            <tr class="table-warning">
-                <th>교원번호</th>
-                <th>이름</th>
-                <th>생년월일</th>
-                <th>전공</th>
-                <th>학급</th>
-                <th>퇴직여부</th>
-                <th>최초등록일</th>
-                <th>최종수정일</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="teacherVo" items="${teacherVoList}" varStatus="stat">
-               <tr onclick="popupTeacherInfo(event)">
-                   <td>${teacherVo.id}</td>
-                   <td>${teacherVo.name}</td>
-                   <td>${teacherVo.birth}</td>
-                   <td>${teacherVo.major}</td>
-                   <td>${teacherVo.grade}</td>
-                   <td>${teacherVo.delYn}</td>
-                   <td>${teacherVo.regDate}</td>
-                   <td>${teacherVo.updDate}</td>
-               </tr>
-            </c:forEach>
-            <c:if test="${teacherVoList.size() eq 0}">
-                <tr><td colspan="8">등록된 교사가 없습니다.</td></tr>
-            </c:if>
-        </tbody>
-    </table>
+    <div style="min-height: 430px">
+        <table id="listTable" class="table table-striped table-hover">
+            <thead>
+                <tr class="table-warning">
+                    <th>교원번호</th>
+                    <th>이름</th>
+                    <th>생년월일</th>
+                    <th>전공</th>
+                    <th>학급</th>
+                    <th>퇴직여부</th>
+                    <th>최초등록일</th>
+                    <th>최종수정일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="teacherVo" items="${teacherVoList}" varStatus="stat">
+                   <tr onclick="popupTeacherInfo(event)">
+                       <td>${teacherVo.id}</td>
+                       <td>${teacherVo.name}</td>
+                       <td>${teacherVo.birth}</td>
+                       <td>${teacherVo.major}</td>
+                       <td>${teacherVo.grade}</td>
+                       <td>${teacherVo.delYn}</td>
+                       <td>${teacherVo.regDate}</td>
+                       <td>${teacherVo.updDate}</td>
+                   </tr>
+                </c:forEach>
+                <c:if test="${teacherVoList.size() eq 0}">
+                    <tr><td colspan="8">등록된 교사가 없습니다.</td></tr>
+                </c:if>
+            </tbody>
+        </table>
+    </div>
     <nav aria-label="Page navigation example" class="d-flex align-items-center">
         <ul class="pagination">
             <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart-1}"/>">이전</a></li>

@@ -12,33 +12,35 @@
         <c:if test="${category eq 'free'}">자유게시판</c:if>
     </h2>
     <div>검색필터</div>
-    <table class="table">
-        <thead>
-            <tr class="table-primary text-center">
-                <td width="5%">번호</td>
-                <td width="*">제목</td>
-                <td width="10%">작성자</td>
-                <td width="15%">등록일</td>
-                <td width="8%">조회수</td>
-                <td width="8%">추천수</td>
-            </tr>
-        </thead>
-        <tbody>
-            <c:if test="${boardVoList.size() eq 0}">
-                <tr class="text-center"><td colspan="6">등록된 게시글이 없습니다.</td></tr>
-            </c:if>
-            <c:forEach var="vo" items="${boardVoList}" varStatus="stat">
-                <tr class="trs">
-                    <td class="text-center">${vo.num}</td>
-                    <td>${vo.title}</td>
-                    <td>${vo.writerId}</td>
-                    <td class="text-center">${fn:replace(vo.regDate, 'T', ' ')}</td>
-                    <td class="text-center">${vo.viewCnt}</td>
-                    <td class="text-center">${vo.likeCnt}</td>
+    <div style="min-height: 430px">
+        <table class="table">
+            <thead>
+                <tr class="table-primary text-center">
+                    <td width="5%">번호</td>
+                    <td width="*">제목</td>
+                    <td width="10%">작성자</td>
+                    <td width="15%">등록일</td>
+                    <td width="8%">조회수</td>
+                    <td width="8%">추천수</td>
                 </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <c:if test="${boardVoList.size() eq 0}">
+                    <tr class="text-center"><td colspan="6">등록된 게시글이 없습니다.</td></tr>
+                </c:if>
+                <c:forEach var="vo" items="${boardVoList}" varStatus="stat">
+                    <tr class="trs">
+                        <td class="text-center">${vo.num}</td>
+                        <td>${vo.title}</td>
+                        <td>${vo.writerId}</td>
+                        <td class="text-center">${fn:replace(vo.regDate, 'T', ' ')}</td>
+                        <td class="text-center">${vo.viewCnt}</td>
+                        <td class="text-center">${vo.likeCnt}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
     <div class="row">
         <div class="col-9">
             <nav aria-label="Page navigation example" class="d-flex align-items-center">
