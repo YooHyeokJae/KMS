@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <html>
@@ -36,6 +37,9 @@
         #addRowBtn{
             border: none;
         }
+        .instElem:hover{
+            background-color: #d3d4d6;
+        }
     </style>
 </head>
 <body>
@@ -58,8 +62,12 @@
                 <td><input type="text" class="form-control data" id="activitySeq" /></td>
             </tr>
             <tr>
-                <th><label for="instructor">지도교사</label></th>
-                <td><input type="text" class="form-control data" id="instructor" /></td>
+                <th><label for="instructorName">지도교사</label></th>
+                <td style="display: flex;">
+                    <input type="text" class="form-control" id="instructorName" disabled />
+                    <input type="hidden" class="data" id="instructor" />
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#searchTeacherModal" onclick="openModal()"><i class="bi bi-search"></i></button>
+                </td>
                 <th><label for="location">활동장소</label></th>
                 <td><input type="text" class="form-control data" id="location" /></td>
             </tr>
@@ -99,6 +107,24 @@
         <div class="text-end" style="margin-top: 10px;">
             <input type="button" class="btn btn-outline-danger" id="resetBtn" value="초기화" />
             <input type="button" class="btn btn-outline-primary" id="insertBtn" value="등록" />
+        </div>
+    </div>
+
+    <div class="modal fade" id="searchTeacherModal" tabindex="-1" aria-labelledby="searchTeacherModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="searchTeacherModalLabel">
+                        <label for="keyword">교사 찾기</label>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="keyword" placeholder="이름을 입력하세요." style="border: 1px solid black" />
+                        <hr>
+                        <ul id="instructorList" style="height: 300px; overflow: auto"></ul>
+                    </div>
+            </div>
         </div>
     </div>
 </body>
@@ -144,7 +170,7 @@
                 contentType: 'application/json;charset=utf-8',
                 data: JSON.stringify(formData),
                 type: 'post',
-                success: function(result){
+                success: function(){
                     window.opener.location.reload();
                     window.close();
                 }
@@ -153,5 +179,49 @@
     });
 </script>
 
+<script>
+    let $keyword = $('#keyword');
+    function openModal(){
+        let keyword = $('#instructorName').val();
+        if(keyword !== null && keyword !== ''){
+            $keyword.val(keyword);
+            searchTeacherAjax();
+        }
+    }
+    $('#searchTeacherModal').on('shown.bs.modal', function () {
+        $('#keyword').focus();
+    });
+
+    function searchTeacherAjax(){
+        $('#instructorList').html('');
+        let keyword = $keyword.val();
+        if(keyword !== null && keyword !== ''){
+            $.ajax({
+                url: '/education/searchTeacher',
+                contentType: 'application/json;charset=utf-8',
+                data: keyword,
+                type: 'post',
+                success: function(result){
+                    for(let i=0; i<result.length; i++){
+                        let html = '<li class="instElem" data-id="' + result[i].id + '">' + result[i].name + '</li>';
+                        $('#instructorList').append(html);
+                    }
+                }
+            });
+        }
+    }
+
+    $keyword.on('input', function(){
+        searchTeacherAjax();
+    });
+
+    $(document).on('dblclick', '.instElem', function(){
+        let id = $(this)[0].dataset.id;
+        let name = $(this).text();
+        $('#instructor').val(id);
+        $('#instructorName').val(name);
+        $('#searchTeacherModal').modal('hide');
+    })
+</script>
 </html>
 

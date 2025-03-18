@@ -3,6 +3,7 @@ package com.hj.service;
 import com.hj.mapper.EducationMapper;
 import com.hj.vo.ActivityVo;
 import com.hj.vo.DailyPlanVo;
+import com.hj.vo.TeacherVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,5 +32,9 @@ public class EducationService {
 
     public List<DailyPlanVo> getAllDailyPlan() {
         return this.educationMapper.getAllDailyPlan();
+    }
+
+    public List<TeacherVo> searchTeacherByName(String keyword) {
+        return this.educationMapper.searchTeacherByName(keyword);
     }
 }

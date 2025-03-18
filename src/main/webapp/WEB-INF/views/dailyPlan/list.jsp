@@ -8,8 +8,8 @@
 <div class="container">
     <input type="button" class="btn btn-primary" value="등록" onclick="popupInsertForm(event)" />
 
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="table table-primary">
             <tr>
                 <th>번호</th>
                 <th>차시</th>
@@ -25,7 +25,7 @@
                     <td>${dailyPlanVo.num}</td>
                     <td>${dailyPlanVo.seq}</td>
                     <td>${dailyPlanVo.activityDate}</td>
-                    <td>${dailyPlanVo.teacherId}</td>
+                    <td>${dailyPlanVo.instructorName}</td>
                     <td>${dailyPlanVo.regDate}</td>
                     <td>${dailyPlanVo.updDate}</td>
                 </tr>

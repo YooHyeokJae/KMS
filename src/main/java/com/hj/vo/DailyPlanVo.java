@@ -22,4 +22,6 @@ public class DailyPlanVo {
     private LocalDateTime updDate;
 
     private List<ActivityVo> activitiyVoList;
+
+    private String instructorName;
 }

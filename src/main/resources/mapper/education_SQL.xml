@@ -20,6 +20,10 @@
     </insert>
 
     <select id="getAllDailyPlan" resultType="com.hj.vo.DailyPlanVo">
-        SELECT * FROM DAILY_PLAN ORDER BY REG_DATE DESC
+        SELECT DAILY_PLAN.*, TEACHER.NAME AS INSTRUCTOR_NAME FROM DAILY_PLAN LEFT JOIN TEACHER ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID) ORDER BY DAILY_PLAN.REG_DATE DESC
+    </select>
+
+    <select id="searchTeacherByName" resultType="com.hj.vo.TeacherVo">
+        SELECT * FROM TEACHER WHERE NAME LIKE CONCAT('%', #{keyword}, '%')
     </select>
 </mapper>

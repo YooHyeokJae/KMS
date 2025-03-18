@@ -2,6 +2,7 @@ package com.hj.mapper;
 
 import com.hj.vo.ActivityVo;
 import com.hj.vo.DailyPlanVo;
+import com.hj.vo.TeacherVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface EducationMapper {
     void insertActivity(ActivityVo activityVo);
 
     List<DailyPlanVo> getAllDailyPlan();
+
+    List<TeacherVo> searchTeacherByName(String keyword);
 }

@@ -4,6 +4,7 @@ import com.hj.service.EducationService;
 import com.hj.vo.ActivityRecordVo;
 import com.hj.vo.ActivityVo;
 import com.hj.vo.DailyPlanVo;
+import com.hj.vo.TeacherVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -87,4 +88,9 @@ public class EducationController {
         return "counsel/list";
     }
 
+    @PostMapping("/searchTeacher")
+    @ResponseBody
+    public List<TeacherVo> searchTeacher(@RequestBody String keyword) {
+        return this.educationService.searchTeacherByName(keyword);
+    }
 }
