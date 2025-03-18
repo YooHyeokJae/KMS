@@ -14,16 +14,53 @@
         VALUES(#{num}, #{seq}, #{activityDate}, #{teacherId}, #{location}, #{target}, #{grade}, #{subject}, #{goals}, #{materials}, SYSDATE(), SYSDATE())
     </insert>
 
+    <update id="modifyDailyPlan">
+        UPDATE DAILY_PLAN
+        SET SEQ = #{seq},
+            ACTIVITY_DATE = #{activityDate},
+            TEACHER_ID = #{teacherId},
+            LOCATION = #{location},
+            TARGET = #{target},
+            GRADE = #{grade},
+            SUBJECT = #{subject},
+            GOALS = #{goals},
+            MATERIALS = #{materials},
+            UPD_DATE = SYSDATE()
+        WHERE NUM = #{num}
+    </update>
+
+    <delete id="deleteActivity">
+        DELETE FROM ACTIVITY WHERE PLAN_NUM = #{planNum}
+    </delete>
+
     <insert id="insertActivity">
         INSERT INTO ACTIVITY(NUM, PLAN_NUM, ACTIVITY_TIME, CONTENT, NOTE, REG_DATE, UPD_DATE)
         VALUES(#{num}, #{planNum}, #{activityTime}, #{content}, #{note}, SYSDATE(), SYSDATE())
     </insert>
 
     <select id="getAllDailyPlan" resultType="com.hj.vo.DailyPlanVo">
-        SELECT DAILY_PLAN.*, TEACHER.NAME AS INSTRUCTOR_NAME FROM DAILY_PLAN LEFT JOIN TEACHER ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID) ORDER BY DAILY_PLAN.REG_DATE DESC
+        SELECT DAILY_PLAN.*, TEACHER.NAME AS INSTRUCTOR_NAME
+        FROM DAILY_PLAN LEFT JOIN TEACHER ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID)
+        ORDER BY DAILY_PLAN.REG_DATE DESC
+        LIMIT #{start}, #{count}
     </select>
 
     <select id="searchTeacherByName" resultType="com.hj.vo.TeacherVo">
         SELECT * FROM TEACHER WHERE NAME LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id="getTotalCntDailyPlan" resultType="int">
+        SELECT COUNT(*) FROM DAILY_PLAN
+    </select>
+
+    <select id="getDailyPlanByNum" resultType="com.hj.vo.DailyPlanVo">
+        SELECT DAILY_PLAN.*, TEACHER.NAME AS INSTRUCTOR_NAME
+        FROM DAILY_PLAN
+        LEFT JOIN TEACHER ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID)
+        WHERE DAILY_PLAN.NUM = #{num}
+    </select>
+
+    <select id="getActivitiesByPlanNum" resultType="com.hj.vo.ActivityVo">
+        SELECT * FROM ACTIVITY WHERE PLAN_NUM = #{planNum}
     </select>
 </mapper>

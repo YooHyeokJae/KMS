@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EducationService {
@@ -30,11 +31,32 @@ public class EducationService {
         }
     }
 
-    public List<DailyPlanVo> getAllDailyPlan() {
-        return this.educationMapper.getAllDailyPlan();
+    public List<DailyPlanVo> getAllDailyPlan(Map<String, Object> params) {
+        return this.educationMapper.getAllDailyPlan(params);
     }
 
     public List<TeacherVo> searchTeacherByName(String keyword) {
         return this.educationMapper.searchTeacherByName(keyword);
+    }
+
+    public int getTotalCntDailyPlan() {
+        return this.educationMapper.getTotalCntDailyPlan();
+    }
+
+    public DailyPlanVo getDailyPlanByNum(String num) {
+        return this.educationMapper.getDailyPlanByNum(num);
+    }
+
+    public List<ActivityVo> getActivitiesByPlanNum(String num) {
+        return this.educationMapper.getActivitiesByPlanNum(num);
+    }
+
+    public void modifyDailyPlan(DailyPlanVo dailyPlanVo) {
+        this.educationMapper.deleteActivity(dailyPlanVo.getNum());
+        this.educationMapper.modifyDailyPlan(dailyPlanVo);
+        List<ActivityVo> activitiyVoList = dailyPlanVo.getActivitiyVoList();
+        for(ActivityVo activityVo : activitiyVoList) {
+            this.educationMapper.insertActivity(activityVo);
+        }
     }
 }

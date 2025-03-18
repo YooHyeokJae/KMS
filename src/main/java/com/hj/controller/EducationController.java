@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,8 +29,22 @@ public class EducationController {
     private EducationService educationService;
 
     @GetMapping("/dailyPlan")
-    public String dailyPlan(Model model) {
-        List<DailyPlanVo> dailyPlanVoList = this.educationService.getAllDailyPlan();
+    public String dailyPlan(Model model,
+                            @RequestParam(defaultValue="1") int page,
+                            @RequestParam(defaultValue="10") int count) {
+        int totalCnt = this.educationService.getTotalCntDailyPlan();
+        int pageBlock = 10;
+        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageStart", pageStart);
+        model.addAttribute("pageBlock", pageBlock);
+        int start = (page-1)*count;
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("count", count);
+        List<DailyPlanVo> dailyPlanVoList = this.educationService.getAllDailyPlan(params);
+        model.addAttribute("count", count);
+        model.addAttribute("totalCnt", totalCnt);
         model.addAttribute("dailyPlanVoList", dailyPlanVoList);
         return "dailyPlan/list";
     }
@@ -56,7 +71,6 @@ public class EducationController {
         dailyPlanVo.setSubject(params.get("subject"));
         dailyPlanVo.setGoals(params.get("goals"));
         dailyPlanVo.setMaterials(params.get("materials"));
-
 
         List<String> timeList = params.entrySet().stream().filter(entry -> entry.getKey().contains("time")).map(Map.Entry::getValue).collect(Collectors.toList());
         List<String> contentList = params.entrySet().stream().filter(entry -> entry.getKey().contains("content")).map(Map.Entry::getValue).collect(Collectors.toList());
@@ -92,5 +106,57 @@ public class EducationController {
     @ResponseBody
     public List<TeacherVo> searchTeacher(@RequestBody String keyword) {
         return this.educationService.searchTeacherByName(keyword);
+    }
+
+    @PostMapping("/dailyPlan/info")
+    public String info(Model model,
+                       @RequestBody String data) {
+        String num = data.split("=")[1];
+        DailyPlanVo dailyPlanVo = this.educationService.getDailyPlanByNum(num);
+        List<ActivityVo> activityVoList = this.educationService.getActivitiesByPlanNum(num);
+        dailyPlanVo.setActivitiyVoList(activityVoList);
+        model.addAttribute("dailyPlanVo", dailyPlanVo);
+        log.info("dailyPlanVo: {}", dailyPlanVo);
+        return "dailyPlan/popup/info";
+    }
+
+    @PostMapping("/dailyPlan/modifyData")
+    @ResponseBody
+    public String modifyData(@RequestBody Map<String, String> params) {
+        int dailyPlanNum = Integer.parseInt(params.get("num"));
+        int activityNum = this.educationService.getNextActivityNum();
+
+        DailyPlanVo dailyPlanVo = new DailyPlanVo();
+        dailyPlanVo.setNum(dailyPlanNum);
+        dailyPlanVo.setSeq(params.get("activitySeq"));
+        dailyPlanVo.setActivityDate(LocalDate.parse(params.get("activityDate")));
+        dailyPlanVo.setTeacherId(params.get("instructor"));
+        dailyPlanVo.setLocation(params.get("location"));
+        dailyPlanVo.setTarget(params.get("target"));
+        dailyPlanVo.setGrade(params.get("grade"));
+        dailyPlanVo.setSubject(params.get("subject"));
+        dailyPlanVo.setGoals(params.get("goals"));
+        dailyPlanVo.setMaterials(params.get("materials"));
+
+        List<String> timeList = params.entrySet().stream().filter(entry -> entry.getKey().contains("time")).map(Map.Entry::getValue).collect(Collectors.toList());
+        List<String> contentList = params.entrySet().stream().filter(entry -> entry.getKey().contains("content")).map(Map.Entry::getValue).collect(Collectors.toList());
+        List<String> noteList = params.entrySet().stream().filter(entry -> entry.getKey().contains("note")).map(Map.Entry::getValue).collect(Collectors.toList());
+
+        List<ActivityVo> activityVoList = new ArrayList<>();
+        for(int i=0; i<timeList.size(); i++){
+            if(!timeList.get(i).isEmpty() || !contentList.get(i).isEmpty() || !noteList.get(i).isEmpty()){
+                ActivityVo activityVo = new ActivityVo();
+                activityVo.setNum(activityNum + i);
+                activityVo.setPlanNum(dailyPlanNum);
+                activityVo.setActivityTime(timeList.get(i));
+                activityVo.setContent(contentList.get(i));
+                activityVo.setNote(noteList.get(i));
+                activityVoList.add(activityVo);
+            }
+        }
+        dailyPlanVo.setActivitiyVoList(activityVoList);
+
+        this.educationService.modifyDailyPlan(dailyPlanVo);
+        return "success";
     }
 }
