@@ -1,5 +1,6 @@
 package com.hj.mapper;
 
+import com.hj.vo.ActivityRecordVo;
 import com.hj.vo.ActivityVo;
 import com.hj.vo.DailyPlanVo;
 import com.hj.vo.TeacherVo;
@@ -31,4 +32,14 @@ public interface EducationMapper {
     DailyPlanVo getDailyPlanByNum(String num);
 
     List<ActivityVo> getActivitiesByPlanNum(String num);
+
+    List<DailyPlanVo> searchPlan(Map<String, String> params);
+
+    int getNextActivityRecordNum();
+
+    void insertRecord(ActivityRecordVo activityRecordVo);
+
+    List<ActivityRecordVo> getAllActivityRecord(Map<String, Object> params);
+
+    int getTotalCntRecord();
 }

@@ -11,8 +11,8 @@
     }
 </style>
 <div class="container">
-    <div style="display: flex; justify-content: end; margin-bottom: 10px;">
-        <input type="button" class="btn btn-primary" value="등록" onclick="popupInsertForm(event)" />
+    <div class="text-end mb-2">
+        <input type="button" class="btn btn-info" value="등록" onclick="popupInsertForm(event)" />
     </div>
 
     <div style="min-height: 430px">

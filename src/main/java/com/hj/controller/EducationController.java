@@ -1,10 +1,8 @@
 package com.hj.controller;
 
+import com.hj.service.ChildrenService;
 import com.hj.service.EducationService;
-import com.hj.vo.ActivityRecordVo;
-import com.hj.vo.ActivityVo;
-import com.hj.vo.DailyPlanVo;
-import com.hj.vo.TeacherVo;
+import com.hj.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,11 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -27,6 +21,8 @@ public class EducationController {
 
     @Resource(name="educationService")
     private EducationService educationService;
+    @Resource(name="childrenService")
+    private ChildrenService childrenService;
 
     @GetMapping("/dailyPlan")
     public String dailyPlan(Model model,
@@ -92,16 +88,6 @@ public class EducationController {
         return "success";
     }
 
-    @GetMapping("/activityRecord")
-    public String activity() {
-        return "activityRecord/list";
-    }
-
-    @GetMapping("/counsel")
-    public String counsel() {
-        return "counsel/list";
-    }
-
     @PostMapping("/searchTeacher")
     @ResponseBody
     public List<TeacherVo> searchTeacher(@RequestBody String keyword) {
@@ -158,5 +144,83 @@ public class EducationController {
 
         this.educationService.modifyDailyPlan(dailyPlanVo);
         return "success";
+    }
+
+    @GetMapping("/activityRecord")
+    public String activity(Model model,
+                           @RequestParam(defaultValue="1") int page,
+                           @RequestParam(defaultValue="10") int count) {
+
+        int totalCnt = this.educationService.getTotalCntRecord();
+        int pageBlock = 10;
+        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageStart", pageStart);
+        model.addAttribute("pageBlock", pageBlock);
+        int start = (page-1)*count;
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("count", count);
+        List<ActivityRecordVo> recordVoList = this.educationService.getAllActivityRecord(params);
+        model.addAttribute("count", count);
+        model.addAttribute("totalCnt", totalCnt);
+        model.addAttribute("recordVoList", recordVoList);
+        return "activityRecord/list";
+    }
+
+    @GetMapping("/recordInsert")
+    public String recordInsert() {
+        return "activityRecord/insert";
+    }
+
+    @PostMapping("/searchChild")
+    @ResponseBody
+    public List<ChildVo> searchChild(@RequestBody Map<String, String> params) {
+        return this.childrenService.searchChild(params);
+    }
+
+    @PostMapping("/searchPlan")
+    @ResponseBody
+    public List<DailyPlanVo> searchPlan(@RequestBody Map<String, String> params) {
+        return this.educationService.searchPlan(params);
+    }
+
+    @PostMapping("/getActivityList")
+    @ResponseBody
+    public List<ActivityVo> getActivityList(@RequestBody Map<String, String> params) {
+        return this.educationService.getActivitiesByPlanNum(params.get("num"));
+    }
+
+    @PostMapping("/insertRecord")
+    @ResponseBody
+    public String insertRecord(@RequestBody Map<String, Object> params) {
+        int nextNum = this.educationService.getNextActivityRecordNum();
+
+        @SuppressWarnings("unchecked")  // src/main/webapp/WEB-INF/views/activityRecord/insert.jsp >> childList
+        List<String> childList = (List<String>) params.get("childList");
+        @SuppressWarnings("unchecked")  // src/main/webapp/WEB-INF/views/activityRecord/insert.jsp >> activityRecords
+        Map<String, String> activityRecords = (Map<String, String>) params.get("activityRecords");
+
+        ActivityRecordVo activityRecordVo = new ActivityRecordVo();
+        for(String child : childList){
+            activityRecordVo.setChildNum(Integer.parseInt(child));
+
+            for(String key : activityRecords.keySet()){
+                int activityNum = Integer.parseInt(key);
+                activityRecordVo.setActivityNum(activityNum);
+                activityRecordVo.setRecord(activityRecords.get(key));
+                if(!"".equals(activityRecordVo.getRecord())){
+                    activityRecordVo.setNum(nextNum++);
+                    this.educationService.insertRecord(activityRecordVo);
+                }
+            }
+        }
+
+        return "success";
+    }
+
+    @GetMapping("/counsel")
+    public String counsel() {
+        return "counsel/list";
     }
 }

@@ -1,6 +1,7 @@
 package com.hj.service;
 
 import com.hj.mapper.ChildrenMapper;
+import com.hj.vo.ActivityVo;
 import com.hj.vo.ChildVo;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,9 @@ public class ChildrenService {
 
     public void insertChildBatch(List<ChildVo> childVoList) {
         this.childrenMapper.insertChildBatch(childVoList);
+    }
+
+    public List<ChildVo> searchChild(Map<String, String> params) {
+        return this.childrenMapper.searchChild(params);
     }
 }

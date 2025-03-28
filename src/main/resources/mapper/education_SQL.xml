@@ -63,4 +63,39 @@
     <select id="getActivitiesByPlanNum" resultType="com.hj.vo.ActivityVo">
         SELECT * FROM ACTIVITY WHERE PLAN_NUM = #{planNum}
     </select>
+
+    <select id="searchPlan" resultType="com.hj.vo.DailyPlanVo">
+        SELECT DP.*, T.NAME AS INSTRUCTOR_NAME
+        FROM DAILY_PLAN DP
+        LEFT JOIN TEACHER T ON (DP.TEACHER_ID = T.ID)
+        WHERE SUBJECT LIKE CONCAT('%', #{subject}, '%')
+          <if test="instructor != null and instructor != ''">
+            AND DP.TEACHER_ID = (SELECT ID FROM TEACHER WHERE NAME = #{instructor})
+          </if>
+          <if test="date != null and date != ''">
+            AND ACTIVITY_DATE = #{date}
+          </if>
+    </select>
+
+    <select id="getNextActivityRecordNum" resultType="int">
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM ACTIVITY_RECORD
+    </select>
+
+    <insert id="insertRecord">
+        INSERT INTO ACTIVITY_RECORD(NUM, CHILD_NUM, ACTIVITY_NUM, RECORD)
+        VALUES(#{num}, #{childNum}, #{activityNum}, #{record})
+    </insert>
+
+    <select id="getAllActivityRecord" resultType="com.hj.vo.ActivityRecordVo">
+        SELECT AR.*, C.NAME AS CHILD_NAME, (SELECT ACTIVITY_DATE FROM DAILY_PLAN D WHERE D.NUM = A.PLAN_NUM) AS ACTIVITY_DATE, A.CONTENT AS ACTIVITY_CONTENT
+        FROM ACTIVITY_RECORD AR
+        LEFT JOIN CHILD C ON (AR.CHILD_NUM = C.NUM)
+        LEFT JOIN ACTIVITY A ON (AR.ACTIVITY_NUM = A.NUM)
+        WHERE AR.DEL_YN = 'N'
+        ORDER BY AR.REG_DATE DESC LIMIT #{start}, #{count}
+    </select>
+
+    <select id="getTotalCntRecord" resultType="int">
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM ACTIVITY_RECORD WHERE DEL_YN = 'N'
+    </select>
 </mapper>

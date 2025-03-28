@@ -12,4 +12,8 @@ public class ActivityRecordVo {
     private String record;
     private LocalDateTime regDate;
     private LocalDateTime updDate;
+
+    private String childName;
+    private LocalDateTime activityDate;
+    private String activityContent;
 }

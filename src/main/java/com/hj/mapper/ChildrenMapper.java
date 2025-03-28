@@ -1,5 +1,6 @@
 package com.hj.mapper;
 
+import com.hj.vo.ActivityVo;
 import com.hj.vo.ChildVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,6 @@ public interface ChildrenMapper {
     void modifyChild(ChildVo childVo);
 
     void insertChildBatch(@Param("childVoList") List<ChildVo> childVoList);
+
+    List<ChildVo> searchChild(Map<String, String> params);
 }

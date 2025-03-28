@@ -1,6 +1,7 @@
 package com.hj.service;
 
 import com.hj.mapper.EducationMapper;
+import com.hj.vo.ActivityRecordVo;
 import com.hj.vo.ActivityVo;
 import com.hj.vo.DailyPlanVo;
 import com.hj.vo.TeacherVo;
@@ -58,5 +59,25 @@ public class EducationService {
         for(ActivityVo activityVo : activitiyVoList) {
             this.educationMapper.insertActivity(activityVo);
         }
+    }
+
+    public List<DailyPlanVo> searchPlan(Map<String, String> params) {
+        return this.educationMapper.searchPlan(params);
+    }
+
+    public int getNextActivityRecordNum() {
+        return this.educationMapper.getNextActivityRecordNum();
+    }
+
+    public void insertRecord(ActivityRecordVo activityRecordVo) {
+        this.educationMapper.insertRecord(activityRecordVo);
+    }
+
+    public List<ActivityRecordVo> getAllActivityRecord(Map<String, Object> params) {
+        return this.educationMapper.getAllActivityRecord(params);
+    }
+
+    public int getTotalCntRecord() {
+        return this.educationMapper.getTotalCntRecord();
     }
 }
