@@ -98,4 +98,39 @@
     <select id="getTotalCntRecord" resultType="int">
         SELECT IFNULL(MAX(NUM) + 1, 0) FROM ACTIVITY_RECORD WHERE DEL_YN = 'N'
     </select>
+
+    <select id="getNextCounselNum" resultType="int">
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM COUNSEL
+    </select>
+
+    <select id="getAllCounselByChildNum" resultType="com.hj.vo.CounselVo">
+        SELECT C.*, T.NAME AS INSTRUCTOR_NAME
+        FROM COUNSEL C
+        LEFT JOIN TEACHER T ON (C.INSTRUCTOR_ID = T.ID AND T.DEL_YN = 'N')
+        WHERE C.DEL_YN = 'N'
+          AND C.CHILD_NUM = #{childNum}
+        ORDER BY NUM DESC
+    </select>
+
+    <select id="getCounselByNum" resultType="com.hj.vo.CounselVo">
+        SELECT C.*, T.NAME AS INSTRUCTOR_NAME
+        FROM COUNSEL C
+        LEFT JOIN TEACHER T ON (C.INSTRUCTOR_ID = T.ID)
+        WHERE NUM = #{num}
+    </select>
+
+    <insert id="insertCounsel">
+        INSERT INTO COUNSEL(NUM, CATEGORY, INSTRUCTOR_ID, COUNSEL_DATE, CHILD_NUM, COUNSEL_NOTE)
+        VALUES(#{num}, #{category}, #{instructorId}, #{counselDate}, #{childNum}, #{counselNote})
+    </insert>
+
+    <update id="modifyCounsel">
+        UPDATE COUNSEL SET UPD_DATE = SYSDATE()
+        <if test="category != null">, CATEGORY = #{category}</if>
+        <if test="instructorId != null">, INSTRUCTOR_ID = #{instructorId}</if>
+        <if test="counselDate != null">, COUNSEL_DATE = #{counselDate}</if>
+        <if test="childNum != null">, CHILD_NUM = #{childNum}</if>
+        <if test="counselNote != null">, COUNSEL_NOTE = #{counselNote}</if>
+        WHERE NUM = #{num}
+    </update>
 </mapper>

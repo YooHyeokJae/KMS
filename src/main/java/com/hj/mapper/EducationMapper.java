@@ -1,9 +1,6 @@
 package com.hj.mapper;
 
-import com.hj.vo.ActivityRecordVo;
-import com.hj.vo.ActivityVo;
-import com.hj.vo.DailyPlanVo;
-import com.hj.vo.TeacherVo;
+import com.hj.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -42,4 +39,14 @@ public interface EducationMapper {
     List<ActivityRecordVo> getAllActivityRecord(Map<String, Object> params);
 
     int getTotalCntRecord();
+
+    int getNextCounselNum();
+
+    List<CounselVo> getAllCounselByChildNum(int childNum);
+
+    CounselVo getCounselByNum(int num);
+
+    void insertCounsel(Map<String, Object> params);
+
+    void modifyCounsel(Map<String, Object> params);
 }

@@ -223,4 +223,37 @@ public class EducationController {
     public String counsel() {
         return "counsel/list";
     }
+
+    @PostMapping("/getCounselByChildNum")
+    @ResponseBody
+    public List<CounselVo> getCounselByChildNum(@RequestBody Map<String, Object> params) {
+        int childNum = Integer.parseInt(params.get("childNum").toString());
+        return this.educationService.getAllCounselByChildNum(childNum);
+    }
+
+    @PostMapping("/getCounselByNum")
+    @ResponseBody
+    public CounselVo getCounselByNum(@RequestBody Map<String, Object> params) {
+        int num = Integer.parseInt(params.get("num").toString());
+        return this.educationService.getCounselByNum(num);
+    }
+
+    @PostMapping("/counsel/nextNum")
+    @ResponseBody
+    public int nextNum() {
+        return this.educationService.getNextCounselNum();
+    }
+
+    @PostMapping("/counsel/save")
+    @ResponseBody
+    public String counselSave(@RequestBody Map<String, Object> params) {
+        int num = Integer.parseInt(params.get("num").toString());
+        if(this.educationService.getCounselByNum(num) == null) {
+            this.educationService.insertCounsel(params);
+            return "insert";
+        } else {
+            this.educationService.modifyCounsel(params);
+            return "modify";
+        }
+    }
 }

@@ -1,10 +1,7 @@
 package com.hj.service;
 
 import com.hj.mapper.EducationMapper;
-import com.hj.vo.ActivityRecordVo;
-import com.hj.vo.ActivityVo;
-import com.hj.vo.DailyPlanVo;
-import com.hj.vo.TeacherVo;
+import com.hj.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -79,5 +76,25 @@ public class EducationService {
 
     public int getTotalCntRecord() {
         return this.educationMapper.getTotalCntRecord();
+    }
+
+    public int getNextCounselNum() {
+        return this.educationMapper.getNextCounselNum();
+    }
+
+    public List<CounselVo> getAllCounselByChildNum(int childNum) {
+        return this.educationMapper.getAllCounselByChildNum(childNum);
+    }
+
+    public CounselVo getCounselByNum(int num) {
+        return this.educationMapper.getCounselByNum(num);
+    }
+
+    public void insertCounsel(Map<String, Object> params) {
+        this.educationMapper.insertCounsel(params);
+    }
+
+    public void modifyCounsel(Map<String, Object> params) {
+        this.educationMapper.modifyCounsel(params);
     }
 }

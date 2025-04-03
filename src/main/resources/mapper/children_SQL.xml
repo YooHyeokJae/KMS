@@ -35,8 +35,15 @@
     <select id="searchChild" resultType="com.hj.vo.ChildVo">
         SELECT *
         FROM CHILD
-        WHERE NAME LIKE CONCAT('%', #{name}, '%')
-          AND GRADE LIKE CONCAT('%', #{grade}, '%')
-          AND GRADUATED = 'N'
+        WHERE GRADUATED = 'N'
+          <if test="name != null">
+            AND NAME LIKE CONCAT('%', #{name}, '%')
+          </if>
+          <if test="grade != null">
+            AND GRADE LIKE CONCAT('%', #{grade}, '%')
+          </if>
+          <if test="birth != null">
+              AND SUBSTR(BIRTH, 1, 10) LIKE CONCAT('%', #{birth}, '%')
+          </if>
     </select>
 </mapper>

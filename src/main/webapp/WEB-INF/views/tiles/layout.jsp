@@ -24,6 +24,9 @@
     font-size: 3em;
     text-align: center;
   }
+  .test_div {
+    border: 1px solid black;
+  }
   /* └지울거┘ */
 </style>
 <body>
