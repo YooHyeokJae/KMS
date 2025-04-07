@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <div class="container">
     <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
@@ -31,8 +32,8 @@
                        <td>${teacherVo.major}</td>
                        <td>${teacherVo.grade}</td>
                        <td>${teacherVo.delYn}</td>
-                       <td>${teacherVo.regDate}</td>
-                       <td>${teacherVo.updDate}</td>
+                       <td>${fn:replace(teacherVo.regDate, 'T', ' ')}</td>
+                       <td>${fn:replace(teacherVo.updDate, 'T', ' ')}</td>
                    </tr>
                 </c:forEach>
                 <c:if test="${teacherVoList.size() eq 0}">
