@@ -35,18 +35,24 @@
                 <td width="21%" id="childName">${childVo.name}</td>
             </tr>
             <tr>
-                <td>학급</td>
-                <td id="childGrade">${childVo.grade}</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
                 <td>생일</td>
                 <td colspan="3" id="childBirth">${fn:substring(childVo.birth, 0, 10)}</td>
             </tr>
             <tr>
                 <td>입학일</td>
                 <td colspan="3" id="childEntryDate">${fn:substring(childVo.entryDate, 0, 10)}</td>
+            </tr>
+            <tr>
+                <c:if test="${childVo.graduated eq 'N'}">
+                    <td>학급</td>
+                    <td id="childGrade">${childVo.grade}</td>
+                </c:if>
+                <c:if test="${childVo.graduated eq 'Y'}">
+                    <td>졸업일</td>
+                    <td id="childGrade">${childVo.graduateDate}</td>
+                </c:if>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
             </tr>

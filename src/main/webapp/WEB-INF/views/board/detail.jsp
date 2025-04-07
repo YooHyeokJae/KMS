@@ -55,7 +55,7 @@
                     </c:if>
                     <c:forEach var="replyVo" items="${replyVoList}" varStatus="stat">
                         <tr>
-                            <td>${replyVo.writerId}</td>
+                            <td>${replyVo.writerName}</td>
                             <td>${replyVo.content}</td>
                             <td class="text-center">${replyVo.regDate}</td>
                             <td class="text-center"><c:if test="${replyVo.writerId eq sessionScope.loginUser.id}"><a href="#">x</a></c:if></td>

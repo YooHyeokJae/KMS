@@ -19,6 +19,18 @@
   <title>유치원 통합 관리 시스템</title>
 </head>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+  h2 {
+    font-family: 'Gowun Dodum', sans-serif;
+    animation: fadeIn 1s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* ┌지울거┐ */
   .test_text {
     font-size: 3em;
@@ -29,7 +41,7 @@
   }
   /* └지울거┘ */
 </style>
-<body>
+<body style="overflow-x: hidden; overflow-y: auto;">
 <div class="header" style="min-height: 200px;">
   <tiles:insertAttribute name="header" />
 </div>

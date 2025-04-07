@@ -18,4 +18,5 @@ public class BoardVo {
     private LocalDateTime updDate;
 
     private long fileSize;
+    private String writerName;
 }

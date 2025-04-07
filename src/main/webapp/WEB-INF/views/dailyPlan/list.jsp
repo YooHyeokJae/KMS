@@ -11,6 +11,10 @@
     }
 </style>
 <div class="container">
+    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+        <span style="color: #0093aa"><i class="bi bi-backpack2"></i> 일일계획안</span>
+    </h2>
+
     <div class="text-end mb-2">
         <input type="button" class="btn btn-info" value="등록" onclick="popupInsertForm(event)" />
     </div>
@@ -48,9 +52,9 @@
         <ul class="pagination">
             <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/education/dailyPlan?page=${pageStart-1}"/>">이전</a></li>
             <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 gt totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/education/dailyPlan?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
+                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/education/dailyPlan?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
             </c:forEach>
-            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 gt totalCnt/count}"> disabled</c:if>" href="<c:url value="/education/dailyPlan?page=${pageStart+pageBlock}"/>">다음</a></li>
+            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/education/dailyPlan?page=${pageStart+pageBlock}"/>">다음</a></li>
         </ul>
         <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
     </nav>

@@ -7,7 +7,13 @@
     </select>
 
     <select id="getList" resultType="com.hj.vo.BoardVo">
-        SELECT BOARD.*, ATTACH_FILE.FILE_SIZE AS FILE_SIZE FROM BOARD LEFT JOIN ATTACH_FILE ON(CONCAT('board/', BOARD.NUM) = ATTACH_FILE.GLOBAL_CODE AND ATTACH_FILE.DEL_YN = 'N') WHERE CATEGORY = #{cat} AND BOARD.DEL_YN = 'N' ORDER BY BOARD.REG_DATE DESC LIMIT #{start}, #{count}
+        SELECT BOARD.*, USER.NAME AS WRITER_NAME, ATTACH_FILE.FILE_SIZE AS FILE_SIZE
+        FROM BOARD
+            LEFT JOIN ATTACH_FILE ON(CONCAT('board/', BOARD.NUM) = ATTACH_FILE.GLOBAL_CODE AND ATTACH_FILE.DEL_YN = 'N')
+            LEFT JOIN USER ON (BOARD.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
+        WHERE CATEGORY = #{cat}
+          AND BOARD.DEL_YN = 'N'
+        ORDER BY BOARD.REG_DATE DESC LIMIT #{start}, #{count}
     </select>
 
     <select id="getNextNum" resultType="int">
@@ -23,11 +29,18 @@
     </update>
 
     <select id="getBoardByNum" resultType="com.hj.vo.BoardVo">
-        SELECT * FROM BOARD WHERE NUM = #{num}
+        SELECT BOARD.*, USER.NAME AS WRITER_NAME
+        FROM BOARD
+        LEFT JOIN USER ON (BOARD.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
+        WHERE NUM = #{num}
     </select>
 
     <select id="getReplyListByBoardNum" resultType="com.hj.vo.ReplyVo">
-        SELECT * FROM REPLY WHERE BOARD_NUM = #{boardNum} AND DEL_YN = 'N' ORDER BY REG_DATE DESC
+        SELECT REPLY.*, USER.NAME AS WRITER_NAME
+        FROM REPLY
+        LEFT JOIN USER ON (REPLY.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
+        WHERE BOARD_NUM = #{boardNum} AND REPLY.DEL_YN = 'N'
+        ORDER BY REG_DATE DESC
     </select>
 
     <insert id="insertReply">
@@ -49,4 +62,21 @@
     <update id="deleteBoard">
         UPDATE BOARD SET DEL_YN = 'Y', UPD_DATE = SYSDATE() WHERE NUM = #{num}
     </update>
+
+    <select id="getBestByDateOrViewOrLike" resultType="com.hj.vo.BoardVo">
+        SELECT BOARD.*, USER.NAME AS WRITER_NAME
+        FROM BOARD
+        LEFT JOIN USER ON (BOARD.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
+        WHERE BOARD.DEL_YN = 'N'
+          AND BOARD.CATEGORY = #{category}
+        <if test="order eq 'date'">
+            ORDER BY BOARD.REG_DATE DESC LIMIT #{count}
+        </if>
+        <if test="order eq 'view'">
+            ORDER BY BOARD.VIEW_CNT DESC LIMIT #{count}
+        </if>
+        <if test="order eq 'like'">
+            ORDER BY BOARD.LIKE_CNT DESC LIMIT #{count}
+        </if>
+    </select>
 </mapper>

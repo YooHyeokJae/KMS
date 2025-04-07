@@ -4,6 +4,7 @@ import com.hj.vo.BoardVo;
 import com.hj.vo.ReplyVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,4 +33,6 @@ public interface BoardMapper {
     void modifyBoard(Map<String, Object> params);
 
     void deleteBoard(int num);
+
+    List<BoardVo> getBestByDateOrViewOrLike(Map<String, Object> params);
 }

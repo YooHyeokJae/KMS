@@ -7,9 +7,15 @@
     }
 </style>
 <div class="container">
-    <h2>
-        <c:if test="${category eq 'notice'}">공지사항</c:if>
-        <c:if test="${category eq 'free'}">자유게시판</c:if>
+    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+        <span>
+            <c:if test="${category eq 'notice'}">
+                <i class="bi bi-card-checklist"></i> 공지사항
+            </c:if>
+            <c:if test="${category eq 'free'}">
+                <i class="bi bi-card-text"></i> 자유게시판
+            </c:if>
+        </span>
     </h2>
     <div>검색필터</div>
     <div style="min-height: 430px">
@@ -32,7 +38,7 @@
                     <tr class="trs">
                         <td class="text-center">${vo.num}</td>
                         <td>${vo.title}</td>
-                        <td>${vo.writerId}</td>
+                        <td>${vo.writerName}</td>
                         <td class="text-center">${fn:replace(vo.regDate, 'T', ' ')}</td>
                         <td class="text-center">${vo.viewCnt}</td>
                         <td class="text-center">${vo.likeCnt}</td>
@@ -47,9 +53,9 @@
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart-1}"/>">이전</a></li>
                     <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                        <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 gt totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/board/list?cat=${category}&page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
+                        <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/board/list?cat=${category}&page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
                     </c:forEach>
-                    <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 gt totalCnt/count}"> disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart+pageBlock}"/>">다음</a></li>
+                    <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart+pageBlock}"/>">다음</a></li>
                 </ul>
                 <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
             </nav>

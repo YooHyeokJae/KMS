@@ -1,13 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <div class="container">
+    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+        <span style="color: #000000"><i class="bi bi-person-fill"></i> 교원</span>
+    </h2>
+
     <c:if test="${sessionScope.loginUser.auth eq 'A'}">
         <a href="#">교원 등록</a>
     </c:if>
     <div style="min-height: 430px">
         <table id="listTable" class="table table-striped table-hover">
             <thead>
-                <tr class="table-warning">
+                <tr class="table-warning text-center">
                     <th>교원번호</th>
                     <th>이름</th>
                     <th>생년월일</th>
@@ -20,7 +24,7 @@
             </thead>
             <tbody>
                 <c:forEach var="teacherVo" items="${teacherVoList}" varStatus="stat">
-                   <tr onclick="popupTeacherInfo(event)">
+                   <tr class="text-center" onclick="popupTeacherInfo(event)">
                        <td>${teacherVo.id}</td>
                        <td>${teacherVo.name}</td>
                        <td>${teacherVo.birth}</td>
@@ -41,9 +45,9 @@
         <ul class="pagination">
             <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart-1}"/>">이전</a></li>
             <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 gt totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/teacher/list?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
+                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/teacher/list?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
             </c:forEach>
-            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 gt totalCnt/count}"> disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart+pageBlock}"/>">다음</a></li>
+            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart+pageBlock}"/>">다음</a></li>
         </ul>
         <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
     </nav>

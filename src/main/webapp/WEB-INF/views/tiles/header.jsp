@@ -67,7 +67,7 @@
             <p class="nav-item"><a href="<c:url value="/company"/>">소개</a></p>
             <p class="nav-item"><a href="<c:url value="/teacher/list"/>">교원</a></p>
             <p class="nav-item"><a href="<c:url value="/children/list"/>">원생</a></p>
-            <p class="nav-item"><a href="#">졸업생</a></p>
+            <p class="nav-item"><a href="<c:url value="/children/graduatedList"/>">졸업생</a></p>
           </div>
         </li>
         <li class="nav-link">

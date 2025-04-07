@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Mapper
 public interface ChildrenMapper {
-    int getTotal();
+    int getTotal(String graduated);
 
     List<ChildVo> getList(Map<String, Object> params);
 

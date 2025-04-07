@@ -8,13 +8,17 @@
 </style>
 
 <div class="container">
+    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+        <span style="color: #aa5500"><i class="bi bi-balloon-heart"></i> 활동기록</span>
+    </h2>
+
     <div class="row mb-2">
         <div class="col-11">
             <div class="accordion" id="filterAccordion">
                 <div class="accordion-item">
-                    <h2 class="accordion-header">
+                    <p class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding: 8px;">검색필터</button>
-                    </h2>
+                    </p>
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
                         <div class="pb-2 pt-2 ps-2 pe-2">
                             필터내용
@@ -59,9 +63,9 @@
         <ul class="pagination">
             <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart-1}"/>">이전</a></li>
             <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 gt totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/teacher/list?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
+                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/teacher/list?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
             </c:forEach>
-            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 gt totalCnt/count}"> disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart+pageBlock}"/>">다음</a></li>
+            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart+pageBlock}"/>">다음</a></li>
         </ul>
         <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
     </nav>

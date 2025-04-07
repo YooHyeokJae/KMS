@@ -13,6 +13,7 @@ public class ChildVo {
     private String name;
     private LocalDate birth;
     private LocalDate entryDate;
+    private LocalDate graduateDate;
     private LocalDateTime regDate;
     private LocalDateTime updDate;
     private String graduated;

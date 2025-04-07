@@ -12,4 +12,6 @@ public class ReplyVo {
     private String writerId;
     private LocalDateTime regDate;
     private String delYn;
+
+    private String writerName;
 }

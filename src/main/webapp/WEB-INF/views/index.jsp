@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <style>
     .no-events-message{
@@ -21,17 +22,87 @@
         width: 50%;
         justify-self: center;
     }
+    .trs:hover td{
+        background-color: lightgray;
+    }
 </style>
 <div class="container">
     <div class="row" style="min-height: 800px">
         <div class="col-8">
+            <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 350px;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="${pageContext.request.contextPath}/resources/images/carousel.png" class="d-block w-100" alt="carouselImage1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="${pageContext.request.contextPath}/resources/images/carousel.png" class="d-block w-100" alt="carouselImage2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="${pageContext.request.contextPath}/resources/images/carousel.png" class="d-block w-100" alt="carouselImage3">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <br>
+            <div class="bestBoard" style="height: 300px;">
+                <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+                    <span>🔥</span> <span style="color: #ff6b6b;">인기글</span>
+                </h2>
 
-            <form action="<c:url value="/test"/>" method="post" enctype="multipart/form-data">
-                <input type="file" name="uploadFile" />
-                <input type="text" name="text" />
-                <input type="submit" value="test" />
-            </form>
+                <div class="bestBoardNavHeader d-flex justify-content-between">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link bestBoardTab active" href="#" data-text="notice" style="color: black;">공지사항</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link bestBoardTab" href="#" data-text="free" style="color: black;">자유게시판</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <label for="orderByDate" class="form-check-label me-1">최신순</label><input type="radio" class="form-check-input me-3" id="orderByDate" name="order" value="date" checked>
+                        <label for="orderByView" class="form-check-label me-1">조회순</label><input type="radio" class="form-check-input me-3" id="orderByView" name="order" value="view">
+                        <label for="orderByLike" class="form-check-label me-1">추천순</label><input type="radio" class="form-check-input me-3" id="orderByLike" name="order" value="like">
+                    </div>
+                </div>
+
+                <table class="table">
+                    <thead class="table-info text-center">
+                        <tr>
+                            <th width="*">제목</th>
+                            <th width="10%">작성자</th>
+                            <th width="15%">작성일</th>
+                            <th width="8%">조회수</th>
+                            <th width="8%">추천수</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bestBoardTbl">
+                        <c:forEach var="boardVo" items="${boardVoList}" varStatus="stat">
+                            <tr class="trs">
+                                <td>${boardVo.title}</td>
+                                <td class="text-center">${boardVo.writerName}</td>
+                                <td class="text-center">${fn:split(boardVo.regDate, 'T')[0]}</td>
+                                <td class="text-center">${boardVo.viewCnt}</td>
+                                <td class="text-center">${boardVo.likeCnt}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
         </div>
+
         <div class="col-4">
             <c:if test="${sessionScope.loginUser eq null}">
                 <form action="<c:url value="/sign/login"/>" method="post">
@@ -260,5 +331,48 @@
             }
         });
         calendar.render();
+    });
+</script>
+
+<script>
+    function getBestBoard(){
+        let data = {
+            category: $('.nav-link.active')[0].dataset.text,
+            count: 5,
+            order: $('input[name="order"]:checked').val()
+        }
+
+        $.ajax({
+            url: '/board/getBest',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function(result){
+                let $bestBoardTbl = $('#bestBoardTbl');
+                $bestBoardTbl.html('');
+                for(let i=0; i<result.length; i++){
+                    let tr = '';
+                    tr += '<tr class="trs">';
+                    tr += '<td>' + result[i].title + '</td>';
+                    tr += '<td class="text-center">' + result[i].writerName + '</td>';
+                    tr += '<td class="text-center">' + result[i].regDate[0] + '-' + String(result[i].regDate[1]).padStart(2, '0') + '-' + String(result[i].regDate[2]).padStart(2, '0') + '</td>';
+                    tr += '<td class="text-center">' + result[i].viewCnt + '</td>';
+                    tr += '<td class="text-center">' + result[i].likeCnt + '</td>';
+                    tr += '</tr>';
+                    $bestBoardTbl.append(tr);
+                }
+            }
+        });
+    }
+
+    $('.bestBoardTab').on('click', function(event){
+        event.preventDefault();
+        $('.bestBoardTab').removeClass('active');
+        $(this).addClass('active');
+        getBestBoard();
+    });
+
+    $('input[name="order"]').on('change', function(){
+        getBestBoard();
     });
 </script>

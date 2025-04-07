@@ -256,4 +256,9 @@ public class EducationController {
             return "modify";
         }
     }
+
+    @GetMapping("/graduate")
+    public String graduate(){
+        return "degree/graduate";
+    }
 }

@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -97,5 +98,9 @@ public class BoardService {
 
     public void deleteBoard(int num) {
         this.boardMapper.deleteBoard(num);
+    }
+
+    public List<BoardVo> getBestByDateOrViewOrLike(Map<String, Object> params) {
+        return this.boardMapper.getBestByDateOrViewOrLike(params);
     }
 }

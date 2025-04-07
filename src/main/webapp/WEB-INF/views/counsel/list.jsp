@@ -18,6 +18,10 @@
     }
 </style>
 <div class="container">
+    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+        <span style="color: #aa0077"><i class="bi bi-chat-heart"></i> 상담</span>
+    </h2>
+
     <div class="row" style="min-height: 400px; margin-bottom: 10px;">
         <div class="col-3" style="display: flex; flex-direction: column; border-right: 1px solid black;">
             <div class="row flex-grow-0">

@@ -8,8 +8,8 @@
     }
 </style>
 <div class="container">
-    <h2>
-        양식
+    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+        <span style="color: #7798bb;"><i class="bi bi-file-ruled"></i> 양식</span>
     </h2>
     <div>검색필터</div>
     <table class="table">
@@ -32,7 +32,7 @@
                     <td class="text-center">${vo.num}</td>
                     <td>${vo.title}</td>
                     <td class="text-center"><a href="<c:url value="/download/board/${vo.num}"/>"><i class="bi bi-download"></i></a></td>
-                    <td>${vo.writerId}</td>
+                    <td>${vo.writerName}</td>
                     <td class="text-center"><fmt:formatNumber value="${vo.fileSize / 1024 + 1}" maxFractionDigits="0" /> KB</td>
                     <td class="text-center">${fn:substring(vo.regDate, 0, 10)}</td>
                 </tr>
@@ -45,9 +45,9 @@
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart-1}"/>">이전</a></li>
                     <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                        <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 gt totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/board/list?cat=${category}&page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
+                        <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/board/list?cat=${category}&page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
                     </c:forEach>
-                    <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 gt totalCnt/count}"> disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart+pageBlock}"/>">다음</a></li>
+                    <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart+pageBlock}"/>">다음</a></li>
                 </ul>
                 <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
             </nav>

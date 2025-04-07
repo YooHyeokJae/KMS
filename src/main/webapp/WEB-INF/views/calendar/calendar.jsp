@@ -21,6 +21,9 @@
     #eventList.visible {
         width: 300px; /* 패널이 보일 때 width가 300px로 늘어남 */
     }
+    .fc-toolbar-title{
+        color: #be40ba;
+    }
 </style>
 <div class="container" id="calendarContainer">
     <div id='calendar'></div>

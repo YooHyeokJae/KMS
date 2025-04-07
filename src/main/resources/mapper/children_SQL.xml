@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.mapper.ChildrenMapper">
     <select id="getList" resultType="com.hj.vo.ChildVo">
-        SELECT * FROM CHILD ORDER BY REG_DATE DESC, NUM DESC LIMIT #{start}, #{count}
+        SELECT * FROM CHILD WHERE GRADUATED = #{graduated} ORDER BY REG_DATE DESC, NUM DESC LIMIT #{start}, #{count}
     </select>
 
     <select id="getTotal" resultType="int">
-        SELECT COUNT(*) FROM CHILD WHERE GRADUATED = 'N'
+        SELECT COUNT(*) FROM CHILD WHERE GRADUATED = #{graduated}
     </select>
 
     <select id="getInfo" resultType="com.hj.vo.ChildVo">

@@ -2,13 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <div class="container">
     <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
-        <span style="color: #000000"><i class="bi bi-person-heart"></i> 원생</span>
+        <span style="color: #000000"><i class="bi bi-person-hearts"></i> 졸업생</span>
     </h2>
-
-    <c:if test="${sessionScope.loginUser.auth eq 'A'}">
-        <a href="#" onclick="insertChild()">원생 등록</a>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#insertModal">일괄 등록</a>
-    </c:if>
     <div style="min-height: 430px">
         <table id="listTable" class="table table-striped table-hover">
             <thead>
@@ -16,28 +11,22 @@
                 <th>원생번호</th>
                 <th>이름</th>
                 <th>생년월일</th>
-                <th>학급</th>
                 <th>입학일</th>
-                <th>졸업여부</th>
-                <th>최초등록일</th>
-                <th>최종수정일</th>
+                <th>졸업일</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach var="childVo" items="${childVoList}" varStatus="stat">
                 <tr class="text-center" onclick="popupChildInfo(event)">
-                    <td>${childVo.num}</td>
-                    <td>${childVo.name}</td>
-                    <td>${childVo.birth}</td>
-                    <td>${childVo.grade}</td>
-                    <td>${childVo.entryDate}</td>
-                    <td>${childVo.graduated}</td>
-                    <td>${childVo.regDate}</td>
-                    <td>${childVo.updDate}</td>
+                    <td width="10%">${childVo.num}</td>
+                    <td width="*">${childVo.name}</td>
+                    <td width="20%">${childVo.birth}</td>
+                    <td width="20%">${childVo.entryDate}</td>
+                    <td width="20%">${childVo.graduateDate}</td>
                 </tr>
             </c:forEach>
             <c:if test="${childVoList.size() eq 0}">
-                <tr><td colspan="8" class="text-center">등록된 원생이 없습니다.</td></tr>
+                <tr><td colspan="8" class="text-center">졸업한 원생이 없습니다.</td></tr>
             </c:if>
             </tbody>
         </table>
@@ -58,26 +47,6 @@
     <input type="hidden" name="num" value=""/>
 </form>
 
-<div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form action="<c:url value="/children/insertBatch"/>" method="post" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="insertModalLabel">원생 일괄 등록</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="file" name="file" accept=".xls,.xlsx" value="파일 선택"/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="submit" class="btn btn-primary">등록</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script>
     let form = $('#openPopup');
 
@@ -85,12 +54,6 @@
         window.open('', 'popup', 'width=600,height=400,scrollbars=yes');
         $('input[name="num"]').val($(event.currentTarget).children().eq(0).text());
         form.attr("action", "<c:url value="/children/info"/>");
-        form.submit();
-    }
-
-    function insertChild(){
-        window.open('', 'popup', 'width=600,height=400,scrollbars=yes');
-        form.attr("action", "<c:url value="/children/insertWindow"/>");
         form.submit();
     }
 </script>

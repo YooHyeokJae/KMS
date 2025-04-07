@@ -160,4 +160,10 @@ public class BoardController {
         }
         return "success";
     }
+
+    @PostMapping("/getBest")
+    @ResponseBody
+    private List<BoardVo> getBest(@RequestBody Map<String, Object> params){
+        return this.boardService.getBestByDateOrViewOrLike(params);
+    }
 }

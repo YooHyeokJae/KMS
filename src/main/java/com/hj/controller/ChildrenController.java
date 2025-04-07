@@ -39,7 +39,7 @@ public class ChildrenController {
                        @RequestParam(defaultValue="1") int page,
                        @RequestParam(defaultValue="10") int count) {
 
-        int totalCnt = this.childrenService.getTotal();
+        int totalCnt = this.childrenService.getTotal("N");
         int pageBlock = 10;
         int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
         model.addAttribute("currentPage", page);
@@ -49,11 +49,34 @@ public class ChildrenController {
         Map<String, Object> params = new HashMap<>();
         params.put("start", start);
         params.put("count", count);
+        params.put("graduated", "N");
         List<ChildVo> childVoList = this.childrenService.getList(params);
         model.addAttribute("count", count);
         model.addAttribute("totalCnt", totalCnt);
         model.addAttribute("childVoList", childVoList);
         return "children/list";
+    }
+
+    @GetMapping("/graduatedList")
+    public String graduatedList(Model model,
+                                @RequestParam(defaultValue="1") int page,
+                                @RequestParam(defaultValue="10") int count){
+        int totalCnt = this.childrenService.getTotal("Y");
+        int pageBlock = 10;
+        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageStart", pageStart);
+        model.addAttribute("pageBlock", pageBlock);
+        int start = (page-1)*count;
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("count", count);
+        params.put("graduated", "Y");
+        List<ChildVo> childVoList = this.childrenService.getList(params);
+        model.addAttribute("count", count);
+        model.addAttribute("totalCnt", totalCnt);
+        model.addAttribute("childVoList", childVoList);
+        return "children/graduatedList";
     }
 
     @PostMapping("/info")

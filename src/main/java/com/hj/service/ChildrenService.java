@@ -14,8 +14,8 @@ public class ChildrenService {
     @Resource(name="childrenMapper")
     private ChildrenMapper childrenMapper;
 
-    public int getTotal() {
-        return this.childrenMapper.getTotal();
+    public int getTotal(String graduated) {
+        return this.childrenMapper.getTotal(graduated);
     }
 
     public List<ChildVo> getList(Map<String, Object> params) {
