@@ -123,6 +123,7 @@
             </c:if>
 
             <div id='calendar'></div>
+            <p> // index.jsp [126] 각 리스트 출력 화면에 검색필터 만들기 </p>
         </div>
     </div>
 </div>

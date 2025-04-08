@@ -76,7 +76,7 @@
             <p class="nav-item"><a href="<c:url value="/education/dailyPlan/"/>">일일 계획안</a></p>
             <p class="nav-item"><a href="<c:url value="/education/activityRecord/"/>">활동기록</a></p>
             <p class="nav-item"><a href="<c:url value="/education/counsel/"/>">상담</a></p>
-            <p class="nav-item"><a href="<c:url value="/education/graduate/"/>">졸업</a></p>
+            <p class="nav-item"><a href="<c:url value="/education/healthCheck/"/>">건강검진</a></p>
           </div>
         </li>
         <li class="nav-link">

@@ -79,6 +79,7 @@
             success: function(response) {
                 // 성공 시 처리
                 window.close();
+                window.opener.location.reload();
             }
         });
     });

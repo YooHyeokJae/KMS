@@ -46,4 +46,13 @@
               AND SUBSTR(BIRTH, 1, 10) LIKE CONCAT('%', #{birth}, '%')
           </if>
     </select>
+
+    <update id="graduate">
+        UPDATE CHILD SET GRADE = '',
+                         GRADUATED = 'Y',
+                         GRADUATE_DATE = SYSDATE(),
+                         GRADUATE_REASON = #{reason},
+                         UPD_DATE = SYSDATE()
+        WHERE NUM = #{num}
+    </update>
 </mapper>

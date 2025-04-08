@@ -16,8 +16,9 @@ public class ChildVo {
     private LocalDate graduateDate;
     private LocalDateTime regDate;
     private LocalDateTime updDate;
-    private String graduated;
     private String grade;
+    private String graduated;
+    private String graduateReason;
 
     private String profilePath;
 }

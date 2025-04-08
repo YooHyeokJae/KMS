@@ -257,8 +257,8 @@ public class EducationController {
         }
     }
 
-    @GetMapping("/graduate")
+    @GetMapping("/healthCheck")
     public String graduate(){
-        return "degree/graduate";
+        return "health/list";
     }
 }

@@ -25,4 +25,6 @@ public interface ChildrenMapper {
     void insertChildBatch(@Param("childVoList") List<ChildVo> childVoList);
 
     List<ChildVo> searchChild(Map<String, String> params);
+
+    void graduate(Map<String, Object> childVo);
 }

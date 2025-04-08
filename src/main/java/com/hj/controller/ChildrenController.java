@@ -177,4 +177,15 @@ public class ChildrenController {
         this.childrenService.insertChildBatch(childVoList);
         return "redirect:/children/list";
     }
+
+    @PostMapping("/graduate")
+    @ResponseBody
+    public String graduate(@RequestBody Map<String, Object> params) {
+        @SuppressWarnings("unchecked")  // src/main/webapp/WEB-INF/views/children/list.jsp >> graduateBtn 클릭 이벤트
+        List<Map<String, Object>> graduateChild = (List<Map<String, Object>>) params.get("child");
+        for (Map<String, Object> childVo : graduateChild) {
+            this.childrenService.graduate(childVo);
+        }
+        return "success";
+    }
 }

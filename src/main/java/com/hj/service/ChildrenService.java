@@ -45,4 +45,8 @@ public class ChildrenService {
     public List<ChildVo> searchChild(Map<String, String> params) {
         return this.childrenMapper.searchChild(params);
     }
+
+    public void graduate(Map<String, Object> childVo) {
+        this.childrenMapper.graduate(childVo);
+    }
 }

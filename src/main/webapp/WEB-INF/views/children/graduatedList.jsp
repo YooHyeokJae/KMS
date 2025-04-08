@@ -13,6 +13,7 @@
                 <th>생년월일</th>
                 <th>입학일</th>
                 <th>졸업일</th>
+                <th>졸업사유</th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                     <td width="20%">${childVo.birth}</td>
                     <td width="20%">${childVo.entryDate}</td>
                     <td width="20%">${childVo.graduateDate}</td>
+                    <td width="20%">${childVo.graduateReason}</td>
                 </tr>
             </c:forEach>
             <c:if test="${childVoList.size() eq 0}">
