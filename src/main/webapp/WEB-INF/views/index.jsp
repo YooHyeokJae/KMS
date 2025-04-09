@@ -27,7 +27,7 @@
     }
 </style>
 <div class="container">
-    <div class="row" style="min-height: 800px">
+    <div class="row" style="min-height: 700px">
         <div class="col-8">
             <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 350px;">
                 <div class="carousel-indicators">
@@ -104,28 +104,48 @@
         </div>
 
         <div class="col-4">
-            <c:if test="${sessionScope.loginUser eq null}">
-                <form action="<c:url value="/sign/login"/>" method="post">
-                    <div class="mb-3 d-flex align-items-center">
-                        <label for="userId" class="form-label mb-0 me-2" style="width: 100px;">아이디: </label>
-                        <input type="text" class="form-control" id="userId" name="userId" />
+            <div id="userInfo" style="min-height: 150px;">
+                <c:if test="${sessionScope.loginUser eq null}">
+                    <form action="<c:url value="/sign/login"/>" method="post">
+                        <div class="d-flex mb-3" style="height: 90px;">
+                            <div>
+                                <div class="mb-3 d-flex align-items-center">
+                                    <label for="userId" class="form-label mb-0 me-2" style="width: 100px;">아이디: </label>
+                                    <input type="text" class="form-control" id="userId" name="userId" />
+                                </div>
+                                <div class="mb-3 d-flex align-items-center">
+                                    <label for="userPw" class="form-label mb-0 me-2" style="width: 100px;">비밀번호: </label>
+                                    <input type="password" class="form-control" id="userPw" name="userPw" />
+                                </div>
+                            </div>
+                            <div class="ms-3 h-100">
+                                <input type="submit" value="로그인" class="btn btn-primary h-100" />
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <input type="button" value="회원가입" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#signupModal" />
+                            <input type="button" value="ID/PW 찾기" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#signupModal" />
+                        </div>
+                    </form>
+                </c:if>
+                <c:if test="${sessionScope.loginUser ne null}">
+                    <div>
+                        <p>${sessionScope.loginUser.name}님 환영합니다.</p>
+                        <input type="button" class="btn btn-primary" id="logout" value="logout" />
                     </div>
-                    <div class="mb-3 d-flex align-items-center">
-                        <label for="userPw" class="form-label mb-0 me-2" style="width: 100px;">비밀번호: </label>
-                        <input type="password" class="form-control" id="userPw" name="userPw" />
-                    </div>
-                    <input type="submit" value="login" class="btn btn-primary" />
-                    <input type="button" value="signup" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#signupModal" />
-                </form>
-            </c:if>
-            <c:if test="${sessionScope.loginUser ne null}">
-                <input type="button" class="btn btn-primary" id="logout" value="logout" />
-            </c:if>
+                </c:if>
+            </div>
+            <br>
+            <div id="" style="height: 280px;">
+                <p> // index.jsp [126] 각 리스트 출력 화면에 검색필터 만들기 </p>
+                <p> // index.jsp [127] 통계 화면 만들기 </p>
+                <p> // index.jsp [128] 설정 화면 만들기 </p>
+                <p> // index.jsp [129] 소개 화면에서 연락처 옆에 지도 넣을까?</p>
+            </div>
 
-            <div id='calendar'></div>
-            <p> // index.jsp [126] 각 리스트 출력 화면에 검색필터 만들기 </p>
-            <p> // index.jsp [127] 통계 화면 만들기 </p>
-            <p> // index.jsp [128] 설정 화면 만들기 </p>
+            <div id="calendarDiv" style="height: 220px;">
+                <div id='calendar'></div>
+            </div>
         </div>
     </div>
 </div>

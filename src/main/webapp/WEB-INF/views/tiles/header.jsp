@@ -55,8 +55,14 @@
     </div>
     <div class="col-4 d-flex align-items-center" style="height: 100px">
       <c:if test="${sessionScope.loginUser ne null}">
-        <p>${sessionScope.loginUser.name}님 환영합니다.</p>
-        <input type="button" class="btn btn-primary" id="logout" value="logout" />
+        <div class="row w-100 h-100 d-flex align-items-center">
+          <div class="col-8">
+            <p class="mb-0">${sessionScope.loginUser.name}님 환영합니다.</p>
+          </div>
+          <div class="col-4">
+            <input type="button" class="btn btn-primary" id="logout" value="logout" />
+          </div>
+        </div>
       </c:if>
       <c:if test="${sessionScope.loginUser eq null}">
         <form action="<c:url value="/sign/login"/>" method="post" style="height: 25px;">
