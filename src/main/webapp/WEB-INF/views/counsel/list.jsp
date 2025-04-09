@@ -190,7 +190,6 @@
                 $(this).val($(this).val() + '-');
             }
         }
-
     });
 
     $(document).on('click', '.list-group-item', function(){
@@ -259,7 +258,7 @@
                 let $childList = $('#childList');
                 $childList.html('');
                 if(result.length === 0){
-                    $childList.html('<li class="list-group-item">검색 결과가 없습니다.</li>');
+                    $childList.html('<li class="list-group-item noActive">검색 결과가 없습니다.</li>');
                 }
                 for(let i=0; i<result.length; i++){
                     let lis = '';

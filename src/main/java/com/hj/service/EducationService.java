@@ -97,4 +97,24 @@ public class EducationService {
     public void modifyCounsel(Map<String, Object> params) {
         this.educationMapper.modifyCounsel(params);
     }
+
+    public List<HealthVo> getHealthListByChildNum(Map<String, Object> params) {
+        return this.educationMapper.getHealthListByChildNum(params);
+    }
+
+    public void deleteHealthCheckByNum(int num) {
+        this.educationMapper.deleteHealthCheckByNum(num);
+    }
+
+    public int getNextHealthCheckNum() {
+        return this.educationMapper.getNextHealthCheckNum();
+    }
+
+    public void insertHealthCheckByNum(Map<String, Object> param) {
+        this.educationMapper.insertHealthCheckByNum(param);
+    }
+
+    public void updateHealthCheckByNum(Map<String, Object> param) {
+        this.educationMapper.updateHealthCheckByNum(param);
+    }
 }

@@ -49,4 +49,14 @@ public interface EducationMapper {
     void insertCounsel(Map<String, Object> params);
 
     void modifyCounsel(Map<String, Object> params);
+
+    List<HealthVo> getHealthListByChildNum(Map<String, Object> params);
+
+    void deleteHealthCheckByNum(int num);
+
+    int getNextHealthCheckNum();
+
+    void insertHealthCheckByNum(Map<String, Object> param);
+
+    void updateHealthCheckByNum(Map<String, Object> param);
 }

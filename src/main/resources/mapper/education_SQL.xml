@@ -133,4 +133,36 @@
         <if test="counselNote != null">, COUNSEL_NOTE = #{counselNote}</if>
         WHERE NUM = #{num}
     </update>
+
+    <select id="getHealthListByChildNum" resultType="com.hj.vo.HealthVo">
+        SELECT H.*
+        FROM HEALTH_CHECK H
+        LEFT JOIN CHILD C ON (H.CHILD_NUM = C.NUM AND C.GRADUATED = 'N')
+        WHERE H.CHILD_NUM = #{childNum}
+          AND H.DEL_YN = 'N'
+        ORDER BY REG_DATE DESC
+    </select>
+
+    <update id="deleteHealthCheckByNum">
+        UPDATE HEALTH_CHECK SET DEL_YN = 'Y',
+                                UPD_DATE = SYSDATE()
+        WHERE NUM = #{num}
+    </update>
+
+    <select id="getNextHealthCheckNum" resultType="int">
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM HEALTH_CHECK
+    </select>
+
+    <insert id="insertHealthCheckByNum">
+        INSERT INTO HEALTH_CHECK(NUM, HOSPITAL, CHILD_NUM, CHECK_DATE, CHECK_RESULT)
+        VALUES(#{num}, #{hospital}, #{childNum}, #{checkDate}, #{checkResult})
+    </insert>
+
+    <update id="updateHealthCheckByNum">
+        UPDATE HEALTH_CHECK SET UPD_DATE = SYSDATE(),
+                                HOSPITAL = #{hospital},
+                                CHECK_DATE = #{checkDate},
+                                CHECK_RESULT = #{checkResult}
+        WHERE NUM = #{num}
+    </update>
 </mapper>

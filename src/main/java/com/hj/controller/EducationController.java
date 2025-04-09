@@ -261,4 +261,39 @@ public class EducationController {
     public String graduate(){
         return "health/list";
     }
+
+    @PostMapping("/getHealthListByChildNum")
+    @ResponseBody
+    public List<HealthVo> getHealthListByChildNum(@RequestBody Map<String, Object> params){
+        return this.educationService.getHealthListByChildNum(params);
+    }
+
+    @PostMapping("/saveHealthCheck")
+    @ResponseBody
+    public String saveHealthCheck(@RequestBody Map<String, Object> params) {
+        String childNum = params.get("childNum").toString();
+        @SuppressWarnings("unchecked")  // src/main/webapp/WEB-INF/views/health/list.jsp >> deleteList
+        List<String> deleteList = (List<String>) params.get("deleteList");
+        @SuppressWarnings("unchecked")  // src/main/webapp/WEB-INF/views/health/list.jsp >> deleteList
+        List<Map<String, Object>> insertList = (List<Map<String, Object>>) params.get("insertList");
+
+        if(!deleteList.isEmpty()){
+            for(String num: deleteList) {
+                this.educationService.deleteHealthCheckByNum(Integer.parseInt(num));
+            }
+        }
+        if(!insertList.isEmpty()){
+            for(Map<String, Object> param: insertList){
+                if(param.get("num") != null){
+                    this.educationService.updateHealthCheckByNum(param);
+                }else{
+                    int nextNum = this.educationService.getNextHealthCheckNum();
+                    param.put("num", nextNum);
+                    param.put("childNum", childNum);
+                    this.educationService.insertHealthCheckByNum(param);
+                }
+            }
+        }
+        return childNum;
+    }
 }
