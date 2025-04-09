@@ -27,15 +27,31 @@
   .nav-link {
     min-width: 120px;
   }
+   #totalSearch:focus {
+     outline: none;
+     box-shadow: none;
+     border-bottom: 3px solid #de999f; /* 포커스 시에도 밑줄 유지 */
+   }
+
 </style>
 <div class="container">
   <div class="row">
     <div class="col-2 d-flex align-items-center" style="height: 100px">
       <a href="${pageContext.request.contextPath}/" class="d-flex justify-content-center" ><img alt="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" style="width: 60%;"></a>
     </div>
-    <div class="col-6 d-flex align-items-center" style="height: 100px">
-      <label for="totalSearch"><input type="text" class="form-control" id="totalSearch" placeholder="검색어를 입력하세요."/></label>
-      <button class="btn btn-light" id="totalSearchBtn"><i class="bi bi-search"></i></button>
+    <div class="col-6 d-flex align-items-center position-relative" style="height: 100px;">
+      <label for="totalSearch"></label>
+      <input type="text"
+             class="form-control h5 p-2"
+             id="totalSearch"
+             placeholder="검색어를 입력하세요."
+             style="background-color: #fbe7e8; outline: none; border: none; border-bottom: 3px solid #de999f;" />
+      <button type="button"
+              class="btn position-absolute top-50 translate-middle-y"
+              id="totalSearchBtn"
+              style="right: 15px; font-size: 1.2em; margin-top: -5px;">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
     <div class="col-4 d-flex align-items-center" style="height: 100px">
       <c:if test="${sessionScope.loginUser ne null}">
