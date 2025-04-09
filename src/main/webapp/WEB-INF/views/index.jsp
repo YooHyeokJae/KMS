@@ -124,10 +124,8 @@
 
             <div id='calendar'></div>
             <p> // index.jsp [126] 각 리스트 출력 화면에 검색필터 만들기 </p>
-            <p> // index.jsp [127] 건강검진 화면 만들기 </p>
-            <p> // index.jsp [128] 소개 화면 만들기 </p>
-            <p> // index.jsp [129] 통계 화면 만들기 </p>
-            <p> // index.jsp [130] 설정 화면 만들기 </p>
+            <p> // index.jsp [127] 통계 화면 만들기 </p>
+            <p> // index.jsp [128] 설정 화면 만들기 </p>
         </div>
     </div>
 </div>
