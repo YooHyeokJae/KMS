@@ -7,9 +7,9 @@
         </h2>
 
         <div class="mb-2 d-flex align-items-end">
-            <input type="button" class="btn btn-outline-primary" id="addBtn" value="추가" disabled />
-            <input type="button" class="btn btn-outline-danger" id="delBtn" value="삭제" disabled />
-            <input type="button" class="btn btn-outline-success" id="saveBtn" value="저장" disabled />
+            <input type="button" class="btn btn-outline-primary ms-2" id="addBtn" value="추가" disabled />
+            <input type="button" class="btn btn-outline-danger ms-2" id="delBtn" value="삭제" disabled />
+            <input type="button" class="btn btn-outline-success ms-2" id="saveBtn" value="저장" disabled />
         </div>
     </div>
 
