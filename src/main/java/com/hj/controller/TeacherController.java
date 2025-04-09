@@ -21,7 +21,7 @@ import java.util.Map;
 public class TeacherController {
     Logger log = LoggerFactory.getLogger(TeacherController.class);
 
-    @Resource
+    @Resource(name="teacherService")
     private TeacherService teacherService;
 
     @GetMapping("/list")

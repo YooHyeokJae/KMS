@@ -113,13 +113,13 @@
         <li class="nav-link">
           <a href="#">통계</a>
           <div class="nav-item-box">
-            <p class="nav-item"><a href="#">접속자 통계</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/statistics/">접속 통계</a></p>
           </div>
         </li>
         <li class="nav-link">
           <a href="#">설정</a>
           <div class="nav-item-box">
-            <p class="nav-item"><a href="#">설정</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/setting/">설정</a></p>
           </div>
         </li>
       </ul>
