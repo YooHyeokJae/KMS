@@ -4,9 +4,9 @@
 
     <!-- 유치원 소개 섹션 -->
     <div class="container my-3 py-3" style="background-color: #f0f8ff;">
-        <h2 class="text-center">우리 유치원 소개</h2>
+        <h2 class="text-center">키즈빌 소개</h2>
         <p class="text-center">
-            우리 유치원은 아이들이 성장하는 데 필요한 창의적이고 긍정적인 환경을 제공하며, <br>
+            키즈빌은 아이들이 성장하는 데 필요한 창의적이고 긍정적인 환경을 제공하며, <br>
             다양한 교육 프로그램과 놀이를 통해 아이들의 잠재력을 최대한 끌어내고 있습니다.
         </p>
     </div>
@@ -31,7 +31,7 @@
     <!-- 교육 프로그램 섹션 -->
     <div class="container my-3 py-3" style="background-color: #fefbd8;">
         <h2 class="text-center">우리의 교육 프로그램</h2>
-        <p class="text-center">아이들은 다양한 프로그램을 통해 창의력과 사회성을 키울 수 있습니다. 우리 유치원에서는 아래와 같은 프로그램들을 운영하고 있습니다:</p>
+        <p class="text-center">아이들은 다양한 프로그램을 통해 창의력과 사회성을 키울 수 있습니다. 키즈빌에서는 아래와 같은 프로그램들을 운영하고 있습니다:</p>
         <div class="d-flex justify-content-center">
             <ul style="width: 80%;">
                 <li><strong>창의 미술 프로그램</strong>: 아이들의 상상력과 창의성을 기르는 미술 활동.</li>
@@ -45,7 +45,7 @@
     <!-- 연락처 섹션 -->
     <div class="container my-3 py-3" style="background-color: #f5f5f5;">
         <h2 class="text-center">연락처</h2>
-        <p class="text-center">우리 유치원에 대해 더 알고 싶다면 언제든지 연락 주세요!</p>
+        <p class="text-center">키즈빌에 대해 더 알고 싶다면 언제든지 연락 주세요!</p>
         <div class="d-flex justify-content-center">
             <ul class="list-group" style="width: 50%;">
                 <li class="list-group-item"><i class="bi bi-house-door"></i> 주소: 대전광역시 서구 관저서로 20</li>

@@ -31,7 +31,7 @@
 <div class="container">
   <div class="row">
     <div class="col-2 d-flex align-items-center" style="height: 100px">
-      <a href="${pageContext.request.contextPath}/" class="test_text">Logo</a>
+      <a href="${pageContext.request.contextPath}/" class="d-flex justify-content-center" ><img alt="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" style="width: 60%;"></a>
     </div>
     <div class="col-6 d-flex align-items-center" style="height: 100px">
       <label for="totalSearch"><input type="text" class="form-control" id="totalSearch" placeholder="검색어를 입력하세요."/></label>
