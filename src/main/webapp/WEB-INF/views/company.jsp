@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6a6a9d97d04ef1ab44849f63080d028d"></script>
 <div class="container">
 
     <!-- 유치원 소개 섹션 -->
@@ -44,15 +45,37 @@
 
     <!-- 연락처 섹션 -->
     <div class="container my-3 py-3" style="background-color: #f5f5f5;">
-        <h2 class="text-center">연락처</h2>
-        <p class="text-center">키즈빌에 대해 더 알고 싶다면 언제든지 연락 주세요!</p>
-        <div class="d-flex justify-content-center">
-            <ul class="list-group" style="width: 50%;">
-                <li class="list-group-item"><i class="bi bi-house-door"></i> 주소: 대전광역시 서구 관저서로 20</li>
-                <li class="list-group-item"><i class="bi bi-telephone"></i> 전화: 010-5131-4322</li>
-                <li class="list-group-item"><i class="bi bi-envelope"></i> 이메일: akfn4322@gmail.com</li>
-                <li class="list-group-item"><i class="bi bi-globe"></i> 웹사이트: <a href="https://yourdomain.com">www.yourdomain.com</a></li>
-            </ul>
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-center">연락처</h2>
+                <p class="text-center">키즈빌에 대해 더 알고 싶다면 언제든지 연락 주세요!</p>
+                <div class="d-flex justify-content-center">
+                    <ul class="list-group" style="width: 90%;">
+                        <li class="list-group-item"><i class="bi bi-house-door"></i> 주소: 대전광역시 서구 관저서로 20</li>
+                        <li class="list-group-item"><i class="bi bi-telephone"></i> 전화: 010-5131-4322</li>
+                        <li class="list-group-item"><i class="bi bi-envelope"></i> 이메일: akfn4322@gmail.com</li>
+                        <li class="list-group-item"><i class="bi bi-globe"></i> 웹사이트: <a href="https://yourdomain.com">www.yourdomain.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div style="width: 100%; height: 300px; background-color: #e0e0e0; text-align: center; padding: 1rem;">
+                    <div class="test_div" id="map" style="width:590px;height:270px;"></div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
+
+<script>
+    const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    const options = { //지도를 생성할 때 필요한 기본 옵션
+        center: new kakao.maps.LatLng(36.294253134372, 127.33079540185), //지도의 중심좌표.
+        level: 3 //지도의 레벨(확대, 축소 정도)
+    };
+
+    const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+</script>
