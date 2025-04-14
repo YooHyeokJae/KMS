@@ -137,10 +137,13 @@
             </div>
             <br>
             <div id="" style="height: 280px;">
-                <p> // index.jsp [126] 각 리스트 출력 화면에 검색필터 만들기 </p>
-                <p> // index.jsp [127] 통계 화면 만들기 </p>
-                <p> // index.jsp [128] 설정 화면 만들기 </p>
-                <p> // index.jsp [129] 소개 화면에서 연락처 옆에 지도 넣을까?</p>
+                <p> // index.jsp [140] 각 리스트 출력 화면에 검색필터 만들기 </p>
+                <p> // index.jsp [141] 통계 화면 만들기 </p>
+                <p> // index.jsp [142] 설정 화면 만들기 </p>
+                <p> // index.jsp [143] 소개 화면 > 연락처 옆에 지도 넣기</p>
+                <p> // index.jsp [144] 여기에는 뭘 넣을까?</p>
+                <p> // index.jsp [145] 출석 관리</p>
+                <p> // index.jsp [146] 학급 관련 셀렉트문들 조인으로 바꿔야함</p>
             </div>
 
             <div id="calendarDiv" style="height: 220px;">

@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.mapper.StatisticsMapper">
+    <select id="getEntryStats" resultType="com.hj.vo.StatsVo">
+        SELECT y.year,
+               (SELECT COUNT(*) FROM CHILD WHERE ENTRY_DATE IS NOT NULL AND YEAR(ENTRY_DATE) = y.year) AS ENTRY_CNT,
+               (SELECT COUNT(*) FROM CHILD WHERE GRADUATE_DATE IS NOT NULL AND YEAR(GRADUATE_DATE) = y.year) AS GRADUATE_CNT
+        FROM (
+        <foreach item="year" collection="years" separator="UNION ALL">
+            SELECT #{year} AS year
+        </foreach>
+        ) AS y
+        ORDER BY y.year
+    </select>
 
+    <select id="getTeacherStats" resultType="com.hj.vo.StatsVo">
+        SELECT y.year, COUNT(t.ID) AS TEACHER_CNT
+        FROM (
+        <foreach item="year" collection="years" separator="UNION ALL">
+            SELECT #{year} AS YEAR
+        </foreach>
+        ) AS y
+        LEFT JOIN TEACHER t
+        ON YEAR(t.REG_DATE) <![CDATA[ <= ]]> y.year
+        AND (t.DEL_DATE IS NULL OR YEAR(t.DEL_DATE) > y.year)
+        GROUP BY y.year
+        ORDER BY y.year
+    </select>
+
+    <select id="getStudentStats" resultType="com.hj.vo.StatsVo">
+        SELECT G.NAME AS GRADE, COUNT(*) AS STUDENT_CNT
+        FROM CHILD C
+        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        WHERE GRADUATED = 'N'
+        GROUP BY G.NUM
+        ORDER BY G.NUM
+    </select>
 </mapper>

@@ -58,13 +58,19 @@
             </tr>
         </table>
     </div>
+
+    <div>
+        출석현황/지각,조퇴 현황
+    </div>
 </body>
 <script>
+    let $profileImage = $('#profileImage');
+
     function selectImage(){
-        $('#profileImage').click();
+        $profileImage.click();
     }
 
-    $('#profileImage').on('change', function(event){
+    $profileImage.on('change', function(event){
         let reader = new FileReader();
         reader.onload = function(e) {
             $('#thumbnail').attr('src', e.target.result);
@@ -99,7 +105,7 @@
 
         let formData = new FormData();
         formData.append("num", "${childVo.num}");
-        formData.append("profileImage", $('#profileImage')[0].files[0]);
+        formData.append("profileImage", $profileImage[0].files[0]);
         formData.append("name", name);
         formData.append("grade", grade);
         formData.append("birth", birth);
