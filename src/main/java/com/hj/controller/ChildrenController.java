@@ -2,9 +2,11 @@ package com.hj.controller;
 
 import com.hj.service.AttachFileService;
 import com.hj.service.ChildrenService;
+import com.hj.service.EducationService;
 import com.hj.util.Utils;
 import com.hj.vo.AttachFileVo;
 import com.hj.vo.ChildVo;
+import com.hj.vo.GradeVo;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -33,6 +35,8 @@ public class ChildrenController {
     private ChildrenService childrenService;
     @Resource(name="attachFileService")
     private AttachFileService attachFileService;
+    @Resource(name="educationService")
+    private EducationService educationService;
 
     @GetMapping("/list")
     public String list(Model model,
@@ -87,7 +91,9 @@ public class ChildrenController {
     }
 
     @PostMapping("/insertWindow")
-    public String insertWindow(){
+    public String insertWindow(Model model){
+        List<GradeVo> gradeList = this.educationService.getGradeList();
+        model.addAttribute("gradeList", gradeList);
         return "children/popup/insert";
     }
 

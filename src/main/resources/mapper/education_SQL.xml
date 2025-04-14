@@ -165,4 +165,8 @@
                                 CHECK_RESULT = #{checkResult}
         WHERE NUM = #{num}
     </update>
+
+    <select id="getGradeList" resultType="com.hj.vo.GradeVo">
+        SELECT * FROM GRADE
+    </select>
 </mapper>

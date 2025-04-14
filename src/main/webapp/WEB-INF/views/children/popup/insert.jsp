@@ -34,7 +34,15 @@
             </tr>
             <tr>
                 <td><label for="grade">학급</label></td>
-                <td><input type="text" class="form-control" id="grade" /></td>
+                <td>
+                    <select id="grade" class="form-select">
+                        <option value=""></option>
+                        <c:forEach var="grade" items="${gradeList}" varStatus="stat">
+                            <option value="${grade.num}">${grade.name}</option>
+                        </c:forEach>
+                    </select>
+                    <input type="hidden" id="gradeNum" />
+                </td>
                 <td></td>
                 <td></td>
             </tr>
@@ -62,11 +70,15 @@
         reader.readAsDataURL(event.target.files[0]);
     });
 
+    $('#grade').on('change', function(){
+        $('#gradeNum').val($(this).val());
+    });
+
     $('#insertBtn').on('click', function(){
         let formData = new FormData();
         formData.append("profileImage", $('#profileImage')[0].files[0]);
         formData.append("name", $('#name').val());
-        formData.append("grade", $('#grade').val());
+        formData.append("grade", $('#gradeNum').val());
         formData.append("birth", $('#birth').val());
         formData.append("entryDate", $('#entryDate').val());
 

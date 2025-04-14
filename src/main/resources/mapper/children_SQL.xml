@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.mapper.ChildrenMapper">
     <select id="getList" resultType="com.hj.vo.ChildVo">
-        SELECT * FROM CHILD WHERE GRADUATED = #{graduated} ORDER BY REG_DATE DESC, NUM DESC LIMIT #{start}, #{count}
+        SELECT C.*, G.NAME AS GRADE
+        FROM CHILD C
+        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        WHERE C.GRADUATED = #{graduated}
+        ORDER BY C.REG_DATE DESC, C.NUM DESC LIMIT #{start}, #{count}
     </select>
 
     <select id="getTotal" resultType="int">
@@ -10,7 +14,11 @@
     </select>
 
     <select id="getInfo" resultType="com.hj.vo.ChildVo">
-        SELECT CHILD.*, ATTACH_FILE.STORED_FILE_NAME AS PROFILE_PATH FROM CHILD LEFT JOIN ATTACH_FILE ON (CONCAT('child/', CHILD.NUM) = ATTACH_FILE.GLOBAL_CODE AND DEL_YN = 'N') WHERE CHILD.NUM = #{num}
+        SELECT CHILD.*, GRADE.NAME AS GRADE, ATTACH_FILE.STORED_FILE_NAME AS PROFILE_PATH
+        FROM CHILD
+        LEFT JOIN ATTACH_FILE ON (CONCAT('child/', CHILD.NUM) = ATTACH_FILE.GLOBAL_CODE AND DEL_YN = 'N')
+        LEFT JOIN GRADE ON (CHILD.GRADE_NUM = GRADE.NUM)
+        WHERE CHILD.NUM = #{num}
     </select>
 
     <select id="getNextNum" resultType="int">

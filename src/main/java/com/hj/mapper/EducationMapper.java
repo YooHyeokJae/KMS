@@ -59,4 +59,6 @@ public interface EducationMapper {
     void insertHealthCheckByNum(Map<String, Object> param);
 
     void updateHealthCheckByNum(Map<String, Object> param);
+
+    List<GradeVo> getGradeList();
 }

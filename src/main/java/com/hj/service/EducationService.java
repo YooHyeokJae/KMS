@@ -117,4 +117,8 @@ public class EducationService {
     public void updateHealthCheckByNum(Map<String, Object> param) {
         this.educationMapper.updateHealthCheckByNum(param);
     }
+
+    public List<GradeVo> getGradeList() {
+        return this.educationMapper.getGradeList();
+    }
 }
