@@ -14,6 +14,21 @@
         </div>
     </div>
 
+    <div class="mb-2">
+        <div class="accordion" id="filterAccordion">
+            <div class="accordion-item">
+                <p class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding: 8px;">검색필터</button>
+                </p>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                    <div class="pb-2 pt-2 ps-2 pe-2">
+                        필터내용
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div style="min-height: 430px">
         <table id="listTable" class="table table-striped table-hover">
             <thead>
