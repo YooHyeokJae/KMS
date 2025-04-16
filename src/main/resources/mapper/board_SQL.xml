@@ -79,4 +79,35 @@
             ORDER BY BOARD.LIKE_CNT DESC LIMIT #{count}
         </if>
     </select>
+
+    <select id="checkLike" resultType="String">
+        SELECT REG_DATE FROM BOARD_LIKE_HISTORY
+        WHERE BOARD_NUM = #{boardNum}
+          AND USER_ID = #{userId}
+    </select>
+
+    <insert id="insertHistory">
+        INSERT INTO BOARD_LIKE_HISTORY(BOARD_NUM, USER_ID)
+        VALUES(#{boardNum}, #{userId})
+    </insert>
+
+    <update id="pressLike">
+        UPDATE BOARD SET LIKE_CNT = LIKE_CNT + 1
+        WHERE NUM = #{boardNum}
+    </update>
+
+    <delete id="deleteHistory">
+        DELETE FROM BOARD_LIKE_HISTORY
+        WHERE BOARD_NUM = #{boardNum}
+          AND USER_ID = #{userId}
+    </delete>
+
+    <update id="unPressLike">
+        UPDATE BOARD SET LIKE_CNT = LIKE_CNT - 1
+        WHERE NUM = #{boardNum}
+    </update>
+
+    <select id="getLikeCnt" resultType="String">
+        SELECT LIKE_CNT FROM BOARD WHERE NUM = #{boardNum}
+    </select>
 </mapper>

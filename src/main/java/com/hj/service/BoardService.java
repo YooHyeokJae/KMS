@@ -103,4 +103,20 @@ public class BoardService {
     public List<BoardVo> getBestByDateOrViewOrLike(Map<String, Object> params) {
         return this.boardMapper.getBestByDateOrViewOrLike(params);
     }
+
+    public String pressLike(Map<String, Object> params) {
+        String checkLike = this.boardMapper.checkLike(params);
+        if(checkLike != null){
+            return checkLike;
+        }
+        this.boardMapper.insertHistory(params);
+        this.boardMapper.pressLike(params);
+        return this.boardMapper.getLikeCnt(params);
+    }
+
+    public String unPressLike(Map<String, Object> params) {
+        this.boardMapper.deleteHistory(params);
+        this.boardMapper.unPressLike(params);
+        return this.boardMapper.getLikeCnt(params);
+    }
 }

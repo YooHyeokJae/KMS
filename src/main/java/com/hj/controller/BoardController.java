@@ -166,4 +166,16 @@ public class BoardController {
     private List<BoardVo> getBest(@RequestBody Map<String, Object> params){
         return this.boardService.getBestByDateOrViewOrLike(params);
     }
+
+    @PostMapping("/pressLike")
+    @ResponseBody
+    public String pressLike(@RequestBody Map<String, Object> params){
+        return this.boardService.pressLike(params);
+    }
+
+    @PostMapping("/unPressLike")
+    @ResponseBody
+    public String unPressLike(@RequestBody Map<String, Object> params){
+        return this.boardService.unPressLike(params);
+    }
 }

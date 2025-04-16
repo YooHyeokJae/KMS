@@ -89,7 +89,7 @@
                     </thead>
                     <tbody id="bestBoardTbl">
                         <c:forEach var="boardVo" items="${boardVoList}" varStatus="stat">
-                            <tr class="trs">
+                            <tr class="trs" data-num="${boardVo.num}">
                                 <td>${boardVo.title}</td>
                                 <td class="text-center">${boardVo.writerName}</td>
                                 <td class="text-center">${fn:split(boardVo.regDate, 'T')[0]}</td>
@@ -377,7 +377,7 @@
                 $bestBoardTbl.html('');
                 for(let i=0; i<result.length; i++){
                     let tr = '';
-                    tr += '<tr class="trs">';
+                    tr += '<tr class="trs" data-num="' + result[i].num + '">';
                     tr += '<td>' + result[i].title + '</td>';
                     tr += '<td class="text-center">' + result[i].writerName + '</td>';
                     tr += '<td class="text-center">' + result[i].regDate[0] + '-' + String(result[i].regDate[1]).padStart(2, '0') + '-' + String(result[i].regDate[2]).padStart(2, '0') + '</td>';
@@ -399,5 +399,9 @@
 
     $('input[name="order"]').on('change', function(){
         getBestBoard();
+    });
+
+    $(document).on('click', '.trs', function(){
+        location.href = 'board/detail?num=' + $(this)[0].dataset.num;
     });
 </script>

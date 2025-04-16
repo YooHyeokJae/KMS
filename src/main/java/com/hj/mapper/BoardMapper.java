@@ -35,4 +35,16 @@ public interface BoardMapper {
     void deleteBoard(int num);
 
     List<BoardVo> getBestByDateOrViewOrLike(Map<String, Object> params);
+
+    String checkLike(Map<String, Object> params);
+
+    void insertHistory(Map<String, Object> params);
+
+    void pressLike(Map<String, Object> params);
+
+    void deleteHistory(Map<String, Object> params);
+
+    void unPressLike(Map<String, Object> params);
+
+    String getLikeCnt(Map<String, Object> params);
 }
