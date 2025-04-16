@@ -136,13 +136,12 @@
                 </c:if>
             </div>
             <br>
-            <div id="" style="height: 280px;">
+            <div class="test_div mb-3" id="" style="height: 280px;">
                 <p> // index.jsp [140] 각 리스트 출력 화면에 검색필터 만들기 </p>
                 <p> // index.jsp [141] 페이지 통계 화면 만들기 </p>
-                <p> // index.jsp [142] 설정 화면 만들기 </p>
+                <p> // index.jsp [142] 설정 화면 만들기 / 가입승인 페이지 </p>
                 <p> // index.jsp [143] 여기에는 뭘 넣을까?</p>
                 <p> // index.jsp [144] 출석 관리</p>
-                <p> // index.jsp [145] 교원 CRUD</p>
             </div>
 
             <div id="calendarDiv" style="height: 220px;">

@@ -24,4 +24,20 @@ public class TeacherService {
     public TeacherVo getInfo(String id) {
         return this.teacherMapper.getInfo(id);
     }
+
+    public void insertTeacher(TeacherVo teacherVo) {
+        this.teacherMapper.insertTeacher(teacherVo);
+    }
+
+    public int findById(String id) {
+        return this.teacherMapper.findById(id);
+    }
+
+    public void modifyTeacher(TeacherVo teacherVo) {
+        this.teacherMapper.modifyTeacher(teacherVo);
+    }
+
+    public void delete(Map<String, Object> params) {
+        this.teacherMapper.delete(params);
+    }
 }

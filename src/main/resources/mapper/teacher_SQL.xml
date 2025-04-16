@@ -5,7 +5,6 @@
         SELECT T.*, G.NAME AS GRADE
         FROM TEACHER T
         LEFT JOIN GRADE G ON (T.GRADE_NUM = G.NUM)
-        WHERE DEL_YN = 'N'
         ORDER BY REG_DATE DESC LIMIT #{start}, #{count}
     </select>
 
@@ -19,4 +18,22 @@
         LEFT JOIN GRADE G ON (T.GRADE_NUM = G.NUM)
         WHERE ID = #{id}
     </select>
+
+    <insert id="insertTeacher">
+        INSERT INTO TEACHER(ID, NAME, BIRTH, GRADE_NUM, MAJOR, ENTRY_DATE)
+        VALUES(#{id}, #{name}, #{birth}, #{grade}, #{major}, #{entryDate})
+    </insert>
+
+    <select id="findById" resultType="int">
+        SELECT COUNT(*) FROM TEACHER WHERE ID = #{id} AND DEL_YN = 'N'
+    </select>
+
+    <update id="modifyTeacher">
+        UPDATE TEACHER SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE_NUM = #{grade}, MAJOR = #{major}, UPD_DATE = SYSDATE() WHERE ID = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE TEACHER SET DEL_YN = 'Y', DEL_DATE = SYSDATE(), UPD_DATE = SYSDATE()
+        WHERE ID = #{id}
+    </delete>
 </mapper>

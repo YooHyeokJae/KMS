@@ -18,7 +18,7 @@
 <body>
     <div class="container">
         <div class="text-end">
-            <span class="small text-muted">최종수정일시: ${childVo.updDate}</span>
+            <span class="small text-muted">최종수정일시: <span id="updDate">${fn:replace(childVo.updDate, 'T', ' ')}</span></span>
             <input type="button" class="btn btn-primary" id="modifyBtn" value="수정" />
             <input type="button" class="btn btn-primary" id="saveBtn" value="저장" style="display: none;" />
         </div>
@@ -49,7 +49,7 @@
                 </c:if>
                 <c:if test="${childVo.graduated eq 'Y'}">
                     <td>졸업일</td>
-                    <td id="childGrade">${childVo.graduateDate}</td>
+                    <td id="childGraduateDate">${childVo.graduateDate}</td>
                 </c:if>
                 <td></td>
                 <td></td>
@@ -85,10 +85,29 @@
 
         let name = $('#childName');
         let grade = $('#childGrade');
+        let gradeName = grade.text();
         let birth = $('#childBirth');
         let entryDate = $('#childEntryDate');
         let inputName = '<input type="text" class="form-control" style="width: 100%;" id="name" value="' + name.text() + '"/>'
-        let inputGrade = '<input type="text" class="form-control" style="width: 100%;" id="grade" value="' + grade.text() + '"/>'
+        let inputGrade = ''
+        $.ajax({
+            url: '/education/getGradeList',
+            contentType: 'application/json;charset=utf-8',
+            type: 'post',
+            success: function(result){
+                inputGrade += '<select id="grade" class="form-select">'
+                inputGrade += '<option value=""></option>'
+                for(let i=0; i<result.length; i++){
+                    inputGrade += '<option name="grade" value="' + result[i].num + '"';
+                    if(result[i].name === gradeName){
+                        inputGrade += ' selected '
+                    }
+                    inputGrade += '>' + result[i].name + '</option>'
+                }
+                inputGrade += '</select>'
+                grade.html(inputGrade);
+            }
+        });
         let inputBirth = '<input type="date" class="form-control" style="width: 100%;" id="birth" value="' + birth.text() + '"/>'
         let inputEntryDate = '<input type="date" class="form-control" style="width: 100%;" id="entryDate" value="' + entryDate.text() + '"/>'
         name.html(inputName);
@@ -120,9 +139,11 @@
             success: function(response) {
                 // 성공 시 처리
                 $('#childName').html(name);
-                $('#childGrade').html(grade);
+                let gradeName = $('option[name="grade"]:selected').text();
+                $('#childGrade').html(gradeName);
                 $('#childBirth').html(birth);
                 $('#childEntryDate').html(entryDate);
+                $('#updDate').text(response.replace('T', ' '));
 
                 $('#saveBtn').css('display', 'none');
                 $('#modifyBtn').css('display', 'inline');

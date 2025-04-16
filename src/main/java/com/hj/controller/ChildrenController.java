@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -129,6 +130,7 @@ public class ChildrenController {
                          @RequestParam String grade,
                          @RequestParam String birth,
                          @RequestParam String entryDate) {
+        LocalDateTime now = LocalDateTime.now();
         ChildVo childVo = new ChildVo();
         childVo.setNum(Integer.parseInt(num));
         childVo.setName(name);
@@ -144,7 +146,7 @@ public class ChildrenController {
             }
             this.attachFileService.uploadFile(profileImage, "child/"+num);
         }
-        return "success";
+        return now.toString().substring(0, 19);
     }
 
     @PostMapping("/insertBatch")

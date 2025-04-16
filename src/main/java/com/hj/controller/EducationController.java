@@ -296,4 +296,10 @@ public class EducationController {
         }
         return childNum;
     }
+
+    @PostMapping("/getGradeList")
+    @ResponseBody
+    public List<GradeVo> getGradeList() {
+        return this.educationService.getGradeList();
+    }
 }

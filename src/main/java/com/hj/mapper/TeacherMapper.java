@@ -13,4 +13,12 @@ public interface TeacherMapper {
     int getTotal();
 
     TeacherVo getInfo(String id);
+
+    void insertTeacher(TeacherVo teacherVo);
+
+    int findById(String id);
+
+    void modifyTeacher(TeacherVo teacherVo);
+
+    void delete(Map<String, Object> params);
 }

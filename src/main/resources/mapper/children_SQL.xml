@@ -30,7 +30,7 @@
     </insert>
 
     <update id="modifyChild">
-        UPDATE CHILD SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE = #{grade}, UPD_DATE = SYSDATE() WHERE NUM = #{num}
+        UPDATE CHILD SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE_NUM = #{grade}, UPD_DATE = SYSDATE() WHERE NUM = #{num}
     </update>
     
     <insert id="insertChildBatch">
