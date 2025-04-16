@@ -8,10 +8,32 @@
     }
 </style>
 <div class="container">
-    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
-        <span style="color: #7798bb;"><i class="bi bi-file-ruled"></i> 양식</span>
-    </h2>
-    <div>검색필터</div>
+    <div class="d-flex justify-content-between">
+        <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+            <span style="color: #7798bb;"><i class="bi bi-file-ruled"></i> 양식</span>
+        </h2>
+
+        <div class="d-flex align-items-end justify-content-end mb-2">
+            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+                <input type="button" value="글작성" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#uploadModal" />
+            </c:if>
+        </div>
+    </div>
+    <div class="mb-2">
+        <div class="accordion" id="filterAccordion">
+            <div class="accordion-item">
+                <p class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding: 8px;">검색필터</button>
+                </p>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                    <div class="pb-2 pt-2 ps-2 pe-2">
+                        필터내용
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table">
         <thead>
             <tr class="table-primary text-center">
@@ -51,11 +73,6 @@
                 </ul>
                 <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
             </nav>
-        </div>
-        <div class="col-3 text-end">
-            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
-                <input type="button" value="글작성" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal" />
-            </c:if>
         </div>
     </div>
 </div>
