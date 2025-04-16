@@ -2,13 +2,18 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <div class="container">
-    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
-        <span style="color: #000000"><i class="bi bi-person-fill"></i> 교원</span>
-    </h2>
+    <div class="d-flex justify-content-between">
+        <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+            <span style="color: #000000"><i class="bi bi-person-fill"></i> 교원</span>
+        </h2>
 
-    <c:if test="${sessionScope.loginUser.auth eq 'A'}">
-        <a href="#" class="btn btn-outline-primary ms-2" onclick="insertTeacher()">교원 등록</a>
-    </c:if>
+        <div class="d-flex align-items-end justify-content-end mb-1">
+            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+                <a href="#" class="btn btn-outline-primary ms-2" onclick="insertTeacher()">교원 등록</a>
+            </c:if>
+        </div>
+    </div>
+
     <div style="min-height: 430px">
         <table id="listTable" class="table table-striped table-hover">
             <thead>

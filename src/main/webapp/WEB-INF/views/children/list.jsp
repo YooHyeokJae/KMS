@@ -2,17 +2,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <div class="container">
-    <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
-        <span style="color: #000000"><i class="bi bi-person-heart"></i> 원생</span>
-    </h2>
+    <div class="d-flex justify-content-between">
+        <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
+            <span style="color: #000000"><i class="bi bi-person-heart"></i> 원생</span>
+        </h2>
 
-    <div class="d-flex justify-content-end mb-1">
-        <c:if test="${sessionScope.loginUser.auth eq 'A'}">
-            <a href="#" class="btn btn-outline-primary ms-2" onclick="insertChild()">원생 등록</a>
-            <a href="#" class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#insertModal">일괄 등록</a>
-            <input type="button" class="btn btn-outline-success ms-2" id="graduateModalOpen" data-bs-toggle="modal" data-bs-target="#graduateModal" value="졸업처리" />
-        </c:if>
+        <div class="d-flex align-items-end justify-content-end mb-1">
+            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+                <a href="#" class="btn btn-outline-primary ms-2" onclick="insertChild()">원생 등록</a>
+                <a href="#" class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#insertModal">일괄 등록</a>
+                <input type="button" class="btn btn-outline-success ms-2" id="graduateModalOpen" data-bs-toggle="modal" data-bs-target="#graduateModal" value="졸업처리" />
+            </c:if>
+        </div>
     </div>
+
     <div style="min-height: 430px">
         <table id="listTable" class="table table-striped table-hover">
             <thead>
