@@ -1,10 +1,11 @@
 package com.hj.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hj.service.AttachFileService;
 import com.hj.service.EducationService;
 import com.hj.service.TeacherService;
 import com.hj.vo.AttachFileVo;
-import com.hj.vo.ChildVo;
 import com.hj.vo.GradeVo;
 import com.hj.vo.TeacherVo;
 import org.slf4j.Logger;
@@ -18,7 +19,6 @@ import javax.annotation.Resource;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -36,23 +36,16 @@ public class TeacherController {
     private EducationService educationService;
 
     @GetMapping("/list")
-    public String teacherList(Model model,
-                              @RequestParam(defaultValue="1") int page,
-                              @RequestParam(defaultValue="10") int count) {
-        int totalCnt = this.teacherService.getTotal();
-        int pageBlock = 10;
-        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageStart", pageStart);
-        model.addAttribute("pageBlock", pageBlock);
-        int start = (page-1)*count;
-        Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("count", count);
-        List<TeacherVo> teacherVoList = this.teacherService.getList(params);
-        model.addAttribute("count", count);
-        model.addAttribute("totalCnt", totalCnt);
-        model.addAttribute("teacherVoList", teacherVoList);
+    public String teacherList(Model model) {
+        List<TeacherVo> teacherVoList = this.teacherService.getList();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String teacherVoListJson = mapper.writeValueAsString(teacherVoList);
+            model.addAttribute("teacherVoList", teacherVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         return "teacher/list";
     }
 
@@ -133,5 +126,19 @@ public class TeacherController {
     public String delete(@RequestBody Map<String, Object> params) {
         this.teacherService.delete(params);
         return "success";
+    }
+
+    @PostMapping(value = "/searchByCond", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String searchByCond(@RequestBody Map<String, Object> params) {
+        List<TeacherVo> teacherVoList = this.teacherService.searchByCond(params);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            return mapper.writeValueAsString(teacherVoList);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+            return null;
+        }
     }
 }

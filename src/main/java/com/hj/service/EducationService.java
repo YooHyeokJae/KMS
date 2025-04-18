@@ -29,8 +29,8 @@ public class EducationService {
         }
     }
 
-    public List<DailyPlanVo> getAllDailyPlan(Map<String, Object> params) {
-        return this.educationMapper.getAllDailyPlan(params);
+    public List<DailyPlanVo> getAllDailyPlan() {
+        return this.educationMapper.getAllDailyPlan();
     }
 
     public List<TeacherVo> searchTeacherByName(String keyword) {
@@ -70,12 +70,8 @@ public class EducationService {
         this.educationMapper.insertRecord(activityRecordVo);
     }
 
-    public List<ActivityRecordVo> getAllActivityRecord(Map<String, Object> params) {
-        return this.educationMapper.getAllActivityRecord(params);
-    }
-
-    public int getTotalCntRecord() {
-        return this.educationMapper.getTotalCntRecord();
+    public List<ActivityRecordVo> getAllActivityRecord() {
+        return this.educationMapper.getAllActivityRecord();
     }
 
     public int getNextCounselNum() {

@@ -138,7 +138,7 @@
             <br>
             <div class="test_div mb-3" id="" style="height: 280px; overflow-y: auto;">
                 <p> // index.jsp [140] 검색필터 만들기 </p>
-                <p> 교원 검색필터: 교원번호, 이름, 생년월일, 재직여부, 전공</p>
+                <p> 교원 검색필터: 교원번호, 이름, 생년월일, 재직여부, 전공 -> 페이징</p>
                 <p> 원생 검색필터: 원생번호, 이름, 생년월일, 입학일, 학급</p>
                 <p> 계획 검색필터: 계획번호, 활동일, 담당교사, 주제</p>
                 <p> 기록 검색필터: 기록번호, 활동일, 활동내용</p>
@@ -385,7 +385,7 @@
                     tr += '<tr class="trs" data-num="' + result[i].num + '">';
                     tr += '<td>' + result[i].title + '</td>';
                     tr += '<td class="text-center">' + result[i].writerName + '</td>';
-                    tr += '<td class="text-center">' + result[i].regDate[0] + '-' + String(result[i].regDate[1]).padStart(2, '0') + '-' + String(result[i].regDate[2]).padStart(2, '0') + '</td>';
+                    tr += '<td class="text-center">' + result[i].regDate[0] + '-' + String(result[i].regDate[1] ?? '').padStart(2, '0') + '-' + String(result[i].regDate[2] ?? '').padStart(2, '0') + '</td>';
                     tr += '<td class="text-center">' + result[i].viewCnt + '</td>';
                     tr += '<td class="text-center">' + result[i].likeCnt + '</td>';
                     tr += '</tr>';

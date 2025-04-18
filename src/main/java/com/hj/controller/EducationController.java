@@ -1,5 +1,7 @@
 package com.hj.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hj.service.ChildrenService;
 import com.hj.service.EducationService;
 import com.hj.vo.*;
@@ -25,23 +27,16 @@ public class EducationController {
     private ChildrenService childrenService;
 
     @GetMapping("/dailyPlan")
-    public String dailyPlan(Model model,
-                            @RequestParam(defaultValue="1") int page,
-                            @RequestParam(defaultValue="10") int count) {
-        int totalCnt = this.educationService.getTotalCntDailyPlan();
-        int pageBlock = 10;
-        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageStart", pageStart);
-        model.addAttribute("pageBlock", pageBlock);
-        int start = (page-1)*count;
-        Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("count", count);
-        List<DailyPlanVo> dailyPlanVoList = this.educationService.getAllDailyPlan(params);
-        model.addAttribute("count", count);
-        model.addAttribute("totalCnt", totalCnt);
-        model.addAttribute("dailyPlanVoList", dailyPlanVoList);
+    public String dailyPlan(Model model) {
+        List<DailyPlanVo> dailyPlanVoList = this.educationService.getAllDailyPlan();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String dailyPlanVoListJson = mapper.writeValueAsString(dailyPlanVoList);
+            model.addAttribute("dailyPlanVoList", dailyPlanVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         return "dailyPlan/list";
     }
 
@@ -102,7 +97,6 @@ public class EducationController {
         List<ActivityVo> activityVoList = this.educationService.getActivitiesByPlanNum(num);
         dailyPlanVo.setActivitiyVoList(activityVoList);
         model.addAttribute("dailyPlanVo", dailyPlanVo);
-        log.info("dailyPlanVo: {}", dailyPlanVo);
         return "dailyPlan/popup/info";
     }
 
@@ -147,24 +141,16 @@ public class EducationController {
     }
 
     @GetMapping("/activityRecord")
-    public String activity(Model model,
-                           @RequestParam(defaultValue="1") int page,
-                           @RequestParam(defaultValue="10") int count) {
-
-        int totalCnt = this.educationService.getTotalCntRecord();
-        int pageBlock = 10;
-        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageStart", pageStart);
-        model.addAttribute("pageBlock", pageBlock);
-        int start = (page-1)*count;
-        Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("count", count);
-        List<ActivityRecordVo> recordVoList = this.educationService.getAllActivityRecord(params);
-        model.addAttribute("count", count);
-        model.addAttribute("totalCnt", totalCnt);
-        model.addAttribute("recordVoList", recordVoList);
+    public String activity(Model model) {
+        List<ActivityRecordVo> recordVoList = this.educationService.getAllActivityRecord();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String recordVoListJson = mapper.writeValueAsString(recordVoList);
+            model.addAttribute("recordVoList", recordVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         return "activityRecord/list";
     }
 

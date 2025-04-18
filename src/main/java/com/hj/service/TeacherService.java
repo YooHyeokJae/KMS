@@ -13,12 +13,8 @@ public class TeacherService {
     @Resource
     private TeacherMapper teacherMapper;
 
-    public List<TeacherVo> getList(Map<String, Object> params) {
-        return this.teacherMapper.getList(params);
-    }
-
-    public int getTotal() {
-        return this.teacherMapper.getTotal();
+    public List<TeacherVo> getList() {
+        return this.teacherMapper.getList();
     }
 
     public TeacherVo getInfo(String id) {
@@ -39,5 +35,9 @@ public class TeacherService {
 
     public void delete(Map<String, Object> params) {
         this.teacherMapper.delete(params);
+    }
+
+    public List<TeacherVo> searchByCond(Map<String, Object> params) {
+        return this.teacherMapper.searchByCond(params);
     }
 }

@@ -1,5 +1,7 @@
 package com.hj.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hj.service.AttachFileService;
 import com.hj.service.ChildrenService;
 import com.hj.service.EducationService;
@@ -40,47 +42,34 @@ public class ChildrenController {
     private EducationService educationService;
 
     @GetMapping("/list")
-    public String list(Model model,
-                       @RequestParam(defaultValue="1") int page,
-                       @RequestParam(defaultValue="10") int count) {
-
-        int totalCnt = this.childrenService.getTotal("N");
-        int pageBlock = 10;
-        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageStart", pageStart);
-        model.addAttribute("pageBlock", pageBlock);
-        int start = (page-1)*count;
+    public String list(Model model) {
         Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("count", count);
         params.put("graduated", "N");
         List<ChildVo> childVoList = this.childrenService.getList(params);
-        model.addAttribute("count", count);
-        model.addAttribute("totalCnt", totalCnt);
-        model.addAttribute("childVoList", childVoList);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String childVoListJson = mapper.writeValueAsString(childVoList);
+            model.addAttribute("childVoList", childVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         return "children/list";
     }
 
     @GetMapping("/graduatedList")
-    public String graduatedList(Model model,
-                                @RequestParam(defaultValue="1") int page,
-                                @RequestParam(defaultValue="10") int count){
-        int totalCnt = this.childrenService.getTotal("Y");
-        int pageBlock = 10;
-        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageStart", pageStart);
-        model.addAttribute("pageBlock", pageBlock);
-        int start = (page-1)*count;
+    public String graduatedList(Model model){
         Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("count", count);
         params.put("graduated", "Y");
         List<ChildVo> childVoList = this.childrenService.getList(params);
-        model.addAttribute("count", count);
-        model.addAttribute("totalCnt", totalCnt);
-        model.addAttribute("childVoList", childVoList);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String childVoListJson = mapper.writeValueAsString(childVoList);
+            model.addAttribute("childVoList", childVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         return "children/graduatedList";
     }
 

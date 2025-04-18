@@ -23,10 +23,6 @@ public class BoardService {
         return this.boardMapper.getList(params);
     }
 
-    public int getTotal(String cat) {
-        return this.boardMapper.getTotal(cat);
-    }
-
     public int getNextNum() {
         return this.boardMapper.getNextNum();
     }

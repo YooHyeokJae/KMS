@@ -5,11 +5,7 @@
         SELECT T.*, G.NAME AS GRADE
         FROM TEACHER T
         LEFT JOIN GRADE G ON (T.GRADE_NUM = G.NUM)
-        ORDER BY REG_DATE DESC LIMIT #{start}, #{count}
-    </select>
-
-    <select id="getTotal" resultType="int">
-        SELECT COUNT(*) FROM TEACHER WHERE DEL_YN = 'N'
+        ORDER BY REG_DATE DESC
     </select>
 
     <select id="getInfo" resultType="com.hj.vo.TeacherVo">
@@ -36,4 +32,17 @@
         UPDATE TEACHER SET DEL_YN = 'Y', DEL_DATE = SYSDATE(), UPD_DATE = SYSDATE()
         WHERE ID = #{id}
     </delete>
+
+    <select id="searchByCond" resultType="com.hj.vo.TeacherVo">
+        SELECT T.*, G.NAME AS GRADE
+        FROM TEACHER T
+        LEFT JOIN GRADE G ON (T.GRADE_NUM = G.NUM)
+        WHERE 1=1
+        <if test="id != null and id != ''"> AND T.ID LIKE CONCAT('%', #{id}, '%') </if>
+        <if test="name != null and name != ''"> AND T.NAME LIKE CONCAT('%', #{name}, '%') </if>
+        <if test="birth != null and birth != ''"> AND T.BIRTH = #{birth} </if>
+        <if test="delYn != 'all'"> AND T.DEL_YN = #{delYn} </if>
+        <if test="major != null and major != ''"> AND T.MAJOR LIKE CONCAT('%', #{major}, '%') </if>
+        ORDER BY T.REG_DATE DESC
+    </select>
 </mapper>

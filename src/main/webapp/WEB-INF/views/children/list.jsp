@@ -50,40 +50,12 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
-            <c:forEach var="childVo" items="${childVoList}" varStatus="stat">
-                <tr class="text-center trs">
-                    <td>
-                        <label for="check_${stat.index}"></label>
-                        <input type="checkbox" id="check_${stat.index}" class="form-check check"
-                            data-num="${childVo.num}" data-name="${childVo.name}" data-birth="${childVo.birth}" data-grade="${childVo.grade}">
-                    </td>
-                    <td>${childVo.num}</td>
-                    <td>${childVo.name}</td>
-                    <td>${childVo.birth}</td>
-                    <td>${childVo.grade}</td>
-                    <td>${childVo.entryDate}</td>
-                    <td>${childVo.graduated}</td>
-                    <td>${fn:replace(childVo.regDate, 'T', ' ')}</td>
-                    <td>${fn:replace(childVo.updDate, 'T', ' ')}</td>
-                    <td><input type="button" class="childInfo" id="child_${childVo.num}" value="정보보기"></td>
-                </tr>
-            </c:forEach>
-            <c:if test="${childVoList.size() eq 0}">
-                <tr><td colspan="8" class="text-center">등록된 원생이 없습니다.</td></tr>
-            </c:if>
-            </tbody>
+            <tbody id="tbody"></tbody>
         </table>
     </div>
-    <nav aria-label="Page navigation example" class="d-flex align-items-center">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/children/list?page=${pageStart-1}"/>">이전</a></li>
-            <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/children/list?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
-            </c:forEach>
-            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/children/list?page=${pageStart+pageBlock}"/>">다음</a></li>
-        </ul>
-        <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
+    <nav id="pageNav" aria-label="Page navigation example" class="d-flex align-items-center">
+        <ul class="pagination"></ul>
+        <span class="ms-2 small text-muted">total count: <span id="totalCnt"></span>건</span>
     </nav>
 </div>
 
@@ -140,6 +112,8 @@
 </div>
 
 <script>
+    let curPage = 1;
+    let childVoList = ${childVoList};
     let form = $('#openPopup');
 
     function popupChildInfo(event){
@@ -150,7 +124,7 @@
         form.submit();
     }
 
-    $('.childInfo').on('click', function(event){
+    $(document).on('click', '.childInfo', function(event){
         popupChildInfo(event);
     });
 
@@ -160,7 +134,7 @@
         form.submit();
     }
 
-    $('.trs').on('click', function(event){
+    $(document).on('click', '.trs', function(event){
         if ($(event.target).is('input[type="checkbox"]') || $(event.target).is('input[type="button"]')) {
             return;
         }
@@ -228,7 +202,6 @@
                 data.child[index][key] = value;
             }
         });
-        console.log(data);
 
         $.ajax({
             url: '/children/graduate',
@@ -240,5 +213,87 @@
                 location.reload();
             }
         });
+    });
+
+    function drawCurPaging(page){
+        let start = (page-1)*10;
+
+        let $tbody = $('#tbody');
+        let html = '';
+        if(childVoList.length === 0){
+            html += '<tr><td colspan="10" class="text-center">검색결과가 없습니다.</td></tr>';
+            $tbody.html(html);
+            return;
+        }
+        for(let i=start; i<start+10; i++) {
+            if (i >= Math.ceil(childVoList.length)) continue;
+            let num = childVoList[i].num ? childVoList[i].num : '';
+            let name = childVoList[i].name ? childVoList[i].name : '';
+            let birth = childVoList[i].birth ? String(childVoList[i].birth[0] ?? '').padStart(2, '0') + '-' + String(childVoList[i].birth[1] ?? '').padStart(2, '0') + '-' + String(childVoList[i].birth[2] ?? '').padStart(2, '0') : '';
+            let grade = childVoList[i].grade ? childVoList[i].grade : '';
+            let entryDate = childVoList[i].entryDate ? String(childVoList[i].entryDate[0] ?? '').padStart(2, '0') + '-' + String(childVoList[i].entryDate[1] ?? '').padStart(2, '0') + '-' + String(childVoList[i].entryDate[2] ?? '').padStart(2, '0') : '';
+            let graduated = childVoList[i].graduated ? childVoList[i].graduated : '';
+            let regDate = childVoList[i].regDate ? String(childVoList[i].regDate[0] ?? '').padStart(2, '0') + '-' + String(childVoList[i].regDate[1] ?? '').padStart(2, '0') + '-' + String(childVoList[i].regDate[2] ?? '').padStart(2, '0') + ' ' + String(childVoList[i].regDate[3] ?? '').padStart(2, '0') + ':' + String(childVoList[i].regDate[4] ?? '').padStart(2, '0') + ':' + String(childVoList[i].regDate[5] ?? '').padStart(2, '0') : '';
+            let updDate = childVoList[i].updDate ? String(childVoList[i].updDate[0] ?? '').padStart(2, '0') + '-' + String(childVoList[i].updDate[1] ?? '').padStart(2, '0') + '-' + String(childVoList[i].updDate[2] ?? '').padStart(2, '0') + ' ' + String(childVoList[i].updDate[3] ?? '').padStart(2, '0') + ':' + String(childVoList[i].updDate[4] ?? '').padStart(2, '0') + ':' + String(childVoList[i].updDate[5] ?? '').padStart(2, '0') : '';
+
+            html += '<tr class="text-center trs">';
+            html += '<td>'
+            html += '<label for="check_' + i + '"></label>'
+            html += '<input type="checkbox" id="check_' + i + '" class="form-check check"'
+            html += 'data-num="' + num + '" data-name="' + name + '" data-birth="' + birth + '" data-grade="' + grade + '">'
+            html += '</td>';
+            html += '<td>' + num + '</td>';
+            html += '<td>' + name + '</td>';
+            html += '<td>' + birth + '</td>';
+            html += '<td>' + grade + '</td>';
+            html += '<td>' + entryDate + '</td>';
+            html += '<td>' + graduated + '</td>';
+            html += '<td>' + regDate + '</td>';
+            html += '<td>' + updDate + '</td>';
+            html += '<td><input type="button" class="childInfo" id="child_' + num + '" value="정보보기"/></td>'
+            html += '</tr>';
+        }
+        $tbody.html(html);
+        drawPagingArea(page);
+        $('#totalCnt').text(childVoList.length);
+    }
+
+    function drawPagingArea(page) {
+        let start = Math.floor((page - 1) / 10) * 10 + 1;
+        let $pagination = $('.pagination');
+        let lastBlock = false;
+        let html = '';
+        html += '<li class="page-item';
+        if(page < 11)   html += ' disabled';
+        html += '"><a class="page-link prev" href="#">이전</a></li>';
+        for(let i=start; i<start+10; i++){
+            html += '<li class="page-item';
+            if(String(page) === String(i))  html += ' active';
+            if(i > Math.ceil(childVoList.length/10)) {
+                html += ' disabled';
+                lastBlock = true;
+            }
+            html += '"><a class="page-link text-center" href="#" style="min-width: 60px;">' + i + '</a></li>';
+        }
+        html += '<li class="page-item';
+        if(lastBlock)   html += ' disabled';
+        html += '"><a class="page-link next" href="#">다음</a></li>';
+        $pagination.html(html);
+    }
+
+    $(document).on('click', '.page-link', function(event){
+        event.preventDefault();
+        if($(this).hasClass('prev')){
+            curPage = Math.floor(((curPage - 1) / 10) - 1) * 10 + 10;
+        }else if($(this).hasClass('next')){
+            curPage = Math.floor(((curPage - 1) / 10) + 1) * 10 + 1;
+        }else{
+            curPage = $(this).text();
+        }
+        drawCurPaging(curPage);
+    });
+
+    $(document).ready(function () {
+        drawCurPaging(curPage);
     });
 </script>

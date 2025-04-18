@@ -8,9 +8,7 @@ import java.util.Map;
 
 @Mapper
 public interface TeacherMapper {
-    List<TeacherVo> getList(Map<String, Object> params);
-
-    int getTotal();
+    List<TeacherVo> getList();
 
     TeacherVo getInfo(String id);
 
@@ -21,4 +19,6 @@ public interface TeacherMapper {
     void modifyTeacher(TeacherVo teacherVo);
 
     void delete(Map<String, Object> params);
+
+    List<TeacherVo> searchByCond(Map<String, Object> params);
 }

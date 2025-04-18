@@ -51,31 +51,12 @@
                     <th width="15%">최종수정일</th>
                 </tr>
             </thead>
-            <tbody>
-                <c:forEach var="dailyPlanVo" items="${dailyPlanVoList}" varStatus="stat">
-                    <tr class="trs">
-                        <td class="center">${dailyPlanVo.num}</td>
-                        <td class="center">${dailyPlanVo.seq}</td>
-                        <td class="center">${dailyPlanVo.activityDate}</td>
-                        <td>${dailyPlanVo.instructorName}</td>
-                        <td>${dailyPlanVo.subject}</td>
-                        <td class="center">${fn:replace(dailyPlanVo.regDate, 'T', ' ')}</td>
-                        <td class="center">${fn:replace(dailyPlanVo.updDate, 'T', ' ')}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
+            <tbody id="tbody"></tbody>
         </table>
     </div>
-
-    <nav aria-label="Page navigation example" class="d-flex align-items-center">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/education/dailyPlan?page=${pageStart-1}"/>">이전</a></li>
-            <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/education/dailyPlan?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
-            </c:forEach>
-            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/education/dailyPlan?page=${pageStart+pageBlock}"/>">다음</a></li>
-        </ul>
-        <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
+    <nav id="pageNav" aria-label="Page navigation example" class="d-flex align-items-center">
+        <ul class="pagination"></ul>
+        <span class="ms-2 small text-muted">total count: <span id="totalCnt"></span>건</span>
     </nav>
 </div>
 
@@ -83,6 +64,9 @@
     <input type="hidden" name="num" value=""/>
 </form>
 <script>
+    let curPage = 1;
+    let dailyPlanVoList = ${dailyPlanVoList};
+
     function popupInsertForm(event){
         window.open('', 'popup', 'width=1000,height=600,scrollbars=yes');
         let $popup = $('#openPopup');
@@ -99,5 +83,81 @@
         $popup.attr('action', '<c:url value="/education/dailyPlan/info"/>');
         $popup.submit();
     });
+
+    function drawCurPaging(page){
+        let start = (page-1)*10;
+
+        let $tbody = $('#tbody');
+        let html = '';
+        if(dailyPlanVoList.length === 0){
+            html += '<tr><td colspan="7" class="text-center">검색결과가 없습니다.</td></tr>';
+            $tbody.html(html);
+            return;
+        }
+
+        for(let i=start; i<start+10; i++) {
+            if (i >= Math.ceil(dailyPlanVoList.length)) continue;
+            let num = dailyPlanVoList[i].num;
+            let seq = dailyPlanVoList[i].seq ? dailyPlanVoList[i].seq : '';
+            let activityDate = dailyPlanVoList[i].activityDate ? String(dailyPlanVoList[i].activityDate[0] ?? '').padStart(2, '0') + '-' + String(dailyPlanVoList[i].activityDate[1] ?? '').padStart(2, '0') + '-' + String(dailyPlanVoList[i].activityDate[2] ?? '').padStart(2, '0') : '';
+            let instructorName = dailyPlanVoList[i].instructorName ? dailyPlanVoList[i].instructorName : '';
+            let subject = dailyPlanVoList[i].subject ? dailyPlanVoList[i].subject : '';
+            let regDate = dailyPlanVoList[i].regDate ? String(dailyPlanVoList[i].regDate[0] ?? '').padStart(2, '0') + '-' + String(dailyPlanVoList[i].regDate[1] ?? '').padStart(2, '0') + '-' + String(dailyPlanVoList[i].regDate[2] ?? '').padStart(2, '0') + ' ' + String(dailyPlanVoList[i].regDate[3] ?? '').padStart(2, '0') + ':' + String(dailyPlanVoList[i].regDate[4] ?? '').padStart(2, '0') + ':' + String(dailyPlanVoList[i].regDate[5] ?? '').padStart(2, '0') : '';
+            let updDate = dailyPlanVoList[i].updDate ? String(dailyPlanVoList[i].updDate[0] ?? '').padStart(2, '0') + '-' + String(dailyPlanVoList[i].updDate[1] ?? '').padStart(2, '0') + '-' + String(dailyPlanVoList[i].updDate[2] ?? '').padStart(2, '0') + ' ' + String(dailyPlanVoList[i].updDate[3] ?? '').padStart(2, '0') + ':' + String(dailyPlanVoList[i].updDate[4] ?? '').padStart(2, '0') + ':' + String(dailyPlanVoList[i].updDate[5] ?? '').padStart(2, '0') : '';
+
+            html += '<tr class="trs">';
+            html += '<td class="text-center">' + num + '</td>';
+            html += '<td class="text-center">' + seq + '</td>';
+            html += '<td class="text-center">' + activityDate + '</td>';
+            html += '<td>' + instructorName + '</td>';
+            html += '<td>' + subject + '</td>';
+            html += '<td class="text-center">' + regDate + '</td>';
+            html += '<td class="text-center">' + updDate + '</td>';
+            html += '</tr>';
+        }
+        $tbody.html(html);
+        drawPagingArea(page);
+        $('#totalCnt').text(dailyPlanVoList.length);
+    }
+
+    function drawPagingArea(page) {
+        let start = Math.floor((page - 1) / 10) * 10 + 1;
+        let $pagination = $('.pagination');
+        let lastBlock = false;
+        let html = '';
+        html += '<li class="page-item';
+        if(page < 11)   html += ' disabled';
+        html += '"><a class="page-link prev" href="#">이전</a></li>';
+        for(let i=start; i<start+10; i++){
+            html += '<li class="page-item';
+            if(String(page) === String(i))  html += ' active';
+            if(i > Math.ceil(dailyPlanVoList.length/10)) {
+                html += ' disabled';
+                lastBlock = true;
+            }
+            html += '"><a class="page-link text-center" href="#" style="min-width: 60px;">' + i + '</a></li>';
+        }
+        html += '<li class="page-item';
+        if(lastBlock)   html += ' disabled';
+        html += '"><a class="page-link next" href="#">다음</a></li>';
+        $pagination.html(html);
+    }
+
+    $(document).on('click', '.page-link', function(event){
+        event.preventDefault();
+        if($(this).hasClass('prev')){
+            curPage = Math.floor(((curPage - 1) / 10) - 1) * 10 + 10;
+        }else if($(this).hasClass('next')){
+            curPage = Math.floor(((curPage - 1) / 10) + 1) * 10 + 1;
+        }else{
+            curPage = $(this).text();
+        }
+        drawCurPaging(curPage);
+    });
+
+    $(document).ready(function () {
+        drawCurPaging(curPage);
+    });
+
 </script>
 

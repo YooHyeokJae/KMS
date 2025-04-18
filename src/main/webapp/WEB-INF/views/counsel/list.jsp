@@ -233,7 +233,7 @@
                         html += '<td width="15%">' + result[i].num + '</td>';
                         html += '<td width="30%">' + result[i].category + '</td>';
                         html += '<td width="20%">' + result[i].instructorName + '</td>';
-                        html += '<td width="*">' + result[i].counselDate[0] + '-' + String(result[i].counselDate[1]).padStart(2, '0') + '-' + String(result[i].counselDate[2]).padStart(2, '0') + '</td>';
+                        html += '<td width="*">' + String(result[i].counselDate[0] ?? '').padStart(2, '0') + '-' + String(result[i].counselDate[1] ?? '').padStart(2, '0') + '-' + String(result[i].counselDate[2] ?? '').padStart(2, '0') + '</td>';
                         html += '</tr>';
                     }
                     $('#counselTbl').html(html)
@@ -301,7 +301,7 @@
             data: JSON.stringify(data),
             type: 'post',
             success: function(result){
-                let formattedDate = result.counselDate[0] + '-' + String(result.counselDate[1]).padStart(2, '0') + '-' + String(result.counselDate[2]).padStart(2, '0')
+                let formattedDate = String(result.counselDate[0] ?? '').padStart(2, '0') + '-' + String(result.counselDate[1] ?? '').padStart(2, '0') + '-' + String(result.counselDate[2] ?? '').padStart(2, '0')
                 $('#num').val(result.num);
                 $('#category').val(result.category);
                 $('#counselDate').val(formattedDate);

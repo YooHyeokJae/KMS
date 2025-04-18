@@ -182,7 +182,7 @@
                         html += '<input type="text" class="form-control data" value="' + result[i].hospital + '" />';
                         html += '</td>';
                         html += '<td width="17%">';
-                        html += '<input type="date" class="form-control data" value="' + result[i].checkDate[0] + '-' + String(result[i].checkDate[1]).padStart(2, '0') + '-' + String(result[i].checkDate[2]).padStart(2, '0') + '" />';
+                        html += '<input type="date" class="form-control data" value="' + String(result[i].checkDate[0] ?? '').padStart(2, '0') + '-' + String(result[i].checkDate[1] ?? '').padStart(2, '0') + '-' + String(result[i].checkDate[2] ?? '').padStart(2, '0') + '" />';
                         html += '</td>';
                         html += '<td width="*%">';
                         html += '<input type="text" class="form-control data" value="' + result[i].checkResult + '" />';

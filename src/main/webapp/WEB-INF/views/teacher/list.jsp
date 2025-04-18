@@ -22,7 +22,59 @@
                 </p>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
                     <div class="pb-2 pt-2 ps-2 pe-2">
-                        필터내용
+                    <%-- 검색필터 --%>
+                        <form id="condForm" method="post">
+                            <div class="d-flex justify-content-between">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="id">교원번호</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="id" name="id" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="name">이름</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="name" name="name" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="birth">생년월일</label></div>
+                                                <div class="col-9"><input type="date" class="form-control" id="birth" name="birth" /></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><span>퇴직여부</span></div>
+                                                <div class="col-9 d-flex align-items-center" style="height: 37px;">
+                                                    <label for="status_all">모두</label><input type="radio" class="form-select-button ms-1 me-3" id="status_all" name="delYn" value="all" checked />
+                                                    <label for="status_n">재직</label><input type="radio" class="form-check ms-1 me-3" id="status_n" name="delYn" value="N" />
+                                                    <label for="status_y">퇴직</label><input type="radio" class="form-check ms-1 me-3" id="status_y" name="delYn" value="Y" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="major">전공</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="major" name="major" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"></div>
+                                                <div class="col-9"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <input type="button" class="btn btn-info ms-2" id="searchByCond" value="검색" />
+                            </div>
+                        </form>
+<%--                     검색필터 --%>
                     </div>
                 </div>
             </div>
@@ -44,48 +96,27 @@
                     <th width="13%">최종수정일</th>
                 </tr>
             </thead>
-            <tbody>
-                <c:forEach var="teacherVo" items="${teacherVoList}" varStatus="stat">
-                   <tr class="text-center" onclick="popupTeacherInfo(event)">
-                       <td>${teacherVo.id}</td>
-                       <td>${teacherVo.name}</td>
-                       <td>${teacherVo.birth}</td>
-                       <td>${teacherVo.major}</td>
-                       <td>${teacherVo.grade}</td>
-                       <td>${teacherVo.delYn}</td>
-                       <td>${teacherVo.delDate}</td>
-                       <td>${fn:replace(teacherVo.regDate, 'T', ' ')}</td>
-                       <td>${fn:replace(teacherVo.updDate, 'T', ' ')}</td>
-                   </tr>
-                </c:forEach>
-                <c:if test="${teacherVoList.size() eq 0}">
-                    <tr><td colspan="8">등록된 교사가 없습니다.</td></tr>
-                </c:if>
-            </tbody>
+            <tbody id="tbody"></tbody>
         </table>
     </div>
-    <nav aria-label="Page navigation example" class="d-flex align-items-center">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart-1}"/>">이전</a></li>
-            <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/teacher/list?page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
-            </c:forEach>
-            <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/teacher/list?page=${pageStart+pageBlock}"/>">다음</a></li>
-        </ul>
-        <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
+    <nav id="pageNav" aria-label="Page navigation example" class="d-flex align-items-center">
+        <ul class="pagination"></ul>
+        <span class="ms-2 small text-muted">total count: <span id="totalCnt"></span>건</span>
     </nav>
 </div>
 
 <form id="openPopup" target="popup" method="post">
-    <input type="hidden" name="id" value=""/>
+    <input type="hidden" id="infoId" name="id" value=""/>
 </form>
 <script>
+    let curPage = 1;
+    let teacherVoList = ${teacherVoList};
     let form = $('#openPopup');
 
     function popupTeacherInfo(event){
         window.open('', 'popup', 'width=800,height=400,scrollbars=yes');
         form.attr("action", "<c:url value="/teacher/info"/>");
-        $('input[name="id"]').val($(event.currentTarget).children().eq(0).text());
+        $('#infoId').val($(event.currentTarget).children().eq(0).text());
         form.submit();
     }
 
@@ -94,4 +125,105 @@
         form.attr("action", "<c:url value="/teacher/insertWindow"/>");
         form.submit();
     }
+
+    function drawCurPaging(page){
+        let start = (page-1)*10;
+
+        let $tbody = $('#tbody');
+        let html = '';
+        if(teacherVoList.length === 0){
+            html += '<tr><td colspan="9" class="text-center">검색결과가 없습니다.</td></tr>';
+            $tbody.html(html);
+            return;
+        }
+        for(let i=start; i<start+10; i++){
+            if(i >= Math.ceil(teacherVoList.length)) continue;
+            let id = teacherVoList[i].id ? teacherVoList[i].id : '';
+            let name = teacherVoList[i].name ? teacherVoList[i].name : '';
+            let birth = teacherVoList[i].birth ? String(teacherVoList[i].birth[0] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].birth[1] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].birth[2] ?? '').padStart(2, '0') : '';
+            let major = teacherVoList[i].major ? teacherVoList[i].major : '';
+            let grade = teacherVoList[i].grade ? teacherVoList[i].grade : '';
+            let delYn = teacherVoList[i].delYn ? teacherVoList[i].delYn : '';
+            let delDate = teacherVoList[i].delDate ? String(teacherVoList[i].delDate[0] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].delDate[1] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].delDate[2] ?? '').padStart(2, '0') : '';
+            let regDate = teacherVoList[i].regDate ? String(teacherVoList[i].regDate[0] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].regDate[1] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].regDate[2] ?? '').padStart(2, '0') + ' ' + String(teacherVoList[i].regDate[3] ?? '').padStart(2, '0') + ':' + String(teacherVoList[i].regDate[4] ?? '').padStart(2, '0') + ':' + String(teacherVoList[i].regDate[5] ?? '').padStart(2, '0') : '';
+            let updDate = teacherVoList[i].updDate ? String(teacherVoList[i].updDate[0] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].updDate[1] ?? '').padStart(2, '0') + '-' + String(teacherVoList[i].updDate[2] ?? '').padStart(2, '0') + ' ' + String(teacherVoList[i].updDate[3] ?? '').padStart(2, '0') + ':' + String(teacherVoList[i].updDate[4] ?? '').padStart(2, '0') + ':' + String(teacherVoList[i].updDate[5] ?? '').padStart(2, '0') : '';
+
+            html += '<tr class="text-center">';
+            html += '<td>' + id + '</td>';
+            html += '<td>' + name + '</td>';
+            html += '<td>' + birth + '</td>';
+            html += '<td>' + major + '</td>';
+            html += '<td>' + grade + '</td>';
+            html += '<td>' + delYn + '</td>';
+            html += '<td>' + delDate + '</td>';
+            html += '<td>' + regDate + '</td>';
+            html += '<td>' + updDate + '</td>';
+            html += '</tr>';
+        }
+        $tbody.html(html);
+        drawPagingArea(page);
+        $('#totalCnt').text(teacherVoList.length);
+    }
+
+    function drawPagingArea(page) {
+        let start = Math.floor((page - 1) / 10) * 10 + 1;
+        let $pagination = $('.pagination');
+        let lastBlock = false;
+        let html = '';
+        html += '<li class="page-item';
+        if(page < 11)   html += ' disabled';
+        html += '"><a class="page-link prev" href="#">이전</a></li>';
+        for(let i=start; i<start+10; i++){
+            html += '<li class="page-item';
+            if(String(page) === String(i))  html += ' active';
+            if(i > Math.ceil(teacherVoList.length/10)) {
+                html += ' disabled';
+                lastBlock = true;
+            }
+            html += '"><a class="page-link text-center" href="#" style="min-width: 60px;">' + i + '</a></li>';
+        }
+        html += '<li class="page-item';
+        if(lastBlock)   html += ' disabled';
+        html += '"><a class="page-link next" href="#">다음</a></li>';
+        $pagination.html(html);
+    }
+
+    $(document).on('click', '.page-link', function(event){
+        event.preventDefault();
+        if($(this).hasClass('prev')){
+            curPage = Math.floor(((curPage - 1) / 10) - 1) * 10 + 10;
+        }else if($(this).hasClass('next')){
+            curPage = Math.floor(((curPage - 1) / 10) + 1) * 10 + 1;
+        }else{
+            curPage = $(this).text();
+        }
+        drawCurPaging(curPage);
+    });
+
+    $(document).ready(function () {
+        drawCurPaging(curPage);
+    });
+
+    // 검색필터
+    $('#searchByCond').on('click', function () {
+        let $form = $('#condForm')[0];
+        let formData = new FormData($form);
+        let data = {};
+
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        $.ajax({
+            url: '/teacher/searchByCond',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function (result) {
+                curPage = 1;
+                teacherVoList = result;
+                drawCurPaging(curPage);
+            }
+        });
+    });
 </script>

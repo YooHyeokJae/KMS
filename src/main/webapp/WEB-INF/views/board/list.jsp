@@ -51,40 +51,22 @@
                     <td width="8%">추천수</td>
                 </tr>
             </thead>
-            <tbody>
-                <c:if test="${boardVoList.size() eq 0}">
-                    <tr class="text-center"><td colspan="6">등록된 게시글이 없습니다.</td></tr>
-                </c:if>
-                <c:forEach var="vo" items="${boardVoList}" varStatus="stat">
-                    <tr class="trs">
-                        <td class="text-center">${vo.num}</td>
-                        <td>${vo.title}</td>
-                        <td>${vo.writerName}</td>
-                        <td class="text-center">${fn:replace(vo.regDate, 'T', ' ')}</td>
-                        <td class="text-center">${vo.viewCnt}</td>
-                        <td class="text-center">${vo.likeCnt}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
+            <tbody id="tbody"></tbody>
         </table>
     </div>
     <div class="row">
         <div class="col-9">
-            <nav aria-label="Page navigation example" class="d-flex align-items-center">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link <c:if test="${pageStart eq 1}">disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart-1}"/>">이전</a></li>
-                    <c:forEach var="i" begin="0" end="${pageBlock-1}">
-                        <li class="page-item<c:if test="${pageStart + i eq currentPage}"> active</c:if><c:if test="${pageStart + i - 1 >= totalCnt/count}"> disabled</c:if>"><a class="page-link text-center" href="<c:url value="/board/list?cat=${category}&page=${pageStart + i}"/>" style="min-width: 60px;">${pageStart + i}</a></li>
-                    </c:forEach>
-                    <li class="page-item"><a class="page-link<c:if test="${pageStart + pageBlock - 1 >= totalCnt/count}"> disabled</c:if>" href="<c:url value="/board/list?cat=${category}&page=${pageStart+pageBlock}"/>">다음</a></li>
-                </ul>
-                <span class="ms-2 small text-muted">total count: ${totalCnt}건</span>
+            <nav id="pageNav" aria-label="Page navigation example" class="d-flex align-items-center">
+                <ul class="pagination"></ul>
+                <span class="ms-2 small text-muted">total count: <span id="totalCnt"></span>건</span>
             </nav>
         </div>
     </div>
 </div>
 
 <script>
+    let curPage = 1;
+    let boardVoList = ${boardVoList};
     let isLogin = ${not empty sessionScope.loginUser ? true : false};
     function loginChk(){
         if(!isLogin){
@@ -93,8 +75,81 @@
         }
     }
 
-    $('.trs').on('click', function(){
+    $(document).on('click', '.trs', function(){
         let num = $(this).children().eq(0).text();
         location.href = "/board/detail?num="+num;
     });
+
+    function drawCurPaging(page){
+        let start = (page-1)*10;
+
+        let $tbody = $('#tbody');
+        let html = '';
+        if(boardVoList.length === 0){
+            html += '<tr><td colspan="6" class="text-center">검색결과가 없습니다.</td></tr>';
+            $tbody.html(html);
+            return;
+        }
+        for(let i=start; i<start+10; i++){
+            if(i >= Math.ceil(boardVoList.length)) continue;
+            let num = boardVoList[i].num;
+            let title = boardVoList[i].title ? boardVoList[i].title : '';
+            let writerName = boardVoList[i].writerName ? boardVoList[i].writerName : '';
+            let regDate = boardVoList[i].regDate ? String(boardVoList[i].regDate[0] ?? '').padStart(2, '0') + '-' + String(boardVoList[i].regDate[1] ?? '').padStart(2, '0') + '-' + String(boardVoList[i].regDate[2] ?? '').padStart(2, '0') + ' ' + String(boardVoList[i].regDate[3] ?? '').padStart(2, '0') + ':' + String(boardVoList[i].regDate[4] ?? '').padStart(2, '0') + ':' + String(boardVoList[i].regDate[5] ?? '').padStart(2, '0') : '';
+            let viewCnt = boardVoList[i].viewCnt ? boardVoList[i].viewCnt : '0';
+            let likeCnt = boardVoList[i].likeCnt ? boardVoList[i].likeCnt : '0';
+
+            html += '<tr class="trs">';
+            html += '<td class="text-center">' + num + '</td>';
+            html += '<td>' + title + '</td>';
+            html += '<td>' + writerName + '</td>';
+            html += '<td class="text-center">' + regDate + '</td>';
+            html += '<td class="text-center">' + viewCnt + '</td>';
+            html += '<td class="text-center">' + likeCnt + '</td>';
+            html += '</tr>';
+        }
+        $tbody.html(html);
+        drawPagingArea(page);
+        $('#totalCnt').text(boardVoList.length);
+    }
+
+    function drawPagingArea(page) {
+        let start = Math.floor((page - 1) / 10) * 10 + 1;
+        let $pagination = $('.pagination');
+        let lastBlock = false;
+        let html = '';
+        html += '<li class="page-item';
+        if(page < 11)   html += ' disabled';
+        html += '"><a class="page-link prev" href="#">이전</a></li>';
+        for(let i=start; i<start+10; i++){
+            html += '<li class="page-item';
+            if(String(page) === String(i))  html += ' active';
+            if(i > Math.ceil(boardVoList.length/10)) {
+                html += ' disabled';
+                lastBlock = true;
+            }
+            html += '"><a class="page-link text-center" href="#" style="min-width: 60px;">' + i + '</a></li>';
+        }
+        html += '<li class="page-item';
+        if(lastBlock)   html += ' disabled';
+        html += '"><a class="page-link next" href="#">다음</a></li>';
+        $pagination.html(html);
+    }
+
+    $(document).on('click', '.page-link', function(event){
+        event.preventDefault();
+        if($(this).hasClass('prev')){
+            curPage = Math.floor(((curPage - 1) / 10) - 1) * 10 + 10;
+        }else if($(this).hasClass('next')){
+            curPage = Math.floor(((curPage - 1) / 10) + 1) * 10 + 1;
+        }else{
+            curPage = $(this).text();
+        }
+        drawCurPaging(curPage);
+    });
+
+    $(document).ready(function () {
+        drawCurPaging(curPage);
+    });
+
 </script>

@@ -1,5 +1,7 @@
 package com.hj.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hj.service.AttachFileService;
 import com.hj.service.BoardService;
 import com.hj.vo.BoardVo;
@@ -32,25 +34,19 @@ public class BoardController {
 
     @GetMapping("/list")
     public String list(Model model,
-                       @RequestParam String cat,
-                       @RequestParam(defaultValue="1") int page,
-                       @RequestParam(defaultValue="10") int count) {
-        int totalCnt = this.boardService.getTotal(cat);
-        int pageBlock = 10;
-        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageStart", pageStart);
-        model.addAttribute("count", count);
-        model.addAttribute("totalCnt", totalCnt);
-        model.addAttribute("pageBlock", pageBlock);
-        int start = (page-1)*count;
+                       @RequestParam String cat) {
         Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("count", count);
         params.put("cat", cat);
         List<BoardVo> boardVoList = this.boardService.getList(params);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String boardVoListJson = mapper.writeValueAsString(boardVoList);
+            model.addAttribute("boardVoList", boardVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         model.addAttribute("category", cat);
-        model.addAttribute("boardVoList", boardVoList);
         return "board/list";
     }
 
@@ -119,26 +115,20 @@ public class BoardController {
     }
 
     @GetMapping("/form")
-    public String form(Model model,
-                       @RequestParam(defaultValue="1") int page,
-                       @RequestParam(defaultValue="10") int count) {
+    public String form(Model model) {
         String cat = "form";
-        int totalCnt = this.boardService.getTotal(cat);
-        int pageBlock = 10;
-        int pageStart = ((page-1) / pageBlock) * pageBlock + 1;
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageStart", pageStart);
-        model.addAttribute("count", count);
-        model.addAttribute("totalCnt", totalCnt);
-        model.addAttribute("pageBlock", pageBlock);
-        int start = (page-1)*count;
         Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("count", count);
         params.put("cat", cat);
         List<BoardVo> boardVoList = this.boardService.getList(params);
         model.addAttribute("category", cat);
-        model.addAttribute("boardVoList", boardVoList);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String boardVoListJson = mapper.writeValueAsString(boardVoList);
+            model.addAttribute("boardVoList", boardVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         return "board/form";
     }
 

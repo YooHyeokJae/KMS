@@ -12,8 +12,6 @@ import java.util.Map;
 public interface BoardMapper {
     List<BoardVo> getList(Map<String, Object> params);
 
-    int getTotal(String cat);
-
     int getNextNum();
 
     void insertBoard(BoardVo boardVo);

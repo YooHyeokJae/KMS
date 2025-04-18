@@ -6,11 +6,7 @@
         FROM CHILD C
         LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
         WHERE C.GRADUATED = #{graduated}
-        ORDER BY C.REG_DATE DESC, C.NUM DESC LIMIT #{start}, #{count}
-    </select>
-
-    <select id="getTotal" resultType="int">
-        SELECT COUNT(*) FROM CHILD WHERE GRADUATED = #{graduated}
+        ORDER BY C.REG_DATE DESC, C.NUM DESC
     </select>
 
     <select id="getInfo" resultType="com.hj.vo.ChildVo">
@@ -56,7 +52,7 @@
     </select>
 
     <update id="graduate">
-        UPDATE CHILD SET GRADE = '',
+        UPDATE CHILD SET GRADE_NUM = null,
                          GRADUATED = 'Y',
                          GRADUATE_DATE = SYSDATE(),
                          GRADUATE_REASON = #{reason},

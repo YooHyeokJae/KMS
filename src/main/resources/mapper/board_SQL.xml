@@ -2,10 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.mapper.BoardMapper">
 
-    <select id="getTotal" resultType="int">
-        SELECT COUNT(*) FROM BOARD WHERE CATEGORY = #{cat} AND DEL_YN = 'N'
-    </select>
-
     <select id="getList" resultType="com.hj.vo.BoardVo">
         SELECT BOARD.*, USER.NAME AS WRITER_NAME, ATTACH_FILE.FILE_SIZE AS FILE_SIZE
         FROM BOARD
@@ -13,7 +9,7 @@
             LEFT JOIN USER ON (BOARD.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
         WHERE CATEGORY = #{cat}
           AND BOARD.DEL_YN = 'N'
-        ORDER BY BOARD.REG_DATE DESC LIMIT #{start}, #{count}
+        ORDER BY BOARD.REG_DATE DESC
     </select>
 
     <select id="getNextNum" resultType="int">

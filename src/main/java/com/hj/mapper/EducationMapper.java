@@ -20,7 +20,7 @@ public interface EducationMapper {
 
     void insertActivity(ActivityVo activityVo);
 
-    List<DailyPlanVo> getAllDailyPlan(Map<String, Object> params);
+    List<DailyPlanVo> getAllDailyPlan();
 
     List<TeacherVo> searchTeacherByName(String keyword);
 
@@ -36,9 +36,7 @@ public interface EducationMapper {
 
     void insertRecord(ActivityRecordVo activityRecordVo);
 
-    List<ActivityRecordVo> getAllActivityRecord(Map<String, Object> params);
-
-    int getTotalCntRecord();
+    List<ActivityRecordVo> getAllActivityRecord();
 
     int getNextCounselNum();
 
