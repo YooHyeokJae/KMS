@@ -24,7 +24,60 @@
                 </p>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
                     <div class="pb-2 pt-2 ps-2 pe-2">
-                        필터내용
+                        <form id="condForm" method="post">
+                            <div class="d-flex justify-content-between">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="num">원생번호</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="num" name="num" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="name">이름</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="name" name="name" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="birth">생년월일</label></div>
+                                                <div class="col-9"><input type="date" class="form-control" id="birth" name="birth" /></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="entryDate">입학일</label></div>
+                                                <div class="col-9"><input type="date" class="form-control" id="entryDate" name="entryDate" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="grade">학급</label></div>
+                                                <div class="col-9">
+                                                    <select class="form-control" id="grade" name="grade">
+                                                        <option value="all">전체</option>
+                                                        <c:forEach var="grade" items="${gradeList}" varStatus="stat">
+                                                            <option value="${grade.num}">${grade.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"></div>
+                                                <div class="col-9"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <input type="button" class="btn btn-info ms-2" id="searchByCond" value="검색" />
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -220,6 +273,7 @@
 
         let $tbody = $('#tbody');
         let html = '';
+        $('#totalCnt').text(childVoList.length);
         if(childVoList.length === 0){
             html += '<tr><td colspan="10" class="text-center">검색결과가 없습니다.</td></tr>';
             $tbody.html(html);
@@ -255,7 +309,6 @@
         }
         $tbody.html(html);
         drawPagingArea(page);
-        $('#totalCnt').text(childVoList.length);
     }
 
     function drawPagingArea(page) {
@@ -295,5 +348,30 @@
 
     $(document).ready(function () {
         drawCurPaging(curPage);
+    });
+
+    // 검색필터
+    $('#searchByCond').on('click', function () {
+        let $form = $('#condForm')[0];
+        let formData = new FormData($form);
+        let data = {
+            graduated: 'N'
+        };
+
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        $.ajax({
+            url: '/children/searchByCond',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function (result) {
+                curPage = 1;
+                childVoList = result;
+                drawCurPaging(curPage);
+            }
+        });
     });
 </script>

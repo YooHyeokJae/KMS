@@ -28,7 +28,33 @@
                 </p>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
                     <div class="pb-2 pt-2 ps-2 pe-2">
-                        필터내용
+                        <form id="condForm" method="post">
+                            <div class="d-flex justify-content-between">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="num">기록번호</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="num" name="num" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="activityDate">활동일</label></div>
+                                                <div class="col-9"><input type="date" class="form-control" id="activityDate" name="activityDate" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="record">활동내용</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="record" name="record" /></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <input type="button" class="btn btn-info ms-2" id="searchByCond" value="검색" />
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -64,6 +90,7 @@
 
         let $tbody = $('#tbody');
         let html = '';
+        $('#totalCnt').text(recordVoList.length);
         if(recordVoList.length === 0){
             html += '<tr><td colspan="5" class="text-center">검색결과가 없습니다.</td></tr>';
             $tbody.html(html);
@@ -88,7 +115,6 @@
         }
         $tbody.html(html);
         drawPagingArea(page);
-        $('#totalCnt').text(recordVoList.length);
     }
 
     function drawPagingArea(page) {
@@ -128,5 +154,30 @@
 
     $(document).ready(function () {
         drawCurPaging(curPage);
+    });
+
+    // 검색필터
+    $('#searchByCond').on('click', function () {
+        let $form = $('#condForm')[0];
+        let formData = new FormData($form);
+        let data = {
+            cat: 'record'
+        };
+
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        $.ajax({
+            url: '/education/searchByCond',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function (result) {
+                curPage = 1;
+                recordVoList = result;
+                drawCurPaging(curPage);
+            }
+        });
     });
 </script>

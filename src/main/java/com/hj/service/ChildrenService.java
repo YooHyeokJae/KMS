@@ -45,4 +45,8 @@ public class ChildrenService {
     public void graduate(Map<String, Object> childVo) {
         this.childrenMapper.graduate(childVo);
     }
+
+    public List<ChildVo> searchByCond(Map<String, Object> params) {
+        return this.childrenMapper.searchByCond(params);
+    }
 }

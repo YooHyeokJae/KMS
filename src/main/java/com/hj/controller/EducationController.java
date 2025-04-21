@@ -288,4 +288,31 @@ public class EducationController {
     public List<GradeVo> getGradeList() {
         return this.educationService.getGradeList();
     }
+
+    @PostMapping(value = "/searchByCond", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String searchByCond(@RequestBody Map<String, Object> params) {
+        List<DailyPlanVo> dailyPlanVoList = new ArrayList<>();
+        List<ActivityRecordVo> activityRecordVoList = new ArrayList<>();
+        if("dailyPlan".equals(params.get("cat"))){
+            dailyPlanVoList = this.educationService.searchDailyPlanByCond(params);
+        } else if("record".equals(params.get("cat"))){
+            activityRecordVoList = this.educationService.searchRecordByCond(params);
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            if("dailyPlan".equals(params.get("cat"))){
+                return mapper.writeValueAsString(dailyPlanVoList);
+            } else if("record".equals(params.get("cat"))){
+                return mapper.writeValueAsString(activityRecordVoList);
+            } else{
+                log.error("NoCategory");
+                return null;
+            }
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+            return null;
+        }
+    }
 }

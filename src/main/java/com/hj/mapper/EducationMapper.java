@@ -59,4 +59,8 @@ public interface EducationMapper {
     void updateHealthCheckByNum(Map<String, Object> param);
 
     List<GradeVo> getGradeList();
+
+    List<DailyPlanVo> searchDailyPlanByCond(Map<String, Object> params);
+
+    List<ActivityRecordVo> searchRecordByCond(Map<String, Object> params);
 }

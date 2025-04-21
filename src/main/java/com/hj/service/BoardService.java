@@ -115,4 +115,8 @@ public class BoardService {
         this.boardMapper.unPressLike(params);
         return this.boardMapper.getLikeCnt(params);
     }
+
+    public List<BoardVo> searchByCond(Map<String, Object> params) {
+        return this.boardMapper.searchByCond(params);
+    }
 }

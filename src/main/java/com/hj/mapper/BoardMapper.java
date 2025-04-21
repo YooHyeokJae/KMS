@@ -45,4 +45,6 @@ public interface BoardMapper {
     void unPressLike(Map<String, Object> params);
 
     String getLikeCnt(Map<String, Object> params);
+
+    List<BoardVo> searchByCond(Map<String, Object> params);
 }

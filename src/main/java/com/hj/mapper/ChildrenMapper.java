@@ -25,4 +25,6 @@ public interface ChildrenMapper {
     List<ChildVo> searchChild(Map<String, String> params);
 
     void graduate(Map<String, Object> childVo);
+
+    List<ChildVo> searchByCond(Map<String, Object> params);
 }

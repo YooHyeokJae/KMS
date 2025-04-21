@@ -31,7 +31,53 @@
                 </p>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
                     <div class="pb-2 pt-2 ps-2 pe-2">
-                        필터내용
+                        <form id="condForm" method="post">
+                            <div class="d-flex justify-content-between">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="num">계획번호</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="num" name="num" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="activityDate">활동일</label></div>
+                                                <div class="col-9"><input type="date" class="form-control" id="activityDate" name="activityDate" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="instructorName">담당교사</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="instructorName" name="instructorName" /></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"><label for="subject">주제</label></div>
+                                                <div class="col-9"><input type="text" class="form-control" id="subject" name="subject" /></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"></div>
+                                                <div class="col-9"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center row">
+                                                <div class="col-3"></div>
+                                                <div class="col-9"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <input type="button" class="btn btn-info ms-2" id="searchByCond" value="검색" />
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -89,6 +135,7 @@
 
         let $tbody = $('#tbody');
         let html = '';
+        $('#totalCnt').text(dailyPlanVoList.length);
         if(dailyPlanVoList.length === 0){
             html += '<tr><td colspan="7" class="text-center">검색결과가 없습니다.</td></tr>';
             $tbody.html(html);
@@ -117,7 +164,6 @@
         }
         $tbody.html(html);
         drawPagingArea(page);
-        $('#totalCnt').text(dailyPlanVoList.length);
     }
 
     function drawPagingArea(page) {
@@ -159,5 +205,29 @@
         drawCurPaging(curPage);
     });
 
+    // 검색필터
+    $('#searchByCond').on('click', function () {
+        let $form = $('#condForm')[0];
+        let formData = new FormData($form);
+        let data = {
+            cat: 'dailyPlan'
+        };
+
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        $.ajax({
+            url: '/education/searchByCond',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function (result) {
+                curPage = 1;
+                dailyPlanVoList = result;
+                drawCurPaging(curPage);
+            }
+        });
+    });
 </script>
 

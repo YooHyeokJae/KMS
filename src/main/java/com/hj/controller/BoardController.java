@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hj.service.AttachFileService;
 import com.hj.service.BoardService;
-import com.hj.vo.BoardVo;
-import com.hj.vo.ReplyVo;
-import com.hj.vo.UserVo;
+import com.hj.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,5 +166,19 @@ public class BoardController {
     @ResponseBody
     public String unPressLike(@RequestBody Map<String, Object> params){
         return this.boardService.unPressLike(params);
+    }
+
+    @PostMapping(value = "/searchByCond", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String searchByCond(@RequestBody Map<String, Object> params) {
+        List<BoardVo> boardVoList = this.boardService.searchByCond(params);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            return mapper.writeValueAsString(boardVoList);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+            return null;
+        }
     }
 }

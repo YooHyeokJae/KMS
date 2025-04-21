@@ -59,4 +59,18 @@
                          UPD_DATE = SYSDATE()
         WHERE NUM = #{num}
     </update>
+
+    <select id="searchByCond" resultType="com.hj.vo.ChildVo">
+        SELECT C.*, G.NAME AS GRADE
+        FROM CHILD C
+        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        WHERE C.GRADUATED = #{graduated}
+        <if test="num != null and num != ''"> AND C.NUM LIKE CONCAT('%', #{num}, '%') </if>
+        <if test="name != null and name != ''"> AND C.NAME LIKE CONCAT('%', #{name}, '%') </if>
+        <if test="birth != null and birth != ''"> AND C.BIRTH = #{birth} </if>
+        <if test="entryDate != null and entryDate != ''"> AND C.ENTRY_DATE = #{entryDate} </if>
+        <if test="graduateDate != null and graduateDate != ''"> AND C.GRADUATE_DATE = #{graduateDate} </if>
+        <if test="grade != null and grade != 'all'"> AND C.GRADE_NUM = #{grade} </if>
+        ORDER BY C.REG_DATE DESC, C.NUM DESC
+    </select>
 </mapper>

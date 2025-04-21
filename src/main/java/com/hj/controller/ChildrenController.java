@@ -54,6 +54,8 @@ public class ChildrenController {
         } catch(Exception e){
             log.error("{}", e.getMessage());
         }
+        List<GradeVo> gradeList = this.educationService.getGradeList();
+        model.addAttribute("gradeList", gradeList);
         return "children/list";
     }
 
@@ -184,5 +186,19 @@ public class ChildrenController {
             this.childrenService.graduate(childVo);
         }
         return "success";
+    }
+
+    @PostMapping(value = "/searchByCond", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String searchByCond(@RequestBody Map<String, Object> params) {
+        List<ChildVo> childVoList = this.childrenService.searchByCond(params);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            return mapper.writeValueAsString(childVoList);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+            return null;
+        }
     }
 }

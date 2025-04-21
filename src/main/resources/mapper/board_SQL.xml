@@ -106,4 +106,19 @@
     <select id="getLikeCnt" resultType="String">
         SELECT LIKE_CNT FROM BOARD WHERE NUM = #{boardNum}
     </select>
+
+    <select id="searchByCond" resultType="com.hj.vo.BoardVo">
+        SELECT B.*, U.NAME AS WRITER_NAME, AF.FILE_SIZE AS FILE_SIZE
+        FROM BOARD B
+                 LEFT JOIN ATTACH_FILE AF ON(CONCAT('board/', B.NUM) = AF.GLOBAL_CODE AND AF.DEL_YN = 'N')
+                 LEFT JOIN USER U ON (B.WRITER_ID = U.ID AND U.DEL_YN = 'N')
+        WHERE CATEGORY = #{cat}
+          AND B.DEL_YN = 'N'
+          <if test="num != null and num != ''"> AND B.NUM LIKE CONCAT('%', #{num}, '%') </if>
+          <if test="title != null and title != ''"> AND B.TITLE LIKE CONCAT('%', #{title}, '%') </if>
+          <if test="regDate != null and regDate != ''"> AND B.REG_DATE LIKE CONCAT('%', #{regDate}, '%') </if>
+          <if test="writerName != null and writerName != ''"> AND (SELECT NAME FROM USER WHERE B.WRITER_ID = USER.ID) LIKE CONCAT('%', #{writerName}, '%') </if>
+          <if test="content != null and content != ''"> AND B.CONTENT LIKE CONCAT('%', #{content}, '%') </if>
+        ORDER BY B.REG_DATE DESC
+    </select>
 </mapper>

@@ -131,6 +131,7 @@
 
         let $tbody = $('#tbody');
         let html = '';
+        $('#totalCnt').text(teacherVoList.length);
         if(teacherVoList.length === 0){
             html += '<tr><td colspan="9" class="text-center">검색결과가 없습니다.</td></tr>';
             $tbody.html(html);
@@ -162,7 +163,6 @@
         }
         $tbody.html(html);
         drawPagingArea(page);
-        $('#totalCnt').text(teacherVoList.length);
     }
 
     function drawPagingArea(page) {

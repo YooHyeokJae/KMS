@@ -117,4 +117,12 @@ public class EducationService {
     public List<GradeVo> getGradeList() {
         return this.educationMapper.getGradeList();
     }
+
+    public List<DailyPlanVo> searchDailyPlanByCond(Map<String, Object> params) {
+        return this.educationMapper.searchDailyPlanByCond(params);
+    }
+
+    public List<ActivityRecordVo> searchRecordByCond(Map<String, Object> params) {
+        return this.educationMapper.searchRecordByCond(params);
+    }
 }
