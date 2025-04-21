@@ -3,11 +3,14 @@
 <style>
   .nav > ul .nav-link {
     display: inline-grid;
+    text-align: center;
   }
   .nav-item-box {
+    border-radius: 5px;
+    background-color: #f5c679;
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 8px 0 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     /* 처음에는 보이지 않도록 설정 */
@@ -81,7 +84,7 @@
 <div class="row" style="background-color: #fabf62; height: 60px">
   <div class="col-2"></div>
   <div class="col-8">
-    <nav class="nav" style="position: absolute; z-index: 999; background-color: #fabf62;">
+    <nav class="nav" style="position: absolute; z-index: 2; background-color: transparent;">
       <ul>
         <li class="nav-link">
           <a href="#">유치원</a>
@@ -95,6 +98,7 @@
         <li class="nav-link">
           <a href="#">교육</a>
           <div class="nav-item-box">
+            <p class="nav-item"><a href="<c:url value="/education/attendance/"/>">출석</a></p>
             <p class="nav-item"><a href="<c:url value="/education/dailyPlan/"/>">일일 계획안</a></p>
             <p class="nav-item"><a href="<c:url value="/education/activityRecord/"/>">활동기록</a></p>
             <p class="nav-item"><a href="<c:url value="/education/counsel/"/>">상담</a></p>
