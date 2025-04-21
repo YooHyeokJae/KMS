@@ -10,7 +10,7 @@
     background-color: #f5c679;
     list-style: none;
     padding: 0;
-    margin: 8px 0 0;
+    margin: 8px -5px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     /* 처음에는 보이지 않도록 설정 */

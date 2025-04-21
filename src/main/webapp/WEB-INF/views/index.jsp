@@ -137,16 +137,10 @@
             </div>
             <br>
             <div class="test_div mb-3" id="" style="height: 280px; overflow-y: auto;">
-                <p> // index.jsp [140] 검색필터 만들기 </p>
-                <p> EducationController > searchByCond 메서드부터 해야함 </p>
-                <p> 계획 검색필터: 계획번호, 활동일, 담당교사, 주제 -> 담당교사는 teacherId를 입력받게 해야하므로 select 박스로 하던지 검색 후 지정 방식으로 수정 필요<br> 현재는 그냥 text로 되어있음</p>
-                <p> 기록 검색필터: 기록번호, 활동일, 활동내용</p>
-                <p> 게시글 검색필터: 글번호, 작성자, 제목, 내용, 작성일</p>
-                <p> 양식 검색필터: 글번호, 작성자, 제목, 작성일</p>
-                <p> // index.jsp [141] 페이지 통계 화면 만들기 </p>
-                <p> // index.jsp [142] 설정 화면 만들기 / 가입승인 페이지 </p>
-                <p> // index.jsp [143] 여기에는 뭘 넣을까?</p>
-                <p> // index.jsp [144] 출석 관리</p>
+                <p> // index.jsp [140] 페이지 통계 화면 만들기 </p>
+                <p> // index.jsp [141] 설정 화면 만들기 / 가입승인 페이지 </p>
+                <p> // index.jsp [142] 여기에는 뭘 넣을까?</p>
+                <p> // index.jsp [143] 출석 관리</p>
             </div>
 
             <div id="calendarDiv" style="height: 220px;">
