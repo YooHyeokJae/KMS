@@ -15,6 +15,29 @@
 <head>
     <title>원생정보</title>
 </head>
+<style>
+    #attendance{
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+        word-break: keep-all;
+        white-space: normal;
+    }
+    #attendance td{
+        border: 1px solid black;
+    }
+    #diagonalCell{
+        width: 40px;
+        background: linear-gradient(-147deg, transparent 49%, #000 50%, transparent 52%);
+    }
+    .monthCell{
+        text-align: center;
+    }
+    .dayCell{
+        width: 25px;
+        text-align: center;
+    }
+</style>
 <body>
     <div class="container">
         <div class="text-end">
@@ -54,13 +77,27 @@
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-            </tr>
+            <tr></tr>
         </table>
-    </div>
 
-    <div>
-        출석현황/지각,조퇴 현황
+        <div style="width: 100%; height: 200px; overflow: auto">
+            <table id="attendance">
+                <tr>
+                    <td id="diagonalCell"></td>
+                    <c:forEach var="d" begin="1" end="31">
+                        <td class="dayCell">${d}</td>
+                    </c:forEach>
+                </tr>
+                <c:forEach var="m" begin="1" end="12">
+                    <tr>
+                        <td class="monthCell">${m}월</td>
+                        <c:forEach var="d" begin="1" end="31">
+                            <td></td>
+                        </c:forEach>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
     </div>
 </body>
 <script>

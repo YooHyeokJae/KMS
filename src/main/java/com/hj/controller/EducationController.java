@@ -315,4 +315,48 @@ public class EducationController {
             return null;
         }
     }
+
+    @GetMapping("/attendance")
+    public String attendance(Model model){
+        LocalDate today = LocalDate.now();
+        model.addAttribute("month", today.getMonthValue());
+        List<GradeVo> gradeVoList = this.educationService.getGradeList();
+        model.addAttribute("gradeVoList", gradeVoList);
+        return "attendance/list";
+    }
+
+    @PostMapping("/getAttendanceByGrade")
+    @ResponseBody
+    public List<AttendanceVo> getAttendanceByGrade(@RequestBody Map<String, Object> params) {
+        return this.educationService.getAttendanceByGrade(params);
+    }
+
+    @PostMapping("/attProc")
+    @ResponseBody
+    public Map<String, Object> attProc(@RequestBody Map<String, Object> params){
+        this.educationService.attProc(params);
+        return params;
+    }
+
+    @PostMapping("/getAttInfo")
+    @ResponseBody
+    public AttendanceVo getAttInfo(@RequestBody Map<String, Object> params) {
+        return this.educationService.getAttInfo(params);
+    }
+
+    @PostMapping("/attAllProc")
+    @ResponseBody
+    public Map<String, Object> attAllProc(@RequestBody Map<String, Object> searchParams) {
+        searchParams.put("graduated", "N");
+        List<ChildVo> childVoList = this.childrenService.searchByCond(searchParams);
+
+        Map<String, Object> insertParams = new HashMap<>();
+        insertParams.put("date", searchParams.get("date"));
+        insertParams.put("status", searchParams.get("status"));
+        for(ChildVo childVo: childVoList){
+            insertParams.put("childNum", childVo.getNum());
+            this.educationService.attProc(insertParams);
+        }
+        return searchParams;
+    }
 }

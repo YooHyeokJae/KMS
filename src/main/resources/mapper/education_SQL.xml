@@ -184,4 +184,35 @@
         <if test="record != null and record != ''"> AND AR.RECORD LIKE CONCAT('%', #{record}, '%') </if>
         ORDER BY AR.REG_DATE DESC
     </select>
+
+    <select id="getAttendanceByGrade" resultType="com.hj.vo.AttendanceVo">
+        SELECT AT.*, C.NAME AS CHILD_NAME
+        FROM ATTENDANCE AT
+        LEFT JOIN CHILD C ON (AT.CHILD_NUM = C.NUM and C.GRADUATED = 'N')
+        WHERE C.GRADE_NUM = #{grade}
+          AND MONTH(ATT_DATE) = #{month}
+    </select>
+
+    <select id="attCheck" resultType="int">
+        SELECT COUNT(*)
+        FROM ATTENDANCE
+        WHERE CHILD_NUM = #{childNum}
+          AND ATT_DATE = #{date}
+    </select>
+
+    <insert id="insertAttendance">
+        INSERT INTO ATTENDANCE(CHILD_NUM, ATT_DATE, STATUS, NOTE)
+        VALUES(#{childNum}, #{date}, #{status}, #{note})
+    </insert>
+
+    <update id="updateAttendance">
+        UPDATE ATTENDANCE SET STATUS = #{status},
+                              NOTE = #{note}
+        WHERE CHILD_NUM = #{childNum}
+          AND ATT_DATE = #{date}
+    </update>
+
+    <select id="getAttInfo" resultType="com.hj.vo.AttendanceVo">
+        SELECT * FROM ATTENDANCE WHERE CHILD_NUM = #{childNum} AND ATT_DATE = #{attDate}
+    </select>
 </mapper>

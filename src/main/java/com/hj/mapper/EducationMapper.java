@@ -63,4 +63,14 @@ public interface EducationMapper {
     List<DailyPlanVo> searchDailyPlanByCond(Map<String, Object> params);
 
     List<ActivityRecordVo> searchRecordByCond(Map<String, Object> params);
+
+    List<AttendanceVo> getAttendanceByGrade(Map<String, Object> params);
+
+    int attCheck(Map<String, Object> params);
+
+    void insertAttendance(Map<String, Object> params);
+
+    void updateAttendance(Map<String, Object> params);
+
+    AttendanceVo getAttInfo(Map<String, Object> params);
 }

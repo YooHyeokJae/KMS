@@ -140,7 +140,6 @@
                 <p> // index.jsp [140] 페이지 통계 화면 만들기 </p>
                 <p> // index.jsp [141] 설정 화면 만들기 / 가입승인 페이지 </p>
                 <p> // index.jsp [142] 여기에는 뭘 넣을까?</p>
-                <p> // index.jsp [143] 출석 관리</p>
             </div>
 
             <div id="calendarDiv" style="height: 220px;">

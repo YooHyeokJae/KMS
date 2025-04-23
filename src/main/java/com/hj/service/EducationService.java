@@ -125,4 +125,20 @@ public class EducationService {
     public List<ActivityRecordVo> searchRecordByCond(Map<String, Object> params) {
         return this.educationMapper.searchRecordByCond(params);
     }
+
+    public List<AttendanceVo> getAttendanceByGrade(Map<String, Object> params) {
+        return this.educationMapper.getAttendanceByGrade(params);
+    }
+
+    public void attProc(Map<String, Object> params) {
+        if(this.educationMapper.attCheck(params) == 0){
+            this.educationMapper.insertAttendance(params);
+        }else{
+            this.educationMapper.updateAttendance(params);
+        }
+    }
+
+    public AttendanceVo getAttInfo(Map<String, Object> params) {
+        return this.educationMapper.getAttInfo(params);
+    }
 }
