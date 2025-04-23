@@ -73,4 +73,6 @@ public interface EducationMapper {
     void updateAttendance(Map<String, Object> params);
 
     AttendanceVo getAttInfo(Map<String, Object> params);
+
+    List<AttendanceVo> getAttendanceByChildNum(int childNum);
 }

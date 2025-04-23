@@ -215,4 +215,8 @@
     <select id="getAttInfo" resultType="com.hj.vo.AttendanceVo">
         SELECT * FROM ATTENDANCE WHERE CHILD_NUM = #{childNum} AND ATT_DATE = #{attDate}
     </select>
+
+    <select id="getAttendanceByChildNum" resultType="com.hj.vo.AttendanceVo">
+        SELECT * FROM ATTENDANCE WHERE CHILD_NUM = #{childNum}
+    </select>
 </mapper>

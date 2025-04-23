@@ -141,4 +141,8 @@ public class EducationService {
     public AttendanceVo getAttInfo(Map<String, Object> params) {
         return this.educationMapper.getAttInfo(params);
     }
+
+    public List<AttendanceVo> getAttendanceByChildNum(int childNum) {
+        return this.educationMapper.getAttendanceByChildNum(childNum);
+    }
 }

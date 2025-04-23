@@ -7,6 +7,7 @@ import com.hj.service.ChildrenService;
 import com.hj.service.EducationService;
 import com.hj.util.Utils;
 import com.hj.vo.AttachFileVo;
+import com.hj.vo.AttendanceVo;
 import com.hj.vo.ChildVo;
 import com.hj.vo.GradeVo;
 import org.apache.poi.ss.usermodel.Cell;
@@ -79,6 +80,15 @@ public class ChildrenController {
     public String childInfo(Model model, @RequestParam String num) {
         ChildVo childVo = this.childrenService.getInfo(Integer.parseInt(num));
         model.addAttribute("childVo", childVo);
+        List<AttendanceVo> attendanceVoList = this.educationService.getAttendanceByChildNum(Integer.parseInt(num));
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            String attendanceVoListJson = mapper.writeValueAsString(attendanceVoList);
+            model.addAttribute("attendanceVoList", attendanceVoListJson);
+        } catch(Exception e){
+            log.error("{}", e.getMessage());
+        }
         return "children/popup/info";
     }
 

@@ -37,6 +37,24 @@
         width: 25px;
         text-align: center;
     }
+    .P{
+        background-color: #A8E6CF;
+    }
+    .T{
+        background-color: #FFF176;
+    }
+    .A{
+        background-color: #FF8A80;
+    }
+    .L{
+        background-color: #FFD180;
+    }
+    .E{
+        background-color: #81D4FA;
+    }
+    .O{
+        background-color: #FFFFFF;
+    }
 </style>
 <body>
     <div class="container">
@@ -92,7 +110,7 @@
                     <tr>
                         <td class="monthCell">${m}월</td>
                         <c:forEach var="d" begin="1" end="31">
-                            <td></td>
+                            <td class="text-center" id="${m}-${d}"></td>
                         </c:forEach>
                     </tr>
                 </c:forEach>
@@ -189,6 +207,16 @@
                 window.opener.location.reload();
             }
         });
+    });
+
+    $(document).ready(function(){
+        let attendanceVoList = ${attendanceVoList};
+        for(let i=0; i<attendanceVoList.length; i++){
+            let cellId = attendanceVoList[i].attDate[1] + '-' + attendanceVoList[i].attDate[2];
+            let $cell = $('#'+cellId);
+            $cell.text(attendanceVoList[i].status);
+            $cell.addClass(attendanceVoList[i].status);
+        }
     });
 </script>
 </html>
