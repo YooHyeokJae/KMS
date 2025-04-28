@@ -110,6 +110,7 @@
           <div class="nav-item-box">
             <p class="nav-item"><a href="<c:url value="/board/list?cat=notice"/>">공지사항</a></p>
             <p class="nav-item"><a href="<c:url value="/board/list?cat=free"/>">자유게시판</a></p>
+            <p class="nav-item"><a href="#">앨범</a></p>
           </div>
         </li>
         <li class="nav-link">
@@ -131,6 +132,7 @@
           <a href="#">설정</a>
           <div class="nav-item-box">
             <p class="nav-item"><a href="${pageContext.request.contextPath}/setting/">설정</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/admin/">관리자 페이지</a></p>
           </div>
         </li>
       </ul>
