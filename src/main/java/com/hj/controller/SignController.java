@@ -34,8 +34,8 @@ public class SignController {
         userVo.setEmail((String) param.get("uEmail"));
         userVo.setChildNum(Integer.parseInt((String) param.get("uChildNum")));
         userVo.setRelation((String) param.get("relation"));
-        log.info("userVo: {}", userVo);
-        // userVo insert
+        userVo.setAuth("W");
+        this.signService.insertUser(userVo);
         return "redirect:/";
     }
 
@@ -51,9 +51,7 @@ public class SignController {
     @ResponseBody
     public List<ChildVo> searchChild(@RequestBody Map<String, Object> params) {
         String keyword = (String) params.get("keyword");
-        List<ChildVo> list = new ArrayList<>();
-        list = this.signService.searchChild(keyword);
-        return list;
+        return this.signService.searchChild(keyword);
     }
 
     @PostMapping("/login")
@@ -61,10 +59,12 @@ public class SignController {
                         @RequestParam Map<String, Object> params) {
         log.info("params: {}", params);
         UserVo userVo = this.signService.login(params);
-        if(userVo != null) {
-            request.getSession().setAttribute("loginUser", userVo);
+        if(userVo == null) {
+            request.getSession().setAttribute("loginFailed", "noUser");
+        }else if(userVo.getAuth().equals("W")) {
+            request.getSession().setAttribute("loginFailed", "noApproval");
         }else{
-            request.getSession().setAttribute("loginFailed", true);
+            request.getSession().setAttribute("loginUser", userVo);
         }
         return "redirect:/";
     }

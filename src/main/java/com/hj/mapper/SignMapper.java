@@ -14,4 +14,6 @@ public interface SignMapper {
     UserVo getUserByUserId(String userId);
 
     UserVo login(Map<String,Object> map);
+
+    void insertUser(UserVo userVo);
 }

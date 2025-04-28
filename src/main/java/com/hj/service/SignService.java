@@ -26,4 +26,8 @@ public class SignService {
     public UserVo login(Map<String, Object> params) {
         return this.signMapper.login(params);
     }
+
+    public void insertUser(UserVo userVo) {
+        this.signMapper.insertUser(userVo);
+    }
 }

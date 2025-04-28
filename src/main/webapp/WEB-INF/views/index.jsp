@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <style>
     .no-events-message{
         height: 80px;
@@ -124,7 +125,7 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <input type="button" value="회원가입" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#signupModal" />
-                            <input type="button" value="ID/PW 찾기" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#signupModal" />
+                            <input type="button" value="ID/PW 찾기" class="btn btn-secondary ms-3" onclick="{alert('미구현\nindex.jsp[127]')}"/>
                         </div>
                     </form>
                 </c:if>
@@ -137,13 +138,23 @@
             </div>
             <br>
             <div class="test_div mb-3" id="" style="height: 280px; overflow-y: auto;">
-                <p> // index.jsp [140] 페이지 통계 화면 만들기 </p>
-                <p> // index.jsp [141] 설정 화면 만들기 / 가입승인 페이지 </p>
-                <p> // index.jsp [142] 여기에는 뭘 넣을까?</p>
+                <p> // index.jsp [140] 페이지 통계 화면 만들기 (금) </p>
+                <p> // index.jsp [141] 설정 화면 만들기 (금) </p>
+                <p> // index.jsp [142] 회원 가입 및 id/pw 찾기 -> 가입승인, 권한설정 (화)</p>
+                <p> // index.jsp [143] 게시판 목록에 '앨범' 추가해서 관리자만 글 작성할수 있도록 (수) </p>
+                <p> // index.jsp [144] 여기에는 뭘 넣을까? -> 교실별 일일 계획안 or 앨범게시판 랜덤 사진 (목) </p>
+                <p> // index.jsp [145] 식단표 영역 옆에 날씨 위젯 + 오늘의 한마디(폰트 찾아보기) (목) </p>
             </div>
 
-            <div id="calendarDiv" style="height: 220px;">
-                <div id='calendar'></div>
+            <div class="d-flex" style="height: 220px;">
+                <div id='calendar' style="width: 50%;"></div>
+                <div style="width: 50%;">
+                    <div>날씨 위젯</div>
+                    <div class="text-center" style="font-family: Shadows Into Light, cursive, sans-serif;">
+                        <p>오늘의 한마디</p>
+                        <p>${todayQuote}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -157,8 +168,8 @@
                 <h1 class="modal-title fs-5" id="signupModalLabel">회원 가입</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form id="signupForm" action="<c:url value='/sign/signup'/>" method="post" onsubmit="return validateForm()">
+            <form id="signupForm" action="<c:url value='/sign/signup'/>" method="post" onsubmit="return validateForm()">
+                <div class="modal-body">
                     <div class="row mb-3">
                         <label for="uId" class="col-sm-4 col-form-label">아이디: </label>
                         <div class="col-sm-8" style="display: flex;">
@@ -198,28 +209,44 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="searchChild" class="col-sm-4 col-form-label">관계: </label>
+                        <label for="searchChild" class="col-sm-4 col-form-label">원생: </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="searchChild" />
+                            <input type="text" class="form-control" id="searchChild" placeholder="원생 이름을 입력해주세요."/>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <ul id="childList"></ul>
+                        <table class="table">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>번호</th>
+                                    <th>학급</th>
+                                    <th>이름</th>
+                                    <th>생년월일</th>
+                                    <th colspan="2">관계</th>
+                                </tr>
+                            </thead>
+                            <tbody id="childList"></tbody>
+                        </table>
                         <input type="hidden" name="uChildNum" />
                     </div>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                     <button type="submit" class="btn btn-primary">가입하기</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
-    <c:if test="${sessionScope.loginFailed}">
-        alert('로그인 실패');
+    <c:if test="${sessionScope.loginFailed ne null}">
+        let loginFailed = '${sessionScope.loginFailed}';
+        if(loginFailed === 'noUser'){
+            alert('정보가 없습니다.');
+        }else if(loginFailed === 'noApproval'){
+            alert('관리자 승인 대기중입니다.');
+        }
         <% session.removeAttribute("loginFailed"); %>
     </c:if>
 
@@ -265,31 +292,54 @@
         }
     });
 
-    $('#searchChild').on('input', function () {
+    $('#uTelNo').on('input', function(event){
+        if (event.originalEvent.inputType === 'deleteContentBackward' ) {
+            if($(this).val().length === 3 || $(this).val().length === 8){
+                $(this).val($(this).val().substring(0, $(this).val().length-1))
+            }
+        }
+        else{
+            if(isNaN(event.originalEvent.data) || $(this).val().length > 13){
+                $(this).val($(this).val().substring(0, $(this).val().length-1))
+            }
+            if($(this).val().length === 3 || $(this).val().length === 8){
+                $(this).val($(this).val() + '-');
+            }
+        }
+    });
+
+    $('#searchChild').on('input', function (event) {
+        if($(this).val() === '')    return;
         $.ajax({
             url: '/sign/searchChild',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify({keyword: $(this).val()}),
             type: 'POST',
             success(result) {
-                console.log(result);
-                let selectBox = $('#childList');
-                let list = '';
+                let listTbl = $('#childList');
+                let html = '';
                 for (let i = 0; i < result.length; i++) {
-                    list += '<li value="' + result[i].num + '">'
-                    list += result[i].grade + ' | ' + result[i].name + ' | ' + result[i].birth
-                    list += '<input type="radio" id="' + result[i].num + '_father" name="relation" class="relationRadio" value="F" /><label for="' + result[i].num + '_father">부</label>'
-                    list += '<input type="radio" id="' + result[i].num + '_mother" name="relation" class="relationRadio" value="M" /><label for="' + result[i].num + '_mother">모</label>'
-                    list += '</li>'
+                    html += '<tr>';
+                    html += '<td>' + result[i].num + '</td>';
+                    html += '<td>' + result[i].grade + '</td>';
+                    html += '<td>' + result[i].name + '</td>';
+                    html += '<td>' + String(result[i].birth[0]).padStart(2, '0') + String(result[i].birth[1]).padStart(2, '0') + String(result[i].birth[2]).padStart(2, '0') + '</td>';
+                    html += '<td>'
+                    html += '<input type="radio" id="' + result[i].num + '_father" name="relation" class="relationRadio" value="F" /><label for="' + result[i].num + '_father">부</label>';
+                    html += '</td>';
+                    html += '<td>'
+                    html += '<input type="radio" id="' + result[i].num + '_mother" name="relation" class="relationRadio" value="M" /><label for="' + result[i].num + '_mother">모</label>';
+                    html += '</td>';
+                    html += '</tr>';
                 }
-                selectBox.html(list);
+                listTbl.html(html);
             }
         });
     });
 
     $(document).on('click', '.relationRadio', function () {
         relationChk = true;
-        $('input[name="uChildNum"]').val($(this).parent().val());
+        $('input[name="uChildNum"]').val($(this)[0].id.split('_')[0]);
     })
 
     // 모달이 닫힐 때 폼 내용 초기화

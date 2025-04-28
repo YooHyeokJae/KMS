@@ -2,7 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.mapper.SignMapper">
     <select id="searchChild" resultType="com.hj.vo.ChildVo">
-        SELECT * FROM CHILD WHERE NAME LIKE CONCAT('%', #{keyword}, '%')
+        SELECT C.*, G.NAME AS GRADE
+        FROM CHILD C
+        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        WHERE C.NAME LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="getUserByUserId" resultType="com.hj.vo.UserVo">
@@ -12,4 +15,9 @@
     <select id="login" resultType="com.hj.vo.UserVo">
         SELECT * FROM USER WHERE ID = #{userId} AND PASSWORD = #{userPw}
     </select>
+
+    <insert id="insertUser">
+        INSERT INTO USER(ID, PASSWORD, NAME, AUTH, EMAIL, TEL_NO, CHILD_NUM, RELATION)
+        VALUES(#{id}, #{password}, #{name}, #{auth}, #{email}, #{telNo}, #{childNum}, #{relation})
+    </insert>
 </mapper>
