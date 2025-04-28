@@ -41,6 +41,9 @@ public class IndexController {
         params.put("order", "date");
         List<BoardVo> boardVoList = this.boardService.getBestByDateOrViewOrLike(params);
         model.addAttribute("boardVoList", boardVoList);
+
+        String todayQuote = this.boardService.todayQuote();
+        model.addAttribute("todayQuote", todayQuote);
         return "index";
     }
 
