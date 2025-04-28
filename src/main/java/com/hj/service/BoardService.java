@@ -119,4 +119,8 @@ public class BoardService {
     public List<BoardVo> searchByCond(Map<String, Object> params) {
         return this.boardMapper.searchByCond(params);
     }
+
+    public String todayQuote() {
+        return this.boardMapper.todayQuote();
+    }
 }

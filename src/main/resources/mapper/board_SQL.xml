@@ -121,4 +121,8 @@
           <if test="content != null and content != ''"> AND B.CONTENT LIKE CONCAT('%', #{content}, '%') </if>
         ORDER BY B.REG_DATE DESC
     </select>
+
+    <select id="todayQuote" resultType="String">
+        SELECT CONTENT FROM TODAY_QUOTE ORDER BY RAND() LIMIT 1
+    </select>
 </mapper>
