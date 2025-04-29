@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hj.mapper.UserMapper">
+    <select id="getUserList" resultType="com.hj.vo.UserVo">
+        SELECT U.*, C.NAME AS CHILD_NAME
+        FROM USER U
+        LEFT JOIN CHILD C ON (U.CHILD_NUM = C.NUM)
+        WHERE U.DEL_YN = 'N'
+          AND AUTH != 'W'
+        <if test="uId != null and uId != ''"> AND U.ID LIKE CONCAT('%', #{uId}, '%') </if>
+        <if test="uName != null and uName != ''"> AND U.NAME LIKE CONCAT('%', #{uName}, '%') </if>
+        <if test="uEmail != null and uEmail != ''"> AND U.EMAIL LIKE CONCAT('%', #{uEmail}, '%') </if>
+        <if test="uTelNo != null and uTelNo != ''"> AND U.TEL_NO LIKE CONCAT('%', #{uTelNo}, '%') </if>
+        <if test="uChildName != null and uChildName != ''"> AND U.CHILD_NUM IN (SELECT NUM FROM CHILD WHERE NAME LIKE CONCAT('%', #{uChildName}, '%')) </if>
+        <if test="uAuth != null and uAuth != 'all'"> AND U.AUTH = #{uAuth} </if>
+        <if test="uRelation != null and uRelation != 'all'"> AND U.AUTH = #{uRelation} </if>
+        ORDER BY REG_DATE DESC
+    </select>
+
+    <select id="getWaitingList" resultType="com.hj.vo.UserVo">
+        SELECT U.*, C.NAME AS CHILD_NAME
+        FROM USER U
+        LEFT JOIN CHILD C ON (U.CHILD_NUM = C.NUM)
+        WHERE U.DEL_YN = 'N'
+          AND AUTH = 'W'
+        <if test="uId != null and uId != ''"> AND U.ID LIKE CONCAT('%', #{uId}, '%') </if>
+        <if test="uName != null and uName != ''"> AND U.NAME LIKE CONCAT('%', #{uName}, '%') </if>
+        <if test="uEmail != null and uEmail != ''"> AND U.EMAIL LIKE CONCAT('%', #{uEmail}, '%') </if>
+        <if test="uTelNo != null and uTelNo != ''"> AND U.TEL_NO LIKE CONCAT('%', #{uTelNo}, '%') </if>
+        <if test="uChildName != null and uChildName != ''"> AND U.CHILD_NUM IN (SELECT NUM FROM CHILD WHERE NAME LIKE CONCAT('%', #{uChildName}, '%')) </if>
+        <if test="uAuth != null and uAuth != 'all'"> AND U.AUTH = #{uAuth} </if>
+        <if test="uRelation != null and uRelation != 'all'"> AND U.AUTH = #{uRelation} </if>
+        ORDER BY REG_DATE DESC
+    </select>
+
+    <update id="changeAuth">
+        UPDATE USER SET AUTH = #{auth},
+                        UPD_DATE = SYSDATE()
+        WHERE ID = #{id}
+    </update>
+</mapper>

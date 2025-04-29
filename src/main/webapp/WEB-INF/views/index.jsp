@@ -140,9 +140,9 @@
             <div class="test_div mb-3" id="" style="height: 280px; overflow-y: auto;">
                 <p> // index.jsp [140] 페이지 통계 화면 만들기 (금) </p>
                 <p> // index.jsp [141] 설정 화면 만들기 (금) </p>
-                <p> // index.jsp [142] 회원 가입 및 id/pw 찾기 -> 가입승인, 권한설정 (화)</p>
+                <p style="color: red"> // index.jsp [142] 회원 가입 및 id/pw 찾기 <br> -> 가입승인, 권한설정 (화)</p>
                 <p> // index.jsp [143] 게시판 목록에 '앨범' 추가해서 관리자만 글 작성할수 있도록 (수) </p>
-                <p> // index.jsp [144] 여기에는 뭘 넣을까? -> 교실별 일일 계획안 or 앨범게시판 랜덤 사진 (목) </p>
+                <p> // index.jsp [144] 여기에는 교실별 일일 계획안 or 앨범게시판 랜덤 사진 (목) </p>
                 <p> // index.jsp [145] 식단표 영역 옆에 날씨 위젯 + 오늘의 한마디(폰트 찾아보기) (목) </p>
             </div>
 
@@ -209,7 +209,13 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="searchChild" class="col-sm-4 col-form-label">원생: </label>
+                        <div class="col-sm-4">
+                            <label for="searchChild" class="">원생: </label>
+                            <div class="d-flex align-items-center">
+                                <label for="teacherChkBox" style="font-size: 11px;">교원 회원가입</label>
+                                <input type="checkbox" class="form-check ms-2" id="teacherChkBox" />
+                            </div>
+                        </div>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="searchChild" placeholder="원생 이름을 입력해주세요."/>
                         </div>
@@ -258,7 +264,7 @@
             alert('아이디 중복검사를 해주세요.');
             return false;
         }
-        if (!relationChk) {
+        if (!relationChk && !$('#teacherChkBox')[0].checked) {
             alert('원생과의 관계를 입력해주세요.')
             return false;
         }
@@ -349,6 +355,15 @@
         $('#childList').html('');
         $('#pwAlert').text('');
         $('#signupForm')[0].reset();
+    });
+
+    $('#teacherChkBox').on('click', function(){
+        let flag = $(this)[0].checked;
+        if(flag){
+            $('#searchChild').prop('disabled', true).val('');
+        }else{
+            $('#searchChild').prop('disabled', false);
+        }
     });
 </script>
 

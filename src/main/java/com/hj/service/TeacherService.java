@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Service
 public class TeacherService {
-    @Resource
+    @Resource(name="teacherMapper")
     private TeacherMapper teacherMapper;
 
     public List<TeacherVo> getList() {

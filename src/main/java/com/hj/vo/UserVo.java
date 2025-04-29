@@ -17,4 +17,6 @@ public class UserVo {
     private String delYn;
     private LocalDateTime regDate;
     private LocalDateTime updDate;
+
+    private String childName;
 }

@@ -32,7 +32,9 @@ public class SignController {
         userVo.setName((String) param.get("uName"));
         userVo.setTelNo((String) param.get("uTelNo"));
         userVo.setEmail((String) param.get("uEmail"));
-        userVo.setChildNum(Integer.parseInt((String) param.get("uChildNum")));
+        if(param.get("uChildNum") != null && !"".equals(param.get("uChildNum"))){
+            userVo.setChildNum(Integer.parseInt((String) param.get("uChildNum")));
+        }
         userVo.setRelation((String) param.get("relation"));
         userVo.setAuth("W");
         this.signService.insertUser(userVo);
