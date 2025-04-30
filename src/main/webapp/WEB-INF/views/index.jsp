@@ -125,7 +125,7 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <input type="button" value="회원가입" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#signupModal" />
-                            <input type="button" value="ID/PW 찾기" class="btn btn-secondary ms-3" onclick="{alert('미구현\nindex.jsp[127]')}"/>
+                            <input type="button" value="ID/PW 찾기" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchIdPwModal" />
                         </div>
                     </form>
                 </c:if>
@@ -168,7 +168,7 @@
                 <h1 class="modal-title fs-5" id="signupModalLabel">회원 가입</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="signupForm" action="<c:url value='/sign/signup'/>" method="post" onsubmit="return validateForm()">
+            <form id="signupForm" action="<c:url value='/sign/signup'/>" method="post" onsubmit="return validateSignForm()">
                 <div class="modal-body">
                     <div class="row mb-3">
                         <label for="uId" class="col-sm-4 col-form-label">아이디: </label>
@@ -223,13 +223,13 @@
                     <div class="mb-3">
                         <table class="table">
                             <thead>
-                                <tr class="text-center">
-                                    <th>번호</th>
-                                    <th>학급</th>
-                                    <th>이름</th>
-                                    <th>생년월일</th>
-                                    <th colspan="2">관계</th>
-                                </tr>
+                            <tr class="text-center">
+                                <th>번호</th>
+                                <th>학급</th>
+                                <th>이름</th>
+                                <th>생년월일</th>
+                                <th colspan="2">관계</th>
+                            </tr>
                             </thead>
                             <tbody id="childList"></tbody>
                         </table>
@@ -245,6 +245,164 @@
     </div>
 </div>
 
+<%-- Id/Pw 찾기 모달 --%>
+<div class="modal fade" id="searchIdPwModal" tabindex="-1" aria-labelledby="searchIdPwModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="searchIdPwModalLabel">ID/PW 찾기</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6" style="border-right: 1px solid black;">
+                        <h5>ID 찾기</h5>
+                        <div class="row d-flex align-items-center mb-2">
+                            <div class="col-3"><label for="searchByChildName">원생 명</label></div>
+                            <div class="col-9"><input type="text" class="form-control idSearchParam" id="searchByChildName" /></div>
+                        </div>
+                        <div class="row d-flex align-items-center mb-2">
+                            <div class="col-3"><label for="searchByChildBirth">원생 생일</label></div>
+                            <div class="col-9"><input type="date" class="form-control idSearchParam" id="searchByChildBirth" /></div>
+                        </div>
+                        <div class="row d-flex align-items-center mb-2">
+                            <div class="col-3"><label for="searchByTelNo">전화번호</label></div>
+                            <div class="col-9"><input type="text" class="form-control idSearchParam" id="searchByTelNo" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-9 row" id="idResult"></div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <input type="button" class="btn btn-primary" id="searchId" value="찾기" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h5>PW 찾기</h5>
+                        <div class="row d-flex align-items-center mb-2">
+                            <div class="col-3"><label for="searchById">아이디</label></div>
+                            <div class="col-9"><input type="text" class="form-control pwSearchParam" id="searchById" /></div>
+                        </div>
+                        <div class="row d-flex align-items-center mb-2">
+                            <div class="col-3"><label for="searchByName">이름</label></div>
+                            <div class="col-9"><input type="text" class="form-control pwSearchParam" id="searchByName" /></div>
+                        </div>
+                        <div class="row d-flex align-items-center mb-2">
+                            <div class="col-3"><label for="searchByEmail">이메일</label></div>
+                            <div class="col-9"><input type="text" class="form-control pwSearchParam" id="searchByEmail" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-9 row" id="pwResult"></div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <input type="button" class="btn btn-primary" id="searchPw" value="찾기" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#searchByTelNo').on('input', function(event){
+        if (event.originalEvent.inputType === 'deleteContentBackward' ) {
+            if($(this).val().length === 3 || $(this).val().length === 8){
+                $(this).val($(this).val().substring(0, $(this).val().length-1))
+            }
+        }
+        else{
+            if(isNaN(event.originalEvent.data) || $(this).val().length > 13){
+                $(this).val($(this).val().substring(0, $(this).val().length-1))
+            }
+            if($(this).val().length === 3 || $(this).val().length === 8){
+                $(this).val($(this).val() + '-');
+            }
+        }
+    });
+
+    $('#searchId').on('click', function(){
+        $('.idSearchParam').each(function(){
+            if($(this).val() === ""){
+                alert('정보를 입력해주세요.');
+                return false;
+            }
+        });
+
+        let data = {
+            childName: $('#searchByChildName').val(),
+            childBirth: $('#searchByChildBirth').val(),
+            telNo: $('#searchByTelNo').val()
+        }
+
+        $.ajax({
+            url: '/sign/searchId',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function(result){
+                let html = '';
+                if(result.length !== 0){
+                    html += '<div class="col-5"><span>검색 결과: </span></div><div class="col-7">';
+                    for(let i=0; i<result.length; i++){
+                        html += '<span>' + result[i].id + '</span><br>';
+                    }
+                    html += '</div>';
+                }else{
+                    html += '<span style="color: red;">일치하는 정보가 없습니다.</span>';
+                }
+                $('#idResult').html(html);
+            }
+        });
+    });
+
+    $('#searchPw').on('click', function(){
+        $('.pwSearchParam').each(function(){
+            if($(this).val() === ""){
+                alert('정보를 입력해주세요.');
+                return false;
+            }
+        });
+
+        let data = {
+            id: $('#searchById').val(),
+            name: $('#searchByName').val(),
+            email: $('#searchByEmail').val()
+        }
+
+        $.ajax({
+            url: '/sign/searchPw',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function(result){
+                let html = '';
+                if(result.length !== 0){
+                    let pw = result[0].password;
+                    let maskedCnt = Math.floor(pw.length*0.4);
+                    let visibleCnt = pw.length - maskedCnt;
+                    let maskedPart = '*'.repeat(maskedCnt);
+                    let visiblePart = pw.slice(-visibleCnt);
+                    let encryptedPw = maskedPart + visiblePart;
+
+                    html += '<div class="col-5"><span>검색 결과: </span></div>';
+                    html += '<div class="col-7"><span>' + encryptedPw + '</span></div>';
+                    html += '<div><span style="font-size: 11px; color: red;">보안을 위해 40%는 암호화된 상태로 표기됩니다. <br>전체 비밀번호를 확인하고 싶은 경우에는 <br>관리자에게 문의하세요.</span></div>';
+                }else{
+                    html += '<span style="color: red;">일치하는 정보가 없습니다.</span>';
+                }
+                $('#pwResult').html(html);
+            }
+        });
+    });
+
+    $('#searchIdPwModal').on('hidden.bs.modal', function () {
+        $('.idSearchParam').val('');
+        $('.pwSearchParam').val('');
+        $('#idResult').html('');
+        $('#pwResult').html('');
+    });
+</script>
+
 <script>
     <c:if test="${sessionScope.loginFailed ne null}">
         let loginFailed = '${sessionScope.loginFailed}';
@@ -258,13 +416,14 @@
 
     let dupChk = false;
     let relationChk = false;
+    let $teacherChkBox = $('#teacherChkBox');
 
-    function validateForm() {
+    function validateSignForm() {
         if (!dupChk) {
             alert('아이디 중복검사를 해주세요.');
             return false;
         }
-        if (!relationChk && !$('#teacherChkBox')[0].checked) {
+        if (!relationChk && !$teacherChkBox[0].checked) {
             alert('원생과의 관계를 입력해주세요.')
             return false;
         }
@@ -314,12 +473,47 @@
         }
     });
 
-    $('#searchChild').on('input', function (event) {
-        if($(this).val() === '')    return;
+    let $searchChild = $('#searchChild');
+    let isComposing = false;
+    let lastKeyword = '';
+    $searchChild.on('compositionstart', function(){
+        isComposing = true;
+    });
+
+    $searchChild.on('compositionend', function(e){
+        isComposing = false;
+        const keyword = e.target.value.trim();
+        if (keyword !== lastKeyword) {
+            lastKeyword = keyword;
+            fn_search(keyword);
+        }
+    });
+
+    $searchChild.on('blur', function(e){
+        const keyword = e.target.value.trim();
+        if (keyword !== lastKeyword) {
+            lastKeyword = keyword;
+            fn_search(keyword);
+        }
+    });
+
+    $searchChild.on('input', function (e) {
+        if (!isComposing) {
+            const keyword = e.target.value.trim();
+            if (keyword !== lastKeyword) {
+                lastKeyword = keyword;
+                fn_search(keyword);
+            }
+        }
+    });
+
+    function fn_search(keyword){
+        if(keyword === '')    return;
+
         $.ajax({
             url: '/sign/searchChild',
             contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({keyword: $(this).val()}),
+            data: JSON.stringify({keyword: keyword}),
             type: 'POST',
             success(result) {
                 let listTbl = $('#childList');
@@ -341,7 +535,7 @@
                 listTbl.html(html);
             }
         });
-    });
+    }
 
     $(document).on('click', '.relationRadio', function () {
         relationChk = true;
@@ -357,7 +551,7 @@
         $('#signupForm')[0].reset();
     });
 
-    $('#teacherChkBox').on('click', function(){
+    $teacherChkBox.on('click', function(){
         let flag = $(this)[0].checked;
         if(flag){
             $('#searchChild').prop('disabled', true).val('');
@@ -396,7 +590,7 @@
             eventContent: function (eventInfo) {
                 return {html: eventInfo.event.extendedProps.customHtml }
             },
-            datesSet: function (info) {
+            datesSet: function () {
                 setTimeout(() => {
                     let eventElements = document.querySelectorAll('.fc-event');
                     let existingMessage = document.querySelector('.no-events-message');

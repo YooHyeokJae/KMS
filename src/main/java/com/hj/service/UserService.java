@@ -29,4 +29,12 @@ public class UserService {
     public void changeAuth(Map<String, Object> params) {
         this.userMapper.changeAuth(params);
     }
+
+    public List<UserVo> searchId(Map<String, Object> params) {
+        return this.userMapper.searchId(params);
+    }
+
+    public List<UserVo> searchPw(Map<String, Object> params) {
+        return this.userMapper.searchPw(params);
+    }
 }

@@ -38,4 +38,19 @@
                         UPD_DATE = SYSDATE()
         WHERE ID = #{id}
     </update>
+
+    <select id="searchId" resultType="com.hj.vo.UserVo">
+        SELECT *
+        FROM USER
+        WHERE CHILD_NUM = (SELECT NUM FROM CHILD WHERE NAME = #{childName} AND BIRTH = #{childBirth})
+          AND TEL_NO = #{telNo}
+    </select>
+
+    <select id="searchPw" resultType="com.hj.vo.UserVo">
+        SELECT *
+        FROM USER
+        WHERE ID = #{id}
+          AND NAME = #{name}
+          AND EMAIL = #{email}
+    </select>
 </mapper>

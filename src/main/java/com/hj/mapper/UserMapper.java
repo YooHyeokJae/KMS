@@ -13,4 +13,8 @@ public interface UserMapper {
     List<UserVo> getWaitingList(Map<String, Object> params);
 
     void changeAuth(Map<String, Object> params);
+
+    List<UserVo> searchId(Map<String, Object> params);
+
+    List<UserVo> searchPw(Map<String, Object> params);
 }

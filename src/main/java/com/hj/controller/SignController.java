@@ -1,17 +1,16 @@
 package com.hj.controller;
 
 import com.hj.service.SignService;
+import com.hj.service.UserService;
 import com.hj.vo.ChildVo;
 import com.hj.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,8 @@ public class SignController {
 
     @Resource(name="signService")
     private SignService signService;
+    @Resource(name="userService")
+    private UserService userService;
 
     @PostMapping("/signup")
     public String signup(@RequestParam Map<String, Object> param) {
@@ -76,5 +77,17 @@ public class SignController {
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("loginUser");
         return "logout";
+    }
+
+    @PostMapping("/searchId")
+    @ResponseBody
+    public List<UserVo> searchId(@RequestBody Map<String, Object> params) {
+        return this.userService.searchId(params);
+    }
+
+    @PostMapping("/searchPw")
+    @ResponseBody
+    public List<UserVo> searchPw(@RequestBody Map<String, Object> params) {
+        return this.userService.searchPw(params);
     }
 }
