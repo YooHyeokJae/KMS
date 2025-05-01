@@ -16,10 +16,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/board")
@@ -180,5 +179,47 @@ public class BoardController {
             log.error("{}", e.getMessage());
             return null;
         }
+    }
+
+    @GetMapping("/album")
+    public String album(Model model){
+        int lastNum = this.boardService.getLastAlbumNum();
+        model.addAttribute("lastNum", lastNum);
+        return "album/list";
+    }
+
+    @PostMapping("/getAlbumData")
+    @ResponseBody
+    public List<AlbumVo> getAlbumData(@RequestBody Map<String, Object> params){
+        int cnt = Integer.parseInt(params.get("cnt").toString());
+        int lastNum = Integer.parseInt(params.get("lastNum").toString());
+        return this.boardService.getAlbum(lastNum, cnt);
+    }
+
+    @PostMapping("/insertAlbum")
+    @ResponseBody
+    public String insertAlbum(
+            @RequestParam("files") List<MultipartFile> files,
+            @RequestParam("descriptions") List<String> descriptions){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd HH_mm_ss");
+        String now = sdf.format(new Date());
+        int idx = 0;
+        for(MultipartFile file : files){
+            String originalFileName = file.getOriginalFilename();
+            String ext = originalFileName != null ? originalFileName.split("\\.")[1] : "";
+            String fileName = "/album/" + now + "(" + idx + ")." + ext;
+            String description = descriptions.get(idx++);
+            long fileSize = file.getSize();
+
+            try{
+                file.transferTo(new File(fileName));
+                AlbumVo albumVo = new AlbumVo(originalFileName, fileName, description, fileSize);
+                this.boardService.insertAlbum(albumVo);
+            } catch(Exception e){
+                log.error("{}", e.getMessage());
+                return "fail";
+            }
+        }
+        return "success";
     }
 }

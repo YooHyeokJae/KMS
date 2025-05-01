@@ -110,7 +110,7 @@
           <div class="nav-item-box">
             <p class="nav-item"><a href="<c:url value="/board/list?cat=notice"/>">공지사항</a></p>
             <p class="nav-item"><a href="<c:url value="/board/list?cat=free"/>">자유게시판</a></p>
-            <p class="nav-item"><a href="#">앨범</a></p>
+            <p class="nav-item"><a href="<c:url value="/board/album"/>">앨범</a></p>
           </div>
         </li>
         <li class="nav-link">

@@ -1,5 +1,6 @@
 package com.hj.mapper;
 
+import com.hj.vo.AlbumVo;
 import com.hj.vo.BoardVo;
 import com.hj.vo.ReplyVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -49,4 +50,10 @@ public interface BoardMapper {
     List<BoardVo> searchByCond(Map<String, Object> params);
 
     String todayQuote();
+
+    void insertAlbum(AlbumVo albumVo);
+
+    int getLastAlbumNum();
+
+    List<AlbumVo> getAlbum(Map<String, Object> params);
 }

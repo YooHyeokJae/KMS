@@ -1,6 +1,7 @@
 package com.hj.service;
 
 import com.hj.mapper.BoardMapper;
+import com.hj.vo.AlbumVo;
 import com.hj.vo.BoardVo;
 import com.hj.vo.ReplyVo;
 import com.hj.vo.UserVo;
@@ -11,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,5 +124,20 @@ public class BoardService {
 
     public String todayQuote() {
         return this.boardMapper.todayQuote();
+    }
+
+    public void insertAlbum(AlbumVo albumVo) {
+        this.boardMapper.insertAlbum(albumVo);
+    }
+
+    public int getLastAlbumNum() {
+        return this.boardMapper.getLastAlbumNum();
+    }
+
+    public List<AlbumVo> getAlbum(int lastNum, int cnt) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("lastNum", lastNum);
+        params.put("cnt", cnt);
+        return this.boardMapper.getAlbum(params);
     }
 }

@@ -138,12 +138,10 @@
             </div>
             <br>
             <div class="test_div mb-3" id="" style="height: 280px; overflow-y: auto;">
-                <p> // index.jsp [140] 페이지 통계 화면 만들기 (금) </p>
-                <p> // index.jsp [141] 설정 화면 만들기 (금) </p>
-                <p style="color: red"> // index.jsp [142] 회원 가입 및 id/pw 찾기 <br> -> 가입승인, 권한설정 (화)</p>
-                <p> // index.jsp [143] 게시판 목록에 '앨범' 추가해서 관리자만 글 작성할수 있도록 (수) </p>
-                <p> // index.jsp [144] 여기에는 교실별 일일 계획안 or 앨범게시판 랜덤 사진 (목) </p>
-                <p> // index.jsp [145] 식단표 영역 옆에 날씨 위젯 + 오늘의 한마디(폰트 찾아보기) (목) </p>
+                <p> // index.jsp [140] 페이지 통계 화면 만들기 (토) </p>
+                <p> // index.jsp [141] 설정 화면 만들기 (일) </p>
+                <p> // index.jsp [144] 여기에는 교실별 일일 계획안 or 앨범게시판 랜덤 사진 (금) </p>
+                <p> // index.jsp [145] 식단표 영역 옆에 날씨 위젯 + 오늘의 한마디(폰트 찾아보기) (금) </p>
             </div>
 
             <div class="d-flex" style="height: 220px;">

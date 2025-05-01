@@ -125,4 +125,17 @@
     <select id="todayQuote" resultType="String">
         SELECT CONTENT FROM TODAY_QUOTE ORDER BY RAND() LIMIT 1
     </select>
+
+    <insert id="insertAlbum">
+        INSERT INTO ALBUM(ORIGINAL_FILE_NAME, FILE_NAME, DESCRIPTION, FILE_SIZE)
+        VALUES(#{originalFileName}, #{fileName}, #{description}, #{fileSize})
+    </insert>
+
+    <select id="getLastAlbumNum" resultType="int">
+        SELECT MAX(NUM) + 1 FROM ALBUM WHERE DEL_YN = 'N'
+    </select>
+
+    <select id="getAlbum" resultType="com.hj.vo.AlbumVo">
+        SELECT * FROM ALBUM WHERE DEL_YN = 'N' AND NUM <![CDATA[ < ]]> #{lastNum} ORDER BY NUM DESC LIMIT #{cnt}
+    </select>
 </mapper>
