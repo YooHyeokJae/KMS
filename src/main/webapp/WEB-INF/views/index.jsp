@@ -5,6 +5,12 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <style>
+    @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+    .nanumpenscript * {
+        font-family: 'Nanum Pen Script', cursive;
+        font-size: 25px;
+    }
+
     .no-events-message{
         height: 80px;
         display: flex;
@@ -137,20 +143,58 @@
                 </c:if>
             </div>
             <br>
-            <div class="test_div mb-3" id="" style="height: 280px; overflow-y: auto;">
-                <p> // index.jsp [140] 페이지 통계 화면 만들기 (토) </p>
-                <p> // index.jsp [141] 설정 화면 만들기 (일) </p>
-                <p> // index.jsp [144] 여기에는 교실별 일일 계획안 or 앨범게시판 랜덤 사진 (금) </p>
-                <p> // index.jsp [145] 식단표 영역 옆에 날씨 위젯 + 오늘의 한마디(폰트 찾아보기) (금) </p>
+            <div class="mb-3" id="" style="height: 280px;">
+                <div class="d-flex justify-content-end">
+                    <a href="<c:url value="/board/album"/>" class="btn btn-outline-light" style="color: black;">더보기</a>
+                </div>
+                <div id="albumCarouselIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="8000">
+                    <div class="carousel-indicators">
+                        <c:forEach var="albumVo" items="${albumVoList}" varStatus="stat">
+                            <button type="button" data-bs-target="#albumCarouselIndicators" data-bs-slide-to="${stat.index}" <c:if test="${stat.index eq 1}"> class="active" </c:if>aria-current="true" aria-label="Slide ${stat.index}"></button>
+                        </c:forEach>
+                    </div>
+                    <div class="carousel-inner" style="height: 230px; background-color: #b3b4b5;">
+                        <c:forEach var="albumVo" items="${albumVoList}" varStatus="stat">
+                            <div class="carousel-item <c:if test="${stat.index eq 0}"> active </c:if>">
+                                <img src="/upload/${albumVo.fileName}" class="d-block h-100 mx-auto" alt="album${stat.count}" style="object-fit: cover;">
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#albumCarouselIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#albumCarouselIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
 
             <div class="d-flex" style="height: 220px;">
                 <div id='calendar' style="width: 50%;"></div>
                 <div style="width: 50%;">
-                    <div>날씨 위젯</div>
-                    <div class="text-center" style="font-family: Shadows Into Light, cursive, sans-serif;">
-                        <p>오늘의 한마디</p>
-                        <p>${todayQuote}</p>
+                    <div class="row mt-2" style="height: 80px;">
+                        <div class="col-6" style="height: 80px;">
+                            <p class="d-flex align-items-center justify-content-end" style="font-size: 4em;">
+                                <c:if test="${weather.PTY eq 0 and weather.SKY eq 1}"><i class="bi bi-sun"></i></c:if>
+                                <c:if test="${weather.PTY eq 0 and weather.SKY eq 3}"><i class="bi bi-cloud-sun"></i></c:if>
+                                <c:if test="${weather.PTY eq 0 and weather.SKY eq 4}"><i class="bi bi-clouds-fill"></i></c:if>
+                                <c:if test="${weather.PTY eq 1}"><i class="bi bi-cloud-rain"></i></c:if>
+                                <c:if test="${weather.PTY eq 2}"><i class="bi bi-cloud-sleet"></i></c:if>
+                                <c:if test="${weather.PTY eq 3}"><i class="bi bi-cloud-snow"></i></c:if>
+                                <c:if test="${weather.PTY eq 4}"><i class="bi bi-cloud-rain-heavy"></i></c:if>
+                                <c:if test="${weather.error}">www.data.go.kr</c:if>
+                            </p>
+                        </div>
+                        <div class="col-6" style="height: 80px;">
+                            <p>온도: <span>${weather.TMP}</span>&#8451;</p>
+                            <p>풍속: <span>${weather.WSD}</span>m/s</p>
+                        </div>
+                    </div>
+                    <div class="text-center nanumpenscript">
+                        <span>오늘의 한마디</span><br>
+                        <span>${todayQuote}</span>
                     </div>
                 </div>
             </div>
@@ -659,3 +703,11 @@
         location.href = 'board/detail?num=' + $(this)[0].dataset.num;
     });
 </script>
+
+<%-- 날씨 --%>
+<script>
+    let weather = '${weather}'
+    console.log(weather);
+</script>
+<p> // index.jsp [140] 페이지 통계 화면 만들기 (토) </p>
+<p> // index.jsp [141] 설정 화면 만들기 (일) </p>
