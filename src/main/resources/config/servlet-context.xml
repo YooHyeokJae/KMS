@@ -11,6 +11,16 @@
     <!--upload 폴더에 바로 접근할 수있도록 빈 등록 필요-->
     <mvc:resources mapping="/upload/**" location="file:///C:/upload/" />
 
+    <!-- 인터셉터 등록 -->
+    <beans:bean id="logInterceptor" class="com.hj.controller.LogController"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <mvc:exclude-mapping path="/resources/**" />
+            <beans:ref bean="logInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <annotation-driven />
     <!-- Tiles 설정 시작 -->
     <beans:bean id="tilesConfigurer"

@@ -132,7 +132,7 @@
           <a href="#">설정</a>
           <div class="nav-item-box">
             <p class="nav-item"><a href="${pageContext.request.contextPath}/setting/">설정</a></p>
-            <p class="nav-item"><a href="${pageContext.request.contextPath}/admin/">관리자 페이지</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/admin/" onclick="authCheck(event)">관리자 페이지</a></p>
           </div>
         </li>
       </ul>
@@ -154,4 +154,12 @@
       }
     })
   });
+
+  function authCheck(event){
+    if('A' !== '${sessionScope.loginUser.auth}'){
+      alert('권한이 없습니다.');
+      event.preventDefault();
+      return false;
+    }
+  }
 </script>
