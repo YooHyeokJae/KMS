@@ -2,6 +2,7 @@ package com.hj.controller;
 
 import com.hj.service.BoardService;
 import com.hj.service.FoodService;
+import com.hj.service.TestService;
 import com.hj.util.Utils;
 import com.hj.vo.AlbumVo;
 import com.hj.vo.BoardVo;
@@ -23,6 +24,8 @@ import java.util.*;
 public class IndexController {
     Logger log = LoggerFactory.getLogger(IndexController.class);
 
+    @Resource(name="testService")
+    private TestService testService;
     @Resource(name="foodService")
     private FoodService foodService;
     @Resource(name="boardService")
@@ -62,8 +65,9 @@ public class IndexController {
         return "company";
     }
 
-    @PostMapping("/test")
-    public String test(HttpServletRequest request) throws ServletException, IOException {
-        return "redirect:/";
+    @GetMapping("/test")
+    public String test(Model model) {
+
+        return null;
     }
 }

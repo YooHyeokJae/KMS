@@ -2,7 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6a6a9d97d04ef1ab44849f63080d028d"></script>
 <div class="container">
-
     <!-- 유치원 소개 섹션 -->
     <div class="container my-3 py-3" style="background-color: #f0f8ff;">
         <h2 class="text-center">키즈빌 소개</h2>

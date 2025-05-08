@@ -4,5 +4,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TestMapper {
-    String test(int keyCd);
+    String test();
 }

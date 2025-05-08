@@ -12,6 +12,6 @@ public class TestService {
     TestMapper testMapper;
 
     public String test(int keyCd) {
-        return testMapper.test(keyCd);
+        return testMapper.test();
     }
 }
