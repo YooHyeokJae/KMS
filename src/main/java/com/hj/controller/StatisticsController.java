@@ -1,6 +1,7 @@
 package com.hj.controller;
 
 import com.hj.service.StatisticsService;
+import com.hj.vo.AccessLogVo;
 import com.hj.vo.StatsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.time.Year;
 import java.util.*;
 
@@ -60,7 +62,35 @@ public class StatisticsController {
     }
 
     @GetMapping("/page")
-    public String statistics(Model model) {
+    public String page(Model model) {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -15);
+        Date strDate = calendar.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String str = sdf.format(strDate);
+        String end = sdf.format(date);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("strDate", str);
+        params.put("endDate", end);
+
+        List<StatsVo> statsByUser = this.statisticsService.getStatsByUser();
+        List<StatsVo> statsByPageUrl = this.statisticsService.getStatsByPageUrl();
+        List<StatsVo> statsByLogin = this.statisticsService.getStatsByLogin(params);
+        model.addAttribute("statsByUser", statsByUser);
+        model.addAttribute("statsByPageUrl", statsByPageUrl);
+        model.addAttribute("statsByLogin", statsByLogin);
+        model.addAttribute("strDate", str);
+        model.addAttribute("endDate", end);
         return "statistics/page";
+    }
+
+    @PostMapping("/searchLoginStats")
+    @ResponseBody
+    public List<StatsVo> searchLoginStats(@RequestBody Map<String, Object> params) {
+        return this.statisticsService.getStatsByLogin(params);
     }
 }

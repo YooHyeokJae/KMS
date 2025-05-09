@@ -30,6 +30,10 @@ public class LogController implements HandlerInterceptor {
         Map<String, Object> ipInfo = Utils.getIpInfo();
         String ipAddress = ipInfo.get("ip").toString();
         String pageUrl = request.getRequestURI();
+        String queryString = request.getQueryString();
+        if(queryString != null) {
+            pageUrl = pageUrl + "?" + queryString;
+        }
 
         HttpSession session = request.getSession(false);
         String userId = null;
@@ -38,7 +42,6 @@ public class LogController implements HandlerInterceptor {
             if (userVo != null) {
                 userId = userVo.getId();
                 AccessLogVo accessLogVo = new AccessLogVo(userId, ipAddress, pageUrl);
-                log.info("accessLog: {}", accessLogVo);
                 if("GET".equalsIgnoreCase(request.getMethod())) {
                     this.logService.insertLog(accessLogVo);
                 }

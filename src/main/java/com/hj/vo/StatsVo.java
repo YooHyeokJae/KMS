@@ -11,4 +11,7 @@ public class StatsVo {
 
     private String grade;
     private int studentCnt;
+
+    private String gubun;
+    private int cnt;
 }

@@ -35,4 +35,42 @@
         GROUP BY G.NUM
         ORDER BY G.NUM
     </select>
+
+    <select id="getStatsByUser" resultType="com.hj.vo.StatsVo">
+        SELECT AUTH AS GUBUN, COUNT(*) AS CNT
+        FROM USER
+        WHERE AUTH IN ('A', 'T')
+        GROUP BY AUTH
+
+        UNION ALL
+
+        SELECT AUTH AS GUBUN, COUNT(*) AS CNT
+        FROM USER
+        WHERE AUTH = 'W'
+        GROUP BY AUTH
+
+        UNION ALL
+
+        SELECT RELATION AS GUBUN, COUNT(*) AS CNT
+        FROM USER
+        WHERE AUTH = 'P'
+        GROUP BY RELATION
+
+        ORDER BY GUBUN
+    </select>
+
+    <select id="getStatsByPageUrl" resultType="com.hj.vo.StatsVo">
+        SELECT PAGE_URL AS GUBUN, COUNT(*) AS CNT
+        FROM ACCESS_LOGS
+        GROUP BY GUBUN
+        ORDER BY GUBUN
+    </select>
+
+    <select id="getStatsByLogin" resultType="com.hj.vo.StatsVo">
+        SELECT SUBSTR(ACCESS_TIME, 1, 10) AS GUBUN, COUNT(DISTINCT USER_ID) AS CNT
+        FROM ACCESS_LOGS
+        WHERE SUBSTR(ACCESS_TIME, 1, 10) BETWEEN #{strDate} AND #{endDate}
+        GROUP BY GUBUN
+        ORDER BY GUBUN
+    </select>
 </mapper>

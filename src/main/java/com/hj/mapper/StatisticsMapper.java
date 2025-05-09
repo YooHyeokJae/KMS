@@ -13,4 +13,10 @@ public interface StatisticsMapper {
     List<StatsVo> getTeacherStats(Map<String, Object> params);
 
     List<StatsVo> getStudentStats();
+
+    List<StatsVo> getStatsByUser();
+
+    List<StatsVo> getStatsByPageUrl();
+
+    List<StatsVo> getStatsByLogin(Map<String, Object> params);
 }

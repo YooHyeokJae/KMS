@@ -125,7 +125,7 @@
           <a href="#">통계</a>
           <div class="nav-item-box">
             <p class="nav-item"><a href="${pageContext.request.contextPath}/statistics/education">교육 통계</a></p>
-            <p class="nav-item"><a href="${pageContext.request.contextPath}/statistics/page">페이지 통계</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/statistics/page">접속 통계</a></p>
           </div>
         </li>
         <li class="nav-link">
