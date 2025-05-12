@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -89,5 +90,14 @@ public class SignController {
     @ResponseBody
     public List<UserVo> searchPw(@RequestBody Map<String, Object> params) {
         return this.userService.searchPw(params);
+    }
+
+    @PostMapping("/chagneInfo")
+    @ResponseBody
+    public String changeInfo(@RequestBody Map<String, Object> params, HttpSession session) {
+        this.userService.changeInfo(params);
+        UserVo userVo = this.signService.login(params);
+        session.setAttribute("loginUser", userVo);
+        return "success";
     }
 }

@@ -37,4 +37,8 @@ public class UserService {
     public List<UserVo> searchPw(Map<String, Object> params) {
         return this.userMapper.searchPw(params);
     }
+
+    public void changeInfo(Map<String, Object> params) {
+        this.userMapper.changeInfo(params);
+    }
 }

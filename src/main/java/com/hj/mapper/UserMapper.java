@@ -17,4 +17,6 @@ public interface UserMapper {
     List<UserVo> searchId(Map<String, Object> params);
 
     List<UserVo> searchPw(Map<String, Object> params);
+
+    void changeInfo(Map<String, Object> params);
 }

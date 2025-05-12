@@ -138,7 +138,8 @@
                 <c:if test="${sessionScope.loginUser ne null}">
                     <div>
                         <p>${sessionScope.loginUser.name}님 환영합니다.</p>
-                        <input type="button" class="btn btn-primary" id="logout" value="logout" />
+                        <a href="<c:url value="/setting/"/>" class="btn btn-primary" id="changeInfo">정보수정</a>
+                        <input type="button" class="btn btn-secondary" id="logout" value="logout" />
                     </div>
                 </c:if>
             </div>
@@ -345,6 +346,7 @@
     </div>
 </div>
 
+<%-- Id/Pw 찾기/정보수정--%>
 <script>
     $('#searchByTelNo').on('input', function(event){
         if (event.originalEvent.inputType === 'deleteContentBackward' ) {
@@ -443,8 +445,11 @@
         $('#idResult').html('');
         $('#pwResult').html('');
     });
+
+
 </script>
 
+<%-- 로그인/회원가입 --%>
 <script>
     <c:if test="${sessionScope.loginFailed ne null}">
         let loginFailed = '${sessionScope.loginFailed}';
@@ -603,6 +608,7 @@
     });
 </script>
 
+<%-- 식단표 --%>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendar');
@@ -657,6 +663,7 @@
     });
 </script>
 
+<%-- 게시판 --%>
 <script>
     function getBestBoard(){
         let data = {
@@ -709,5 +716,3 @@
     let weather = '${weather}'
     console.log(weather);
 </script>
-<p> // index.jsp [140] 페이지 통계 화면 만들기 (토) </p>
-<p> // index.jsp [141] 설정 화면 만들기 (일) </p>

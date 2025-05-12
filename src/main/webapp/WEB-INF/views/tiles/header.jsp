@@ -131,8 +131,8 @@
         <li class="nav-link">
           <a href="#">설정</a>
           <div class="nav-item-box">
-            <p class="nav-item"><a href="${pageContext.request.contextPath}/setting/">설정</a></p>
-            <p class="nav-item"><a href="${pageContext.request.contextPath}/admin/" onclick="authCheck(event)">관리자 페이지</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/setting/" onclick="authCheck(event, 'A', 'P', 'T')">개인 설정</a></p>
+            <p class="nav-item"><a href="${pageContext.request.contextPath}/admin/" onclick="authCheck(event, 'A')">관리자 페이지</a></p>
           </div>
         </li>
       </ul>
@@ -155,8 +155,10 @@
     })
   });
 
-  function authCheck(event){
-    if('A' !== '${sessionScope.loginUser.auth}'){
+  function authCheck(event, ...allowedAuths){
+    const userAuth = '${sessionScope.loginUser.auth}';
+
+    if (!allowedAuths.includes(userAuth)) {
       alert('권한이 없습니다.');
       event.preventDefault();
       return false;
