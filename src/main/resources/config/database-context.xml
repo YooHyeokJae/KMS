@@ -10,10 +10,12 @@
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/kms_db" />
-<!--        <property name="driverClassName" value="org.mariadb.jdbc.Driver" />-->
-<!--        <property name="jdbcUrl" value="jdbc:mariadb://183.107.171.198:3306/KMS_DB" />-->
         <property name="username" value="root" />
         <property name="password" value="root" />
+<!--        <property name="driverClassName" value="org.mariadb.jdbc.Driver" />-->
+<!--        <property name="jdbcUrl" value="jdbc:mariadb://183.107.171.198:3306/KMS_DB" />-->
+<!--        <property name="username" value="yhj" />-->
+<!--        <property name="password" value="yhj4322" />-->
     </bean>
 
     <bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
