@@ -13,11 +13,11 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="rbspi_mariadb" uuid="22e79278-1675-4fb1-8752-c711247f0772">
+    <data-source source="LOCAL" name="rbspi_mariadb" uuid="764ddc66-5742-4201-87a2-02658a88f3a2">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://183.107.171.198:3306/kms_db</jdbc-url>
+      <jdbc-url>jdbc:mariadb://183.107.171.198:3306</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
