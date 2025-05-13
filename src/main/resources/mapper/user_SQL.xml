@@ -3,8 +3,8 @@
 <mapper namespace="com.hj.mapper.UserMapper">
     <select id="getUserList" resultType="com.hj.vo.UserVo">
         SELECT U.*, C.NAME AS CHILD_NAME
-        FROM USER U
-        LEFT JOIN CHILD C ON (U.CHILD_NUM = C.NUM)
+        FROM user U
+        LEFT JOIN child C ON (U.CHILD_NUM = C.NUM)
         WHERE U.DEL_YN = 'N'
           AND AUTH != 'W'
         <if test="uId != null and uId != ''"> AND U.ID LIKE CONCAT('%', #{uId}, '%') </if>
@@ -19,8 +19,8 @@
 
     <select id="getWaitingList" resultType="com.hj.vo.UserVo">
         SELECT U.*, C.NAME AS CHILD_NAME
-        FROM USER U
-        LEFT JOIN CHILD C ON (U.CHILD_NUM = C.NUM)
+        FROM user U
+        LEFT JOIN child C ON (U.CHILD_NUM = C.NUM)
         WHERE U.DEL_YN = 'N'
           AND AUTH = 'W'
         <if test="uId != null and uId != ''"> AND U.ID LIKE CONCAT('%', #{uId}, '%') </if>
@@ -34,28 +34,28 @@
     </select>
 
     <update id="changeAuth">
-        UPDATE USER SET AUTH = #{auth},
+        UPDATE user SET AUTH = #{auth},
                         UPD_DATE = SYSDATE()
         WHERE ID = #{id}
     </update>
 
     <select id="searchId" resultType="com.hj.vo.UserVo">
         SELECT *
-        FROM USER
+        FROM user
         WHERE CHILD_NUM = (SELECT NUM FROM CHILD WHERE NAME = #{childName} AND BIRTH = #{childBirth})
           AND TEL_NO = #{telNo}
     </select>
 
     <select id="searchPw" resultType="com.hj.vo.UserVo">
         SELECT *
-        FROM USER
+        FROM user
         WHERE ID = #{id}
           AND NAME = #{name}
           AND EMAIL = #{email}
     </select>
 
     <update id="changeInfo">
-        UPDATE USER SET NAME = #{uName},
+        UPDATE user SET NAME = #{uName},
                         EMAIL = #{uEmail},
                         TEL_NO = #{uTelNo}
         <if test="uPw != ''">, PASSWORD = #{userPw} </if>

@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hj.mapper.EducationMapper">
     <select id="getNextDailyPlanNum" resultType="int">
-        SELECT IFNULL(MAX(NUM) + 1, 0) FROM DAILY_PLAN
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM daily_plan
     </select>
 
     <select id="getNextActivityNum" resultType="int">
-        SELECT IFNULL(MAX(NUM) + 1, 0) FROM ACTIVITY
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM activity
     </select>
 
     <insert id="insertDailyPlan">
-        INSERT INTO DAILY_PLAN(NUM, SEQ, ACTIVITY_DATE, TEACHER_ID, LOCATION, TARGET, GRADE, SUBJECT, GOALS, MATERIALS, REG_DATE, UPD_DATE)
+        INSERT INTO daily_plan(NUM, SEQ, ACTIVITY_DATE, TEACHER_ID, LOCATION, TARGET, GRADE, SUBJECT, GOALS, MATERIALS, REG_DATE, UPD_DATE)
         VALUES(#{num}, #{seq}, #{activityDate}, #{teacherId}, #{location}, #{target}, #{grade}, #{subject}, #{goals}, #{materials}, SYSDATE(), SYSDATE())
     </insert>
 
     <update id="modifyDailyPlan">
-        UPDATE DAILY_PLAN
+        UPDATE daily_plan
         SET SEQ = #{seq},
             ACTIVITY_DATE = #{activityDate},
             TEACHER_ID = #{teacherId},
@@ -30,39 +30,39 @@
     </update>
 
     <delete id="deleteActivity">
-        DELETE FROM ACTIVITY WHERE PLAN_NUM = #{planNum}
+        DELETE FROM activity WHERE PLAN_NUM = #{planNum}
     </delete>
 
     <insert id="insertActivity">
-        INSERT INTO ACTIVITY(NUM, PLAN_NUM, ACTIVITY_TIME, CONTENT, NOTE, REG_DATE, UPD_DATE)
+        INSERT INTO activity(NUM, PLAN_NUM, ACTIVITY_TIME, CONTENT, NOTE, REG_DATE, UPD_DATE)
         VALUES(#{num}, #{planNum}, #{activityTime}, #{content}, #{note}, SYSDATE(), SYSDATE())
     </insert>
 
     <select id="getAllDailyPlan" resultType="com.hj.vo.DailyPlanVo">
-        SELECT DAILY_PLAN.*, TEACHER.NAME AS INSTRUCTOR_NAME
-        FROM DAILY_PLAN LEFT JOIN TEACHER ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID)
-        ORDER BY DAILY_PLAN.REG_DATE DESC
+        SELECT daily_plan.*, teacher.NAME AS INSTRUCTOR_NAME
+        FROM daily_plan LEFT JOIN teacher ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID)
+        ORDER BY daily_plan.REG_DATE DESC
     </select>
 
     <select id="searchTeacherByName" resultType="com.hj.vo.TeacherVo">
-        SELECT * FROM TEACHER WHERE NAME LIKE CONCAT('%', #{keyword}, '%')
+        SELECT * FROM teacher WHERE NAME LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="getDailyPlanByNum" resultType="com.hj.vo.DailyPlanVo">
-        SELECT DAILY_PLAN.*, TEACHER.NAME AS INSTRUCTOR_NAME
-        FROM DAILY_PLAN
-        LEFT JOIN TEACHER ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID)
-        WHERE DAILY_PLAN.NUM = #{num}
+        SELECT daily_plan.*, teacher.NAME AS INSTRUCTOR_NAME
+        FROM daily_plan
+        LEFT JOIN teacher ON (daily_plan.TEACHER_ID = teacher.ID)
+        WHERE daily_plan.NUM = #{num}
     </select>
 
     <select id="getActivitiesByPlanNum" resultType="com.hj.vo.ActivityVo">
-        SELECT * FROM ACTIVITY WHERE PLAN_NUM = #{planNum}
+        SELECT * FROM activity WHERE PLAN_NUM = #{planNum}
     </select>
 
     <select id="searchPlan" resultType="com.hj.vo.DailyPlanVo">
         SELECT DP.*, T.NAME AS INSTRUCTOR_NAME
-        FROM DAILY_PLAN DP
-        LEFT JOIN TEACHER T ON (DP.TEACHER_ID = T.ID)
+        FROM daily_plan DP
+        LEFT JOIN teacher T ON (DP.TEACHER_ID = T.ID)
         WHERE SUBJECT LIKE CONCAT('%', #{subject}, '%')
           <if test="instructor != null and instructor != ''">
             AND DP.TEACHER_ID = (SELECT ID FROM TEACHER WHERE NAME = #{instructor})
@@ -73,31 +73,31 @@
     </select>
 
     <select id="getNextActivityRecordNum" resultType="int">
-        SELECT IFNULL(MAX(NUM) + 1, 0) FROM ACTIVITY_RECORD
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM activity_record
     </select>
 
     <insert id="insertRecord">
-        INSERT INTO ACTIVITY_RECORD(NUM, CHILD_NUM, ACTIVITY_NUM, RECORD)
+        INSERT INTO activity_record(NUM, CHILD_NUM, ACTIVITY_NUM, RECORD)
         VALUES(#{num}, #{childNum}, #{activityNum}, #{record})
     </insert>
 
     <select id="getAllActivityRecord" resultType="com.hj.vo.ActivityRecordVo">
         SELECT AR.*, C.NAME AS CHILD_NAME, (SELECT ACTIVITY_DATE FROM DAILY_PLAN D WHERE D.NUM = A.PLAN_NUM) AS ACTIVITY_DATE, A.CONTENT AS ACTIVITY_CONTENT
-        FROM ACTIVITY_RECORD AR
-        LEFT JOIN CHILD C ON (AR.CHILD_NUM = C.NUM)
-        LEFT JOIN ACTIVITY A ON (AR.ACTIVITY_NUM = A.NUM)
+        FROM activity_record AR
+        LEFT JOIN child C ON (AR.CHILD_NUM = C.NUM)
+        LEFT JOIN activity A ON (AR.ACTIVITY_NUM = A.NUM)
         WHERE AR.DEL_YN = 'N'
         ORDER BY AR.REG_DATE DESC
     </select>
 
     <select id="getNextCounselNum" resultType="int">
-        SELECT IFNULL(MAX(NUM) + 1, 0) FROM COUNSEL
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM counsel
     </select>
 
     <select id="getAllCounselByChildNum" resultType="com.hj.vo.CounselVo">
         SELECT C.*, T.NAME AS INSTRUCTOR_NAME
-        FROM COUNSEL C
-        LEFT JOIN TEACHER T ON (C.INSTRUCTOR_ID = T.ID AND T.DEL_YN = 'N')
+        FROM counsel C
+        LEFT JOIN teacher T ON (C.INSTRUCTOR_ID = T.ID AND T.DEL_YN = 'N')
         WHERE C.DEL_YN = 'N'
           AND C.CHILD_NUM = #{childNum}
         ORDER BY NUM DESC
@@ -105,18 +105,18 @@
 
     <select id="getCounselByNum" resultType="com.hj.vo.CounselVo">
         SELECT C.*, T.NAME AS INSTRUCTOR_NAME
-        FROM COUNSEL C
-        LEFT JOIN TEACHER T ON (C.INSTRUCTOR_ID = T.ID)
+        FROM counsel C
+        LEFT JOIN teacher T ON (C.INSTRUCTOR_ID = T.ID)
         WHERE NUM = #{num}
     </select>
 
     <insert id="insertCounsel">
-        INSERT INTO COUNSEL(NUM, CATEGORY, INSTRUCTOR_ID, COUNSEL_DATE, CHILD_NUM, COUNSEL_NOTE)
+        INSERT INTO counsel(NUM, CATEGORY, INSTRUCTOR_ID, COUNSEL_DATE, CHILD_NUM, COUNSEL_NOTE)
         VALUES(#{num}, #{category}, #{instructorId}, #{counselDate}, #{childNum}, #{counselNote})
     </insert>
 
     <update id="modifyCounsel">
-        UPDATE COUNSEL SET UPD_DATE = SYSDATE()
+        UPDATE counsel SET UPD_DATE = SYSDATE()
         <if test="category != null">, CATEGORY = #{category}</if>
         <if test="instructorId != null">, INSTRUCTOR_ID = #{instructorId}</if>
         <if test="counselDate != null">, COUNSEL_DATE = #{counselDate}</if>
@@ -127,30 +127,30 @@
 
     <select id="getHealthListByChildNum" resultType="com.hj.vo.HealthVo">
         SELECT H.*
-        FROM HEALTH_CHECK H
-        LEFT JOIN CHILD C ON (H.CHILD_NUM = C.NUM AND C.GRADUATED = 'N')
+        FROM health_check H
+        LEFT JOIN child C ON (H.CHILD_NUM = C.NUM AND C.GRADUATED = 'N')
         WHERE H.CHILD_NUM = #{childNum}
           AND H.DEL_YN = 'N'
         ORDER BY REG_DATE DESC
     </select>
 
     <update id="deleteHealthCheckByNum">
-        UPDATE HEALTH_CHECK SET DEL_YN = 'Y',
+        UPDATE health_check SET DEL_YN = 'Y',
                                 UPD_DATE = SYSDATE()
         WHERE NUM = #{num}
     </update>
 
     <select id="getNextHealthCheckNum" resultType="int">
-        SELECT IFNULL(MAX(NUM) + 1, 0) FROM HEALTH_CHECK
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM health_check
     </select>
 
     <insert id="insertHealthCheckByNum">
-        INSERT INTO HEALTH_CHECK(NUM, HOSPITAL, CHILD_NUM, CHECK_DATE, CHECK_RESULT)
+        INSERT INTO health_check(NUM, HOSPITAL, CHILD_NUM, CHECK_DATE, CHECK_RESULT)
         VALUES(#{num}, #{hospital}, #{childNum}, #{checkDate}, #{checkResult})
     </insert>
 
     <update id="updateHealthCheckByNum">
-        UPDATE HEALTH_CHECK SET UPD_DATE = SYSDATE(),
+        UPDATE health_check SET UPD_DATE = SYSDATE(),
                                 HOSPITAL = #{hospital},
                                 CHECK_DATE = #{checkDate},
                                 CHECK_RESULT = #{checkResult}
@@ -158,13 +158,13 @@
     </update>
 
     <select id="getGradeList" resultType="com.hj.vo.GradeVo">
-        SELECT * FROM GRADE
+        SELECT * FROM grade
     </select>
 
     <select id="searchDailyPlanByCond" resultType="com.hj.vo.DailyPlanVo">
         SELECT D.*, T.NAME AS INSTRUCTOR_NAME
-        FROM DAILY_PLAN D
-        LEFT JOIN TEACHER T ON (D.TEACHER_ID = T.ID)
+        FROM daily_plan D
+        LEFT JOIN teacher T ON (D.TEACHER_ID = T.ID)
         WHERE 1=1
         <if test="num != null and num != ''"> AND D.NUM LIKE CONCAT('%', #{num}, '%') </if>
         <if test="activityDate != null and activityDate != ''"> AND D.ACTIVITY_DATE = #{activityDate} </if>
@@ -175,9 +175,9 @@
 
     <select id="searchRecordByCond" resultType="com.hj.vo.ActivityRecordVo">
         SELECT AR.*, C.NAME AS CHILD_NAME, (SELECT ACTIVITY_DATE FROM DAILY_PLAN D WHERE D.NUM = A.PLAN_NUM) AS ACTIVITY_DATE, A.CONTENT AS ACTIVITY_CONTENT
-        FROM ACTIVITY_RECORD AR
-                 LEFT JOIN CHILD C ON (AR.CHILD_NUM = C.NUM)
-                 LEFT JOIN ACTIVITY A ON (AR.ACTIVITY_NUM = A.NUM)
+        FROM activity_record AR
+                 LEFT JOIN child C ON (AR.CHILD_NUM = C.NUM)
+                 LEFT JOIN activity A ON (AR.ACTIVITY_NUM = A.NUM)
         WHERE AR.DEL_YN = 'N'
         <if test="num != null and num != ''"> AND AR.NUM LIKE CONCAT('%', #{num}, '%') </if>
         <if test="activityDate != null and activityDate != ''"> AND (SELECT ACTIVITY_DATE FROM DAILY_PLAN D WHERE D.NUM = A.PLAN_NUM) = #{activityDate} </if>
@@ -187,36 +187,36 @@
 
     <select id="getAttendanceByGrade" resultType="com.hj.vo.AttendanceVo">
         SELECT AT.*, C.NAME AS CHILD_NAME
-        FROM ATTENDANCE AT
-        LEFT JOIN CHILD C ON (AT.CHILD_NUM = C.NUM and C.GRADUATED = 'N')
+        FROM attendance AT
+        LEFT JOIN child C ON (AT.CHILD_NUM = C.NUM and C.GRADUATED = 'N')
         WHERE C.GRADE_NUM = #{grade}
           AND MONTH(ATT_DATE) = #{month}
     </select>
 
     <select id="attCheck" resultType="int">
         SELECT COUNT(*)
-        FROM ATTENDANCE
+        FROM attendance
         WHERE CHILD_NUM = #{childNum}
           AND ATT_DATE = #{date}
     </select>
 
     <insert id="insertAttendance">
-        INSERT INTO ATTENDANCE(CHILD_NUM, ATT_DATE, STATUS, NOTE)
+        INSERT INTO attendance(CHILD_NUM, ATT_DATE, STATUS, NOTE)
         VALUES(#{childNum}, #{date}, #{status}, #{note})
     </insert>
 
     <update id="updateAttendance">
-        UPDATE ATTENDANCE SET STATUS = #{status},
+        UPDATE attendance SET STATUS = #{status},
                               NOTE = #{note}
         WHERE CHILD_NUM = #{childNum}
           AND ATT_DATE = #{date}
     </update>
 
     <select id="getAttInfo" resultType="com.hj.vo.AttendanceVo">
-        SELECT * FROM ATTENDANCE WHERE CHILD_NUM = #{childNum} AND ATT_DATE = #{attDate}
+        SELECT * FROM attendance WHERE CHILD_NUM = #{childNum} AND ATT_DATE = #{attDate}
     </select>
 
     <select id="getAttendanceByChildNum" resultType="com.hj.vo.AttendanceVo">
-        SELECT * FROM ATTENDANCE WHERE CHILD_NUM = #{childNum}
+        SELECT * FROM attendance WHERE CHILD_NUM = #{childNum}
     </select>
 </mapper>

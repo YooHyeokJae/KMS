@@ -17,13 +17,12 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
-    <data-source name="rbspi_mariadb" uuid="22e79278-1675-4fb1-8752-c711247f0772">
+    <data-source name="rbspi_mariadb" uuid="764ddc66-5742-4201-87a2-02658a88f3a2">
       <database-info product="MariaDB" version="10.5.28-MariaDB-0+deb11u2" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.3.3" dbms="MARIADB" exact-version="10.5.28" exact-driver-version="3.3">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
-      <secret-storage>master_key</secret-storage>
       <user-name>yhj</user-name>
       <schema-mapping>
         <introspection-scope>

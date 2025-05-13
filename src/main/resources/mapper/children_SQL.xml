@@ -3,34 +3,34 @@
 <mapper namespace="com.hj.mapper.ChildrenMapper">
     <select id="getList" resultType="com.hj.vo.ChildVo">
         SELECT C.*, G.NAME AS GRADE
-        FROM CHILD C
-        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        FROM child C
+        LEFT JOIN grade G ON (C.GRADE_NUM = G.NUM)
         WHERE C.GRADUATED = #{graduated}
         ORDER BY C.REG_DATE DESC, C.NUM DESC
     </select>
 
     <select id="getInfo" resultType="com.hj.vo.ChildVo">
-        SELECT CHILD.*, GRADE.NAME AS GRADE, ATTACH_FILE.STORED_FILE_NAME AS PROFILE_PATH
-        FROM CHILD
-        LEFT JOIN ATTACH_FILE ON (CONCAT('child/', CHILD.NUM) = ATTACH_FILE.GLOBAL_CODE AND DEL_YN = 'N')
-        LEFT JOIN GRADE ON (CHILD.GRADE_NUM = GRADE.NUM)
-        WHERE CHILD.NUM = #{num}
+        SELECT child.*, grade.NAME AS GRADE, attach_file.STORED_FILE_NAME AS PROFILE_PATH
+        FROM child
+        LEFT JOIN attach_file ON (CONCAT('child/', child.NUM) = attach_file.GLOBAL_CODE AND DEL_YN = 'N')
+        LEFT JOIN grade ON (child.GRADE_NUM = grade.NUM)
+        WHERE child.NUM = #{num}
     </select>
 
     <select id="getNextNum" resultType="int">
-        SELECT IFNULL(MAX(NUM) + 1, 0) FROM CHILD
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM child
     </select>
 
     <insert id="insertChild">
-        INSERT INTO CHILD(NUM, NAME, BIRTH, ENTRY_DATE, GRADE) VALUES(#{num}, #{name}, #{birth}, #{entryDate}, #{grade})
+        INSERT INTO child(NUM, NAME, BIRTH, ENTRY_DATE, GRADE) VALUES(#{num}, #{name}, #{birth}, #{entryDate}, #{grade})
     </insert>
 
     <update id="modifyChild">
-        UPDATE CHILD SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE_NUM = #{grade}, UPD_DATE = SYSDATE() WHERE NUM = #{num}
+        UPDATE child SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE_NUM = #{grade}, UPD_DATE = SYSDATE() WHERE NUM = #{num}
     </update>
     
     <insert id="insertChildBatch">
-        INSERT INTO CHILD(NUM, NAME, BIRTH, ENTRY_DATE, GRADE)
+        INSERT INTO child(NUM, NAME, BIRTH, ENTRY_DATE, GRADE)
         <foreach collection="childVoList" item="childVo" separator=", " open=" VALUES " >
             (#{childVo.num}, #{childVo.name}, #{childVo.birth}, #{childVo.entryDate}, #{childVo.grade})
         </foreach>
@@ -38,7 +38,7 @@
 
     <select id="searchChild" resultType="com.hj.vo.ChildVo">
         SELECT *
-        FROM CHILD
+        FROM child
         WHERE GRADUATED = 'N'
           <if test="name != null">
             AND NAME LIKE CONCAT('%', #{name}, '%')
@@ -52,7 +52,7 @@
     </select>
 
     <update id="graduate">
-        UPDATE CHILD SET GRADE_NUM = null,
+        UPDATE child SET GRADE_NUM = null,
                          GRADUATED = 'Y',
                          GRADUATE_DATE = SYSDATE(),
                          GRADUATE_REASON = #{reason},
@@ -62,8 +62,8 @@
 
     <select id="searchByCond" resultType="com.hj.vo.ChildVo">
         SELECT C.*, G.NAME AS GRADE
-        FROM CHILD C
-        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        FROM child C
+        LEFT JOIN grade G ON (C.GRADE_NUM = G.NUM)
         WHERE C.GRADUATED = #{graduated}
         <if test="num != null and num != ''"> AND C.NUM LIKE CONCAT('%', #{num}, '%') </if>
         <if test="name != null and name != ''"> AND C.NAME LIKE CONCAT('%', #{name}, '%') </if>

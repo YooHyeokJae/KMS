@@ -4,122 +4,25 @@
     <root id="1">
       <DefaultCasing>exact</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
-      <Grants>|root||mysql|localhost|ALTER|G
-|root||root||ALTER|G
-|root||root|localhost|ALTER|G
-|root||mysql|localhost|ALTER ROUTINE|G
-|root||root||ALTER ROUTINE|G
-|root||root|localhost|ALTER ROUTINE|G
-|root||mysql|localhost|BINLOG ADMIN|G
-|root||root||BINLOG ADMIN|G
-|root||root|localhost|BINLOG ADMIN|G
-|root||mysql|localhost|BINLOG MONITOR|G
-|root||root||BINLOG MONITOR|G
-|root||root|localhost|BINLOG MONITOR|G
-|root||mysql|localhost|BINLOG REPLAY|G
-|root||root||BINLOG REPLAY|G
-|root||root|localhost|BINLOG REPLAY|G
-|root||mysql|localhost|CONNECTION ADMIN|G
-|root||root||CONNECTION ADMIN|G
-|root||root|localhost|CONNECTION ADMIN|G
-|root||mysql|localhost|CREATE|G
-|root||root||CREATE|G
-|root||root|localhost|CREATE|G
-|root||mysql|localhost|CREATE ROUTINE|G
-|root||root||CREATE ROUTINE|G
-|root||root|localhost|CREATE ROUTINE|G
-|root||mysql|localhost|CREATE TABLESPACE|G
-|root||root||CREATE TABLESPACE|G
-|root||root|localhost|CREATE TABLESPACE|G
-|root||mysql|localhost|CREATE TEMPORARY TABLES|G
-|root||root||CREATE TEMPORARY TABLES|G
-|root||root|localhost|CREATE TEMPORARY TABLES|G
-|root||mysql|localhost|CREATE USER|G
-|root||root||CREATE USER|G
-|root||root|localhost|CREATE USER|G
-|root||mysql|localhost|CREATE VIEW|G
-|root||root||CREATE VIEW|G
-|root||root|localhost|CREATE VIEW|G
-|root||mysql|localhost|DELETE|G
-|root||root||DELETE|G
-|root||root|localhost|DELETE|G
-|root||mysql|localhost|DELETE HISTORY|G
-|root||root||DELETE HISTORY|G
-|root||root|localhost|DELETE HISTORY|G
-|root||mysql|localhost|DROP|G
-|root||root||DROP|G
-|root||root|localhost|DROP|G
-|root||mysql|localhost|EVENT|G
-|root||root||EVENT|G
-|root||root|localhost|EVENT|G
-|root||mysql|localhost|EXECUTE|G
-|root||root||EXECUTE|G
-|root||root|localhost|EXECUTE|G
-|root||mysql|localhost|FEDERATED ADMIN|G
-|root||root||FEDERATED ADMIN|G
-|root||root|localhost|FEDERATED ADMIN|G
-|root||mysql|localhost|FILE|G
-|root||root||FILE|G
-|root||root|localhost|FILE|G
-|root||mysql|localhost|INDEX|G
-|root||root||INDEX|G
-|root||root|localhost|INDEX|G
-|root||mysql|localhost|INSERT|G
-|root||root||INSERT|G
-|root||root|localhost|INSERT|G
-|root||mysql|localhost|LOCK TABLES|G
-|root||root||LOCK TABLES|G
-|root||root|localhost|LOCK TABLES|G
-|root||mysql|localhost|PROCESS|G
-|root||root||PROCESS|G
-|root||root|localhost|PROCESS|G
-|root||mysql|localhost|READ_ONLY ADMIN|G
-|root||root||READ_ONLY ADMIN|G
-|root||root|localhost|READ_ONLY ADMIN|G
-|root||mysql|localhost|REFERENCES|G
-|root||root||REFERENCES|G
-|root||root|localhost|REFERENCES|G
-|root||mysql|localhost|RELOAD|G
-|root||root||RELOAD|G
-|root||root|localhost|RELOAD|G
-|root||mysql|localhost|REPLICATION MASTER ADMIN|G
-|root||root||REPLICATION MASTER ADMIN|G
-|root||root|localhost|REPLICATION MASTER ADMIN|G
-|root||mysql|localhost|REPLICATION SLAVE|G
-|root||root||REPLICATION SLAVE|G
-|root||root|localhost|REPLICATION SLAVE|G
-|root||mysql|localhost|REPLICATION SLAVE ADMIN|G
-|root||root||REPLICATION SLAVE ADMIN|G
-|root||root|localhost|REPLICATION SLAVE ADMIN|G
-|root||mysql|localhost|SELECT|G
-|root||root||SELECT|G
-|root||root|localhost|SELECT|G
-|root||mysql|localhost|SET USER|G
-|root||root||SET USER|G
-|root||root|localhost|SET USER|G
-|root||mysql|localhost|SHOW DATABASES|G
-|root||root||SHOW DATABASES|G
-|root||root|localhost|SHOW DATABASES|G
-|root||mysql|localhost|SHOW VIEW|G
-|root||root||SHOW VIEW|G
-|root||root|localhost|SHOW VIEW|G
-|root||mysql|localhost|SHUTDOWN|G
-|root||root||SHUTDOWN|G
-|root||root|localhost|SHUTDOWN|G
-|root||mysql|localhost|SLAVE MONITOR|G
-|root||root||SLAVE MONITOR|G
-|root||root|localhost|SLAVE MONITOR|G
-|root||mysql|localhost|SUPER|G
-|root||root||SUPER|G
-|root||root|localhost|SUPER|G
-|root||mysql|localhost|TRIGGER|G
-|root||root||TRIGGER|G
-|root||root|localhost|TRIGGER|G
-|root||mysql|localhost|UPDATE|G
-|root||root||UPDATE|G
-|root||root|localhost|UPDATE|G
-|root||mysql|localhost|grant option|G
-|root||root|localhost|grant option|G</Grants>
+      <Grants>kms_db|schema||yhj||ALTER|G
+kms_db|schema||yhj||ALTER ROUTINE|G
+kms_db|schema||yhj||CREATE|G
+kms_db|schema||yhj||CREATE ROUTINE|G
+kms_db|schema||yhj||CREATE TEMPORARY TABLES|G
+kms_db|schema||yhj||CREATE VIEW|G
+kms_db|schema||yhj||DELETE|G
+kms_db|schema||yhj||DELETE HISTORY|G
+kms_db|schema||yhj||DROP|G
+kms_db|schema||yhj||EVENT|G
+kms_db|schema||yhj||EXECUTE|G
+kms_db|schema||yhj||INDEX|G
+kms_db|schema||yhj||INSERT|G
+kms_db|schema||yhj||LOCK TABLES|G
+kms_db|schema||yhj||REFERENCES|G
+kms_db|schema||yhj||SELECT|G
+kms_db|schema||yhj||SHOW VIEW|G
+kms_db|schema||yhj||TRIGGER|G
+kms_db|schema||yhj||UPDATE|G</Grants>
       <ServerVersion>10.5.28</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_bin">
@@ -1128,32 +1031,1195 @@
     <collation id="323" parent="1" name="utf8mb4_vietnamese_ci">
       <Charset>utf8mb4</Charset>
     </collation>
-    <schema id="324" parent="1" name="RECOVER_YOUR_DATA">
-      <CollationName>utf8mb4_general_ci</CollationName>
-    </schema>
-    <schema id="325" parent="1" name="information_schema">
+    <schema id="324" parent="1" name="information_schema">
       <LastIntrospectionLocalTimestamp>2025-05-08.07:00:41</LastIntrospectionLocalTimestamp>
       <CollationName>utf8_general_ci</CollationName>
     </schema>
-    <schema id="326" parent="1" name="mysql">
-      <Grants>global_priv|||mariadb.sys|localhost|DELETE|G
-global_priv|||mariadb.sys|localhost|SELECT|G</Grants>
-      <LastIntrospectionLocalTimestamp>2025-05-08.07:00:42</LastIntrospectionLocalTimestamp>
+    <schema id="325" parent="1" name="kms_db">
+      <Current>1</Current>
+      <LastIntrospectionLocalTimestamp>2025-05-13.05:32:09</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
-    <schema id="327" parent="1" name="performance_schema">
-      <LastIntrospectionLocalTimestamp>2025-05-08.07:00:43</LastIntrospectionLocalTimestamp>
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <user id="328" parent="1" name="mariadb.sys">
-      <Host>localhost</Host>
-    </user>
-    <user id="329" parent="1" name="mysql">
-      <Host>localhost</Host>
-    </user>
-    <user id="330" parent="1" name="root"/>
-    <user id="331" parent="1" name="root">
-      <Host>localhost</Host>
-    </user>
+    <user id="326" parent="1" name="yhj"/>
+    <table id="327" parent="325" name="access_logs">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="328" parent="325" name="activity">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="329" parent="325" name="activity_record">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="330" parent="325" name="album">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="331" parent="325" name="attach_file">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="332" parent="325" name="attendance">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="333" parent="325" name="board">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="334" parent="325" name="board_like_history">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="335" parent="325" name="calendar">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="336" parent="325" name="child">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="337" parent="325" name="counsel">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="338" parent="325" name="daily_plan">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="339" parent="325" name="food">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="340" parent="325" name="grade">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="341" parent="325" name="health_check">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="342" parent="325" name="reply">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="343" parent="325" name="teacher">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="344" parent="325" name="today_quote">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <table id="345" parent="325" name="user">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_general_ci</CollationName>
+    </table>
+    <column id="346" parent="327" name="NUM">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="347" parent="327" name="USER_ID">
+      <Comment>접속자_아이디</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="348" parent="327" name="IP_ADDRESS">
+      <Comment>IP_주소</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="349" parent="327" name="PAGE_URL">
+      <Comment>접속페이지_URL</Comment>
+      <Position>4</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="350" parent="327" name="ACCESS_TIME">
+      <Comment>접속시간</Comment>
+      <Position>5</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="351" parent="327" name="ACCESS_LOGS_user_ID_fk">
+      <ColNames>USER_ID</ColNames>
+      <RefColNames>ID</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <index id="352" parent="327" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="353" parent="327" name="ACCESS_LOGS_user_ID_fk">
+      <ColNames>USER_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="354" parent="327" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="355" parent="328" name="NUM">
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="356" parent="328" name="PLAN_NUM">
+      <Comment>계획번호</Comment>
+      <Position>2</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="357" parent="328" name="ACTIVITY_TIME">
+      <Comment>활동시간</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="358" parent="328" name="CONTENT">
+      <Comment>활동내용</Comment>
+      <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="359" parent="328" name="NOTE">
+      <Comment>비고</Comment>
+      <Position>5</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="360" parent="328" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="361" parent="328" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="362" parent="328" name="activity_daily_plan_NUM_fk">
+      <ColNames>PLAN_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>daily_plan</RefTableName>
+    </foreign-key>
+    <index id="363" parent="328" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="364" parent="328" name="activity_daily_plan_NUM_fk">
+      <ColNames>PLAN_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="365" parent="328" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="366" parent="329" name="NUM">
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="367" parent="329" name="CHILD_NUM">
+      <Comment>원생번호</Comment>
+      <Position>2</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="368" parent="329" name="ACTIVITY_NUM">
+      <Comment>활동번호</Comment>
+      <Position>3</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="369" parent="329" name="RECORD">
+      <Comment>활동기록</Comment>
+      <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="370" parent="329" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>5</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="371" parent="329" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="372" parent="329" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <foreign-key id="373" parent="329" name="ACTIVITY_RECORD_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>child</RefTableName>
+    </foreign-key>
+    <foreign-key id="374" parent="329" name="activity_record_activity_NUM_fk">
+      <ColNames>ACTIVITY_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>activity</RefTableName>
+    </foreign-key>
+    <index id="375" parent="329" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="376" parent="329" name="ACTIVITY_RECORD_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="377" parent="329" name="activity_record_activity_NUM_fk">
+      <ColNames>ACTIVITY_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="378" parent="329" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="379" parent="330" name="NUM">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="380" parent="330" name="ORIGINAL_FILE_NAME">
+      <Comment>원본 파일 명</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="381" parent="330" name="FILE_NAME">
+      <Comment>파일 명</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(200)|0s</StoredType>
+    </column>
+    <column id="382" parent="330" name="DESCRIPTION">
+      <Comment>설명</Comment>
+      <Position>4</Position>
+      <StoredType>varchar(1000)|0s</StoredType>
+    </column>
+    <column id="383" parent="330" name="FILE_SIZE">
+      <Comment>파일크기</Comment>
+      <Position>5</Position>
+      <StoredType>bigint(20)|0s</StoredType>
+    </column>
+    <column id="384" parent="330" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="385" parent="330" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="386" parent="330" name="UDP_DATE">
+      <Comment>최종 수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>8</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <index id="387" parent="330" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="388" parent="330" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="389" parent="331" name="num">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>첨부파일 번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="390" parent="331" name="GLOBAL_CODE">
+      <Comment>전사적코드</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="391" parent="331" name="ORIGINAL_FILE_NAME">
+      <Comment>원본파일명</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="392" parent="331" name="STORED_FILE_NAME">
+      <Comment>저장파일명</Comment>
+      <Position>4</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="393" parent="331" name="EXTENSION">
+      <Comment>확장자</Comment>
+      <Position>5</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="394" parent="331" name="CONTENT_TYPE">
+      <Comment>파일 형식</Comment>
+      <Position>6</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="395" parent="331" name="FILE_SIZE">
+      <Comment>파일크기</Comment>
+      <Position>7</Position>
+      <StoredType>mediumtext|0s</StoredType>
+    </column>
+    <column id="396" parent="331" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>8</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="397" parent="331" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <index id="398" parent="331" name="PRIMARY">
+      <ColNames>num</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="399" parent="331" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="400" parent="332" name="NUM">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="401" parent="332" name="CHILD_NUM">
+      <Comment>원생번호</Comment>
+      <Position>2</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="402" parent="332" name="ATT_DATE">
+      <Comment>출석일</Comment>
+      <Position>3</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="403" parent="332" name="STATUS">
+      <Comment>출석여부</Comment>
+      <Position>4</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="404" parent="332" name="NOTE">
+      <Comment>비고</Comment>
+      <Position>5</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <foreign-key id="405" parent="332" name="attendance_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>child</RefTableName>
+    </foreign-key>
+    <index id="406" parent="332" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="407" parent="332" name="attendance_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="408" parent="332" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="409" parent="333" name="NUM">
+      <Comment>게시글번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="410" parent="333" name="CATEGORY">
+      <Comment>카테고리</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="411" parent="333" name="TITLE">
+      <Comment>제목</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="412" parent="333" name="CONTENT">
+      <Comment>내용</Comment>
+      <Position>4</Position>
+      <StoredType>longtext|0s</StoredType>
+    </column>
+    <column id="413" parent="333" name="WRITER_ID">
+      <Comment>작성자_아이디</Comment>
+      <Position>5</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="414" parent="333" name="VIEW_CNT">
+      <Comment>조회수</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="415" parent="333" name="LIKE_CNT">
+      <Comment>추천수</Comment>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="416" parent="333" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>8</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="417" parent="333" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="418" parent="333" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>10</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="419" parent="333" name="board_user_ID_fk">
+      <ColNames>WRITER_ID</ColNames>
+      <RefColNames>ID</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <index id="420" parent="333" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="421" parent="333" name="board_user_ID_fk">
+      <ColNames>WRITER_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="422" parent="333" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="423" parent="334" name="NUM">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="424" parent="334" name="BOARD_NUM">
+      <Comment>게시글 번호</Comment>
+      <Position>2</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="425" parent="334" name="USER_ID">
+      <Comment>유저_ID</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="426" parent="334" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>4</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="427" parent="334" name="board_like_history_board_NUM_fk">
+      <ColNames>BOARD_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>board</RefTableName>
+    </foreign-key>
+    <foreign-key id="428" parent="334" name="board_like_history_user_ID_fk">
+      <ColNames>USER_ID</ColNames>
+      <RefColNames>ID</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <index id="429" parent="334" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="430" parent="334" name="board_like_history_board_NUM_fk">
+      <ColNames>BOARD_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="431" parent="334" name="board_like_history_user_ID_fk">
+      <ColNames>USER_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="432" parent="334" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="433" parent="335" name="NUM">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>일정번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="434" parent="335" name="WRITER_ID">
+      <Comment>작성자_아이디</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="435" parent="335" name="TITLE">
+      <Comment>일정제목</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="436" parent="335" name="STR_DATE">
+      <Comment>시작일</Comment>
+      <Position>4</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="437" parent="335" name="END_DATE">
+      <Comment>종료일</Comment>
+      <Position>5</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="438" parent="335" name="GUBUN">
+      <Comment>구분</Comment>
+      <Position>6</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="439" parent="335" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <foreign-key id="440" parent="335" name="CALENDAR_user_ID_fk">
+      <ColNames>WRITER_ID</ColNames>
+      <RefColNames>ID</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <index id="441" parent="335" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="442" parent="335" name="CALENDAR_user_ID_fk">
+      <ColNames>WRITER_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="443" parent="335" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="444" parent="336" name="NUM">
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="445" parent="336" name="NAME">
+      <Comment>이름</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="446" parent="336" name="BIRTH">
+      <Comment>생년월일</Comment>
+      <Position>3</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <column id="447" parent="336" name="ENTRY_DATE">
+      <Comment>입학날짜</Comment>
+      <Position>4</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="448" parent="336" name="GRADUATE_DATE">
+      <Comment>졸업날짜</Comment>
+      <Position>5</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="449" parent="336" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <column id="450" parent="336" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <column id="451" parent="336" name="GRADE_NUM">
+      <Comment>학급_번호</Comment>
+      <Position>8</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="452" parent="336" name="GRADUATED">
+      <Comment>졸업여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="453" parent="336" name="GRADUATE_REASON">
+      <Comment>졸업사유</Comment>
+      <Position>10</Position>
+      <StoredType>varchar(1000)|0s</StoredType>
+    </column>
+    <foreign-key id="454" parent="336" name="child_grade_NUM_fk">
+      <ColNames>GRADE_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>grade</RefTableName>
+    </foreign-key>
+    <index id="455" parent="336" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="456" parent="336" name="child_grade_NUM_fk">
+      <ColNames>GRADE_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="457" parent="336" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="458" parent="337" name="NUM">
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="459" parent="337" name="CATEGORY">
+      <Comment>유형</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="460" parent="337" name="INSTRUCTOR_ID">
+      <Comment>상담교사_ID</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="461" parent="337" name="COUNSEL_DATE">
+      <Comment>상담일</Comment>
+      <Position>4</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="462" parent="337" name="CHILD_NUM">
+      <Comment>원생번호</Comment>
+      <Position>5</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="463" parent="337" name="COUNSEL_NOTE">
+      <Comment>상담기록</Comment>
+      <Position>6</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="464" parent="337" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="465" parent="337" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>8</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="466" parent="337" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <foreign-key id="467" parent="337" name="counsel_teacher_ID_fk">
+      <ColNames>INSTRUCTOR_ID</ColNames>
+      <RefColNames>ID</RefColNames>
+      <RefTableName>teacher</RefTableName>
+    </foreign-key>
+    <foreign-key id="468" parent="337" name="counsel_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>child</RefTableName>
+    </foreign-key>
+    <index id="469" parent="337" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="470" parent="337" name="counsel_teacher_ID_fk">
+      <ColNames>INSTRUCTOR_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="471" parent="337" name="counsel_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="472" parent="337" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="473" parent="338" name="NUM">
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="474" parent="338" name="SEQ">
+      <Comment>차수</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(10)|0s</StoredType>
+    </column>
+    <column id="475" parent="338" name="ACTIVITY_DATE">
+      <Comment>활동일</Comment>
+      <Position>3</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="476" parent="338" name="TEACHER_ID">
+      <Comment>지도교사_아이디</Comment>
+      <Position>4</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="477" parent="338" name="LOCATION">
+      <Comment>활동장소</Comment>
+      <Position>5</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="478" parent="338" name="TARGET">
+      <Comment>대상</Comment>
+      <Position>6</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="479" parent="338" name="GRADE_NUM">
+      <Comment>학급_번호</Comment>
+      <Position>7</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="480" parent="338" name="SUBJECT">
+      <Comment>활동주제</Comment>
+      <Position>8</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="481" parent="338" name="GOALS">
+      <Comment>활동목표</Comment>
+      <Position>9</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="482" parent="338" name="MATERIALS">
+      <Comment>준비자료</Comment>
+      <Position>10</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="483" parent="338" name="REG_DATE">
+      <Comment>최초입력일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>11</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="484" parent="338" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>12</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="485" parent="338" name="DAILY_PLAN_teacher_ID_fk">
+      <ColNames>TEACHER_ID</ColNames>
+      <RefColNames>ID</RefColNames>
+      <RefTableName>teacher</RefTableName>
+    </foreign-key>
+    <foreign-key id="486" parent="338" name="daily_plan_grade_NUM_fk">
+      <ColNames>GRADE_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>grade</RefTableName>
+    </foreign-key>
+    <index id="487" parent="338" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="488" parent="338" name="DAILY_PLAN_teacher_ID_fk">
+      <ColNames>TEACHER_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="489" parent="338" name="daily_plan_grade_NUM_fk">
+      <ColNames>GRADE_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="490" parent="338" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="491" parent="339" name="MEAL_DATE">
+      <Comment>날짜</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="492" parent="339" name="MEAL">
+      <Comment>음식</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(300)|0s</StoredType>
+    </column>
+    <index id="493" parent="339" name="PRIMARY">
+      <ColNames>MEAL_DATE</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="494" parent="339" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="495" parent="340" name="NUM">
+      <Comment>학급번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="496" parent="340" name="NAME">
+      <Comment>학급명</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <index id="497" parent="340" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="498" parent="340" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="499" parent="341" name="NUM">
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="500" parent="341" name="HOSPITAL">
+      <Comment>검진병원</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="501" parent="341" name="CHILD_NUM">
+      <Comment>원생번호</Comment>
+      <Position>3</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="502" parent="341" name="CHECK_DATE">
+      <Comment>검진일</Comment>
+      <Position>4</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="503" parent="341" name="CHECK_RESULT">
+      <Comment>검진결과</Comment>
+      <Position>5</Position>
+      <StoredType>varchar(1000)|0s</StoredType>
+    </column>
+    <column id="504" parent="341" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="505" parent="341" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="506" parent="341" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>8</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="507" parent="341" name="health_check_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>child</RefTableName>
+    </foreign-key>
+    <index id="508" parent="341" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="509" parent="341" name="health_check_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="510" parent="341" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="511" parent="342" name="NUM">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>댓글번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="512" parent="342" name="BOARD_NUM">
+      <Comment>게시글 번호</Comment>
+      <Position>2</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="513" parent="342" name="CONTENT">
+      <Comment>댓글내용</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="514" parent="342" name="WRITER_ID">
+      <Comment>작성자_아이디</Comment>
+      <Position>4</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="515" parent="342" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>5</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="516" parent="342" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>6</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <foreign-key id="517" parent="342" name="reply_board_NUM_fk">
+      <ColNames>BOARD_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>board</RefTableName>
+    </foreign-key>
+    <foreign-key id="518" parent="342" name="reply_user_ID_fk">
+      <ColNames>WRITER_ID</ColNames>
+      <RefColNames>ID</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <index id="519" parent="342" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="520" parent="342" name="reply_board_NUM_fk">
+      <ColNames>BOARD_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="521" parent="342" name="reply_user_ID_fk">
+      <ColNames>WRITER_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="522" parent="342" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="523" parent="343" name="ID">
+      <Comment>교원번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="524" parent="343" name="NAME">
+      <Comment>이름</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="525" parent="343" name="PROFILE_IMAGE">
+      <Comment>프로필사진</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="526" parent="343" name="BIRTH">
+      <Comment>생년월일</Comment>
+      <Position>4</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="527" parent="343" name="GRADE_NUM">
+      <Comment>학급_번호</Comment>
+      <Position>5</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="528" parent="343" name="MAJOR">
+      <Comment>전공</Comment>
+      <Position>6</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="529" parent="343" name="ENTRY_DATE">
+      <Comment>임용일</Comment>
+      <Position>7</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="530" parent="343" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>8</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="531" parent="343" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>9</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="532" parent="343" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>10</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="533" parent="343" name="DEL_DATE">
+      <Comment>삭제일</Comment>
+      <Position>11</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <foreign-key id="534" parent="343" name="teacher_grade_NUM_fk">
+      <ColNames>GRADE_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>grade</RefTableName>
+    </foreign-key>
+    <index id="535" parent="343" name="PRIMARY">
+      <ColNames>ID</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="536" parent="343" name="teacher_grade_NUM_fk">
+      <ColNames>GRADE_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="537" parent="343" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="538" parent="344" name="NUM">
+      <AutoIncrement>1</AutoIncrement>
+      <Comment>번호</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="539" parent="344" name="CONTENT">
+      <Comment>내용</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(1000)|0s</StoredType>
+    </column>
+    <index id="540" parent="344" name="PRIMARY">
+      <ColNames>NUM</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="541" parent="344" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="542" parent="345" name="ID">
+      <Comment>아이디</Comment>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="543" parent="345" name="PASSWORD">
+      <Comment>비밀번호</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="544" parent="345" name="NAME">
+      <Comment>이름</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="545" parent="345" name="NICKNAME">
+      <Comment>닉네임</Comment>
+      <Position>4</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="546" parent="345" name="AUTH">
+      <Comment>권한</Comment>
+      <Position>5</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="547" parent="345" name="EMAIL">
+      <Comment>이메일</Comment>
+      <Position>6</Position>
+      <StoredType>varchar(40)|0s</StoredType>
+    </column>
+    <column id="548" parent="345" name="TEL_NO">
+      <Comment>전화번호</Comment>
+      <Position>7</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="549" parent="345" name="CHILD_NUM">
+      <Comment>원생번호</Comment>
+      <Position>8</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <column id="550" parent="345" name="RELATION">
+      <Comment>관계</Comment>
+      <Position>9</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="551" parent="345" name="DEL_YN">
+      <Comment>삭제여부</Comment>
+      <DefaultExpression>&apos;N&apos;</DefaultExpression>
+      <Position>10</Position>
+      <StoredType>varchar(1)|0s</StoredType>
+    </column>
+    <column id="552" parent="345" name="REG_DATE">
+      <Comment>최초등록일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>11</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="553" parent="345" name="UPD_DATE">
+      <Comment>최종수정일</Comment>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <Position>12</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="554" parent="345" name="user_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <RefColNames>NUM</RefColNames>
+      <RefTableName>child</RefTableName>
+    </foreign-key>
+    <index id="555" parent="345" name="PRIMARY">
+      <ColNames>ID</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="556" parent="345" name="user_child_NUM_fk">
+      <ColNames>CHILD_NUM</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="557" parent="345" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

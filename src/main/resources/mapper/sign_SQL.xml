@@ -3,21 +3,21 @@
 <mapper namespace="com.hj.mapper.SignMapper">
     <select id="searchChild" resultType="com.hj.vo.ChildVo">
         SELECT C.*, G.NAME AS GRADE
-        FROM CHILD C
-        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        FROM child C
+        LEFT JOIN grade G ON (C.GRADE_NUM = G.NUM)
         WHERE C.NAME LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="getUserByUserId" resultType="com.hj.vo.UserVo">
-        SELECT * FROM USER WHERE ID = #{userId}
+        SELECT * FROM user WHERE ID = #{userId}
     </select>
 
     <select id="login" resultType="com.hj.vo.UserVo">
-        SELECT * FROM USER WHERE ID = #{userId} AND PASSWORD = #{userPw}
+        SELECT * FROM user WHERE ID = #{userId} AND PASSWORD = #{userPw}
     </select>
 
     <insert id="insertUser">
-        INSERT INTO USER(ID, PASSWORD, NAME, AUTH, EMAIL, TEL_NO, CHILD_NUM, RELATION)
+        INSERT INTO user(ID, PASSWORD, NAME, AUTH, EMAIL, TEL_NO, CHILD_NUM, RELATION)
         VALUES(#{id}, #{password}, #{name}, #{auth}, #{email}, #{telNo}, #{childNum}, #{relation})
     </insert>
 </mapper>

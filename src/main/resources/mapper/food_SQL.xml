@@ -3,22 +3,22 @@
 <mapper namespace="com.hj.mapper.FoodMapper">
 
     <select id="selectAll" resultType="com.hj.vo.FoodVo">
-        SELECT * FROM FOOD
+        SELECT * FROM food
     </select>
 
     <select id="select" resultType="com.hj.vo.FoodVo">
-        SELECT * FROM FOOD WHERE MEAL_DATE = #{mealDate}
+        SELECT * FROM food WHERE MEAL_DATE = #{mealDate}
     </select>
 
     <insert id="insert">
-        INSERT INTO FOOD(MEAL_DATE, MEAL) VALUES(#{mealDate}, #{meal})
+        INSERT INTO food(MEAL_DATE, MEAL) VALUES(#{mealDate}, #{meal})
     </insert>
 
     <update id="update">
-        UPDATE FOOD SET MEAL = #{meal} WHERE MEAL_DATE = #{mealDate}
+        UPDATE food SET MEAL = #{meal} WHERE MEAL_DATE = #{mealDate}
     </update>
 
     <select id="selectByYearMonth" resultType="com.hj.vo.FoodVo">
-        SELECT * FROM FOOD WHERE MEAL_DATE LIKE CONCAT(#{yearMonth}, '%')
+        SELECT * FROM food WHERE MEAL_DATE LIKE CONCAT(#{yearMonth}, '%')
     </select>
 </mapper>

@@ -3,40 +3,40 @@
 <mapper namespace="com.hj.mapper.TeacherMapper">
     <select id="getList" resultType="com.hj.vo.TeacherVo">
         SELECT T.*, G.NAME AS GRADE
-        FROM TEACHER T
-        LEFT JOIN GRADE G ON (T.GRADE_NUM = G.NUM)
+        FROM teacher T
+        LEFT JOIN grade G ON (T.GRADE_NUM = G.NUM)
         ORDER BY REG_DATE DESC
     </select>
 
     <select id="getInfo" resultType="com.hj.vo.TeacherVo">
         SELECT T.*, G.NAME AS GRADE
-        FROM TEACHER T
-        LEFT JOIN GRADE G ON (T.GRADE_NUM = G.NUM)
+        FROM teacher T
+        LEFT JOIN grade G ON (T.GRADE_NUM = G.NUM)
         WHERE ID = #{id}
     </select>
 
     <insert id="insertTeacher">
-        INSERT INTO TEACHER(ID, NAME, BIRTH, GRADE_NUM, MAJOR, ENTRY_DATE)
+        INSERT INTO teacher(ID, NAME, BIRTH, GRADE_NUM, MAJOR, ENTRY_DATE)
         VALUES(#{id}, #{name}, #{birth}, #{grade}, #{major}, #{entryDate})
     </insert>
 
     <select id="findById" resultType="int">
-        SELECT COUNT(*) FROM TEACHER WHERE ID = #{id} AND DEL_YN = 'N'
+        SELECT COUNT(*) FROM teacher WHERE ID = #{id} AND DEL_YN = 'N'
     </select>
 
     <update id="modifyTeacher">
-        UPDATE TEACHER SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE_NUM = #{grade}, MAJOR = #{major}, UPD_DATE = SYSDATE() WHERE ID = #{id}
+        UPDATE teacher SET NAME = #{name}, BIRTH = #{birth}, ENTRY_DATE = #{entryDate}, GRADE_NUM = #{grade}, MAJOR = #{major}, UPD_DATE = SYSDATE() WHERE ID = #{id}
     </update>
 
     <delete id="delete">
-        UPDATE TEACHER SET DEL_YN = 'Y', DEL_DATE = SYSDATE(), UPD_DATE = SYSDATE()
+        UPDATE teacher SET DEL_YN = 'Y', DEL_DATE = SYSDATE(), UPD_DATE = SYSDATE()
         WHERE ID = #{id}
     </delete>
 
     <select id="searchByCond" resultType="com.hj.vo.TeacherVo">
         SELECT T.*, G.NAME AS GRADE
-        FROM TEACHER T
-        LEFT JOIN GRADE G ON (T.GRADE_NUM = G.NUM)
+        FROM teacher T
+        LEFT JOIN grade G ON (T.GRADE_NUM = G.NUM)
         WHERE 1=1
         <if test="id != null and id != ''"> AND T.ID LIKE CONCAT('%', #{id}, '%') </if>
         <if test="name != null and name != ''"> AND T.NAME LIKE CONCAT('%', #{name}, '%') </if>

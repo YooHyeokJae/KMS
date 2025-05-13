@@ -3,115 +3,115 @@
 <mapper namespace="com.hj.mapper.BoardMapper">
 
     <select id="getList" resultType="com.hj.vo.BoardVo">
-        SELECT BOARD.*, USER.NAME AS WRITER_NAME, ATTACH_FILE.FILE_SIZE AS FILE_SIZE
-        FROM BOARD
-            LEFT JOIN ATTACH_FILE ON(CONCAT('board/', BOARD.NUM) = ATTACH_FILE.GLOBAL_CODE AND ATTACH_FILE.DEL_YN = 'N')
-            LEFT JOIN USER ON (BOARD.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
+        SELECT board.*, user.NAME AS WRITER_NAME, attach_file.FILE_SIZE AS FILE_SIZE
+        FROM board
+            LEFT JOIN attach_file ON(CONCAT('board/', BOARD.NUM) = ATTACH_FILE.GLOBAL_CODE AND ATTACH_FILE.DEL_YN = 'N')
+            LEFT JOIN user ON (board.WRITER_ID = user.ID AND user.DEL_YN = 'N')
         WHERE CATEGORY = #{cat}
-          AND BOARD.DEL_YN = 'N'
-        ORDER BY BOARD.REG_DATE DESC
+          AND board.DEL_YN = 'N'
+        ORDER BY board.REG_DATE DESC
     </select>
 
     <select id="getNextNum" resultType="int">
-        SELECT MAX(NUM)+1 FROM BOARD
+        SELECT MAX(NUM)+1 FROM board
     </select>
 
     <insert id="insertBoard">
-        INSERT INTO BOARD(NUM, CATEGORY, TITLE, CONTENT, WRITER_ID) VALUES(#{num}, #{category}, #{title}, #{content}, #{writerId})
+        INSERT INTO board(NUM, CATEGORY, TITLE, CONTENT, WRITER_ID) VALUES(#{num}, #{category}, #{title}, #{content}, #{writerId})
     </insert>
 
     <update id="viewBoard">
-        UPDATE BOARD SET VIEW_CNT = VIEW_CNT + 1 WHERE NUM = #{num}
+        UPDATE board SET VIEW_CNT = VIEW_CNT + 1 WHERE NUM = #{num}
     </update>
 
     <select id="getBoardByNum" resultType="com.hj.vo.BoardVo">
-        SELECT BOARD.*, USER.NAME AS WRITER_NAME
-        FROM BOARD
-        LEFT JOIN USER ON (BOARD.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
+        SELECT board.*, user.NAME AS WRITER_NAME
+        FROM board
+        LEFT JOIN user ON (board.WRITER_ID = user.ID AND user.DEL_YN = 'N')
         WHERE NUM = #{num}
     </select>
 
     <select id="getReplyListByBoardNum" resultType="com.hj.vo.ReplyVo">
-        SELECT REPLY.*, USER.NAME AS WRITER_NAME
-        FROM REPLY
-        LEFT JOIN USER ON (REPLY.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
-        WHERE BOARD_NUM = #{boardNum} AND REPLY.DEL_YN = 'N'
+        SELECT reply.*, user.NAME AS WRITER_NAME
+        FROM reply
+        LEFT JOIN user ON (reply.WRITER_ID = user.ID AND user.DEL_YN = 'N')
+        WHERE BOARD_NUM = #{boardNum} AND reply.DEL_YN = 'N'
         ORDER BY REG_DATE DESC
     </select>
 
     <insert id="insertReply">
-        INSERT INTO REPLY(BOARD_NUM, CONTENT, WRITER_ID) VALUES(#{boardNum}, #{content}, #{writerId})
+        INSERT INTO reply(BOARD_NUM, CONTENT, WRITER_ID) VALUES(#{boardNum}, #{content}, #{writerId})
     </insert>
 
     <select id="getPrev" resultType="com.hj.vo.BoardVo">
-        SELECT * FROM BOARD WHERE NUM <![CDATA[ < ]]> #{num} AND CATEGORY = #{category} ORDER BY REG_DATE DESC LIMIT 1
+        SELECT * FROM board WHERE NUM <![CDATA[ < ]]> #{num} AND CATEGORY = #{category} ORDER BY REG_DATE DESC LIMIT 1
     </select>
 
     <select id="getNext" resultType="com.hj.vo.BoardVo">
-        SELECT * FROM BOARD WHERE NUM <![CDATA[ > ]]> #{num} AND CATEGORY = #{category} LIMIT 1
+        SELECT * FROM board WHERE NUM <![CDATA[ > ]]> #{num} AND CATEGORY = #{category} LIMIT 1
     </select>
 
     <update id="modifyBoard">
-        UPDATE BOARD SET CATEGORY = #{category}, TITLE = #{title}, CONTENT = <![CDATA[ #{content} ]]>, UPD_DATE = SYSDATE() WHERE NUM = #{num}
+        UPDATE board SET CATEGORY = #{category}, TITLE = #{title}, CONTENT = <![CDATA[ #{content} ]]>, UPD_DATE = SYSDATE() WHERE NUM = #{num}
     </update>
 
     <update id="deleteBoard">
-        UPDATE BOARD SET DEL_YN = 'Y', UPD_DATE = SYSDATE() WHERE NUM = #{num}
+        UPDATE board SET DEL_YN = 'Y', UPD_DATE = SYSDATE() WHERE NUM = #{num}
     </update>
 
     <select id="getBestByDateOrViewOrLike" resultType="com.hj.vo.BoardVo">
-        SELECT BOARD.*, USER.NAME AS WRITER_NAME
-        FROM BOARD
-        LEFT JOIN USER ON (BOARD.WRITER_ID = USER.ID AND USER.DEL_YN = 'N')
-        WHERE BOARD.DEL_YN = 'N'
-          AND BOARD.CATEGORY = #{category}
+        SELECT board.*, user.NAME AS WRITER_NAME
+        FROM board
+        LEFT JOIN user ON (board.WRITER_ID = user.ID AND user.DEL_YN = 'N')
+        WHERE board.DEL_YN = 'N'
+          AND board.CATEGORY = #{category}
         <if test="order eq 'date'">
-            ORDER BY BOARD.REG_DATE DESC LIMIT #{count}
+            ORDER BY board.REG_DATE DESC LIMIT #{count}
         </if>
         <if test="order eq 'view'">
-            ORDER BY BOARD.VIEW_CNT DESC LIMIT #{count}
+            ORDER BY board.VIEW_CNT DESC LIMIT #{count}
         </if>
         <if test="order eq 'like'">
-            ORDER BY BOARD.LIKE_CNT DESC LIMIT #{count}
+            ORDER BY board.LIKE_CNT DESC LIMIT #{count}
         </if>
     </select>
 
     <select id="checkLike" resultType="String">
-        SELECT REG_DATE FROM BOARD_LIKE_HISTORY
+        SELECT REG_DATE FROM board_like_history
         WHERE BOARD_NUM = #{boardNum}
           AND USER_ID = #{userId}
     </select>
 
     <insert id="insertHistory">
-        INSERT INTO BOARD_LIKE_HISTORY(BOARD_NUM, USER_ID)
+        INSERT INTO board_like_history(BOARD_NUM, USER_ID)
         VALUES(#{boardNum}, #{userId})
     </insert>
 
     <update id="pressLike">
-        UPDATE BOARD SET LIKE_CNT = LIKE_CNT + 1
+        UPDATE board SET LIKE_CNT = LIKE_CNT + 1
         WHERE NUM = #{boardNum}
     </update>
 
     <delete id="deleteHistory">
-        DELETE FROM BOARD_LIKE_HISTORY
+        DELETE FROM board_like_history
         WHERE BOARD_NUM = #{boardNum}
           AND USER_ID = #{userId}
     </delete>
 
     <update id="unPressLike">
-        UPDATE BOARD SET LIKE_CNT = LIKE_CNT - 1
+        UPDATE board SET LIKE_CNT = LIKE_CNT - 1
         WHERE NUM = #{boardNum}
     </update>
 
     <select id="getLikeCnt" resultType="String">
-        SELECT LIKE_CNT FROM BOARD WHERE NUM = #{boardNum}
+        SELECT LIKE_CNT FROM board WHERE NUM = #{boardNum}
     </select>
 
     <select id="searchByCond" resultType="com.hj.vo.BoardVo">
         SELECT B.*, U.NAME AS WRITER_NAME, AF.FILE_SIZE AS FILE_SIZE
-        FROM BOARD B
-                 LEFT JOIN ATTACH_FILE AF ON(CONCAT('board/', B.NUM) = AF.GLOBAL_CODE AND AF.DEL_YN = 'N')
-                 LEFT JOIN USER U ON (B.WRITER_ID = U.ID AND U.DEL_YN = 'N')
+        FROM board B
+                 LEFT JOIN attach_file AF ON(CONCAT('board/', B.NUM) = AF.GLOBAL_CODE AND AF.DEL_YN = 'N')
+                 LEFT JOIN user U ON (B.WRITER_ID = U.ID AND U.DEL_YN = 'N')
         WHERE CATEGORY = #{cat}
           AND B.DEL_YN = 'N'
           <if test="num != null and num != ''"> AND B.NUM LIKE CONCAT('%', #{num}, '%') </if>
@@ -123,19 +123,19 @@
     </select>
 
     <select id="todayQuote" resultType="String">
-        SELECT CONTENT FROM TODAY_QUOTE ORDER BY RAND() LIMIT 1
+        SELECT CONTENT FROM today_quote ORDER BY RAND() LIMIT 1
     </select>
 
     <insert id="insertAlbum">
-        INSERT INTO ALBUM(ORIGINAL_FILE_NAME, FILE_NAME, DESCRIPTION, FILE_SIZE)
+        INSERT INTO album(ORIGINAL_FILE_NAME, FILE_NAME, DESCRIPTION, FILE_SIZE)
         VALUES(#{originalFileName}, #{fileName}, #{description}, #{fileSize})
     </insert>
 
     <select id="getLastAlbumNum" resultType="int">
-        SELECT MAX(NUM) + 1 FROM ALBUM WHERE DEL_YN = 'N'
+        SELECT MAX(NUM) + 1 FROM album WHERE DEL_YN = 'N'
     </select>
 
     <select id="getAlbum" resultType="com.hj.vo.AlbumVo">
-        SELECT * FROM ALBUM WHERE DEL_YN = 'N' AND NUM <![CDATA[ < ]]> #{lastNum} ORDER BY NUM DESC LIMIT #{cnt}
+        SELECT * FROM album WHERE DEL_YN = 'N' AND NUM <![CDATA[ < ]]> #{lastNum} ORDER BY NUM DESC LIMIT #{cnt}
     </select>
 </mapper>

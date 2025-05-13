@@ -3,8 +3,8 @@
 <mapper namespace="com.hj.mapper.StatisticsMapper">
     <select id="getEntryStats" resultType="com.hj.vo.StatsVo">
         SELECT y.year,
-               (SELECT COUNT(*) FROM CHILD WHERE ENTRY_DATE IS NOT NULL AND YEAR(ENTRY_DATE) = y.year) AS ENTRY_CNT,
-               (SELECT COUNT(*) FROM CHILD WHERE GRADUATE_DATE IS NOT NULL AND YEAR(GRADUATE_DATE) = y.year) AS GRADUATE_CNT
+               (SELECT COUNT(*) FROM child WHERE ENTRY_DATE IS NOT NULL AND YEAR(ENTRY_DATE) = y.year) AS ENTRY_CNT,
+               (SELECT COUNT(*) FROM child WHERE GRADUATE_DATE IS NOT NULL AND YEAR(GRADUATE_DATE) = y.year) AS GRADUATE_CNT
         FROM (
         <foreach item="year" collection="years" separator="UNION ALL">
             SELECT #{year} AS year
@@ -20,7 +20,7 @@
             SELECT #{year} AS YEAR
         </foreach>
         ) AS y
-        LEFT JOIN TEACHER t
+        LEFT JOIN teacher t
         ON YEAR(t.REG_DATE) <![CDATA[ <= ]]> y.year
         AND (t.DEL_DATE IS NULL OR YEAR(t.DEL_DATE) > y.year)
         GROUP BY y.year
@@ -29,8 +29,8 @@
 
     <select id="getStudentStats" resultType="com.hj.vo.StatsVo">
         SELECT G.NAME AS GRADE, COUNT(*) AS STUDENT_CNT
-        FROM CHILD C
-        LEFT JOIN GRADE G ON (C.GRADE_NUM = G.NUM)
+        FROM child C
+        LEFT JOIN grade G ON (C.GRADE_NUM = G.NUM)
         WHERE GRADUATED = 'N'
         GROUP BY G.NUM
         ORDER BY G.NUM
@@ -38,21 +38,21 @@
 
     <select id="getStatsByUser" resultType="com.hj.vo.StatsVo">
         SELECT AUTH AS GUBUN, COUNT(*) AS CNT
-        FROM USER
+        FROM user
         WHERE AUTH IN ('A', 'T')
         GROUP BY AUTH
 
         UNION ALL
 
         SELECT AUTH AS GUBUN, COUNT(*) AS CNT
-        FROM USER
+        FROM user
         WHERE AUTH = 'W'
         GROUP BY AUTH
 
         UNION ALL
 
         SELECT RELATION AS GUBUN, COUNT(*) AS CNT
-        FROM USER
+        FROM user
         WHERE AUTH = 'P'
         GROUP BY RELATION
 
@@ -61,14 +61,14 @@
 
     <select id="getStatsByPageUrl" resultType="com.hj.vo.StatsVo">
         SELECT PAGE_URL AS GUBUN, COUNT(*) AS CNT
-        FROM ACCESS_LOGS
+        FROM access_logs
         GROUP BY GUBUN
         ORDER BY GUBUN
     </select>
 
     <select id="getStatsByLogin" resultType="com.hj.vo.StatsVo">
         SELECT SUBSTR(ACCESS_TIME, 1, 10) AS GUBUN, COUNT(DISTINCT USER_ID) AS CNT
-        FROM ACCESS_LOGS
+        FROM access_logs
         WHERE SUBSTR(ACCESS_TIME, 1, 10) BETWEEN #{strDate} AND #{endDate}
         GROUP BY GUBUN
         ORDER BY GUBUN
