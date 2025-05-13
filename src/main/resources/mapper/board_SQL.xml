@@ -13,7 +13,7 @@
     </select>
 
     <select id="getNextNum" resultType="int">
-        SELECT MAX(NUM)+1 FROM board
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM board
     </select>
 
     <insert id="insertBoard">
@@ -132,7 +132,7 @@
     </insert>
 
     <select id="getLastAlbumNum" resultType="int">
-        SELECT MAX(NUM) + 1 FROM album WHERE DEL_YN = 'N'
+        SELECT IFNULL(MAX(NUM) + 1, 0) FROM album WHERE DEL_YN = 'N'
     </select>
 
     <select id="getAlbum" resultType="com.hj.vo.AlbumVo">
