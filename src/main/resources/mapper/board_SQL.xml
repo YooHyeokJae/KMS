@@ -5,7 +5,7 @@
     <select id="getList" resultType="com.hj.vo.BoardVo">
         SELECT board.*, user.NAME AS WRITER_NAME, attach_file.FILE_SIZE AS FILE_SIZE
         FROM board
-            LEFT JOIN attach_file ON(CONCAT('board/', BOARD.NUM) = ATTACH_FILE.GLOBAL_CODE AND ATTACH_FILE.DEL_YN = 'N')
+            LEFT JOIN attach_file ON(CONCAT('board/', board.NUM) = attach_file.GLOBAL_CODE AND attach_file.DEL_YN = 'N')
             LEFT JOIN user ON (board.WRITER_ID = user.ID AND user.DEL_YN = 'N')
         WHERE CATEGORY = #{cat}
           AND board.DEL_YN = 'N'

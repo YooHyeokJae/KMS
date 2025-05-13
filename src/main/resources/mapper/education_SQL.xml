@@ -40,7 +40,7 @@
 
     <select id="getAllDailyPlan" resultType="com.hj.vo.DailyPlanVo">
         SELECT daily_plan.*, teacher.NAME AS INSTRUCTOR_NAME
-        FROM daily_plan LEFT JOIN teacher ON (DAILY_PLAN.TEACHER_ID = TEACHER.ID)
+        FROM daily_plan LEFT JOIN teacher ON (daily_plan.TEACHER_ID = teacher.ID)
         ORDER BY daily_plan.REG_DATE DESC
     </select>
 
@@ -65,7 +65,7 @@
         LEFT JOIN teacher T ON (DP.TEACHER_ID = T.ID)
         WHERE SUBJECT LIKE CONCAT('%', #{subject}, '%')
           <if test="instructor != null and instructor != ''">
-            AND DP.TEACHER_ID = (SELECT ID FROM TEACHER WHERE NAME = #{instructor})
+            AND DP.TEACHER_ID = (SELECT ID FROM teacher WHERE NAME = #{instructor})
           </if>
           <if test="date != null and date != ''">
             AND ACTIVITY_DATE = #{date}
@@ -82,7 +82,7 @@
     </insert>
 
     <select id="getAllActivityRecord" resultType="com.hj.vo.ActivityRecordVo">
-        SELECT AR.*, C.NAME AS CHILD_NAME, (SELECT ACTIVITY_DATE FROM DAILY_PLAN D WHERE D.NUM = A.PLAN_NUM) AS ACTIVITY_DATE, A.CONTENT AS ACTIVITY_CONTENT
+        SELECT AR.*, C.NAME AS CHILD_NAME, (SELECT ACTIVITY_DATE FROM daily_plan D WHERE D.NUM = A.PLAN_NUM) AS ACTIVITY_DATE, A.CONTENT AS ACTIVITY_CONTENT
         FROM activity_record AR
         LEFT JOIN child C ON (AR.CHILD_NUM = C.NUM)
         LEFT JOIN activity A ON (AR.ACTIVITY_NUM = A.NUM)
@@ -174,13 +174,13 @@
     </select>
 
     <select id="searchRecordByCond" resultType="com.hj.vo.ActivityRecordVo">
-        SELECT AR.*, C.NAME AS CHILD_NAME, (SELECT ACTIVITY_DATE FROM DAILY_PLAN D WHERE D.NUM = A.PLAN_NUM) AS ACTIVITY_DATE, A.CONTENT AS ACTIVITY_CONTENT
+        SELECT AR.*, C.NAME AS CHILD_NAME, (SELECT ACTIVITY_DATE FROM daily_plan D WHERE D.NUM = A.PLAN_NUM) AS ACTIVITY_DATE, A.CONTENT AS ACTIVITY_CONTENT
         FROM activity_record AR
                  LEFT JOIN child C ON (AR.CHILD_NUM = C.NUM)
                  LEFT JOIN activity A ON (AR.ACTIVITY_NUM = A.NUM)
         WHERE AR.DEL_YN = 'N'
         <if test="num != null and num != ''"> AND AR.NUM LIKE CONCAT('%', #{num}, '%') </if>
-        <if test="activityDate != null and activityDate != ''"> AND (SELECT ACTIVITY_DATE FROM DAILY_PLAN D WHERE D.NUM = A.PLAN_NUM) = #{activityDate} </if>
+        <if test="activityDate != null and activityDate != ''"> AND (SELECT ACTIVITY_DATE FROM daily_plan D WHERE D.NUM = A.PLAN_NUM) = #{activityDate} </if>
         <if test="record != null and record != ''"> AND AR.RECORD LIKE CONCAT('%', #{record}, '%') </if>
         ORDER BY AR.REG_DATE DESC
     </select>
