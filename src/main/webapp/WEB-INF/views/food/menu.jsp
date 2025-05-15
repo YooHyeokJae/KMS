@@ -125,6 +125,11 @@
                 insert:{
                     text: '식단표 입력',
                     click: function(){
+                        let auth = '${sessionScope.loginUser.auth}';
+                        if(auth !== 'A'){
+                            alert('권한이 없습니다.');
+                            return;
+                        }
                         $('#menuInsertBtn').click();
                     }
                 },

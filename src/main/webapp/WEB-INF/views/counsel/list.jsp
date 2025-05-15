@@ -135,16 +135,18 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-4 text-end">
-            <input type="button" class="btn btn-outline-primary" id="plusCounsel" value="new" />
+    <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-4 text-end">
+                <input type="button" class="btn btn-outline-primary" id="plusCounsel" value="등록" />
+            </div>
+            <div class="col-5 text-end">
+                <input type="button" class="btn btn-outline-warning" id="modCounsel" value="수정" disabled />
+                <input type="button" class="btn btn-outline-success" id="saveCounsel" value="저장" disabled />
+            </div>
         </div>
-        <div class="col-5 text-end">
-            <input type="button" class="btn btn-outline-warning" id="modCounsel" value="수정" disabled />
-            <input type="button" class="btn btn-outline-success" id="saveCounsel" value="저장" disabled />
-        </div>
-    </div>
+    </c:if>
 </div>
 
 <!-- 교사 찾기 modal -->

@@ -44,7 +44,7 @@
             AND NAME LIKE CONCAT('%', #{name}, '%')
           </if>
           <if test="grade != null">
-            AND GRADE LIKE CONCAT('%', #{grade}, '%')
+            AND GRADE_NUM IN (SELECT NUM FROM grade WHERE NAME LIKE CONCAT('%', #{grade}, '%'))
           </if>
           <if test="birth != null">
               AND SUBSTR(BIRTH, 1, 10) LIKE CONCAT('%', #{birth}, '%')

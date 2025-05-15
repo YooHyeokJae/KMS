@@ -84,7 +84,7 @@
 <div class="row" style="background-color: #fabf62; height: 60px">
   <div class="col-2"></div>
   <div class="col-8">
-    <nav class="nav" style="position: absolute; z-index: 2; background-color: transparent;">
+    <nav class="nav" style="position: absolute; z-index: 5; background-color: transparent;">
       <ul>
         <li class="nav-link">
           <a href="#">유치원</a>

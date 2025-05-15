@@ -90,7 +90,7 @@
 </div>
 
 <form id="openPopup" target="popup" action="" method="post">
-    <input type="hidden" name="infoNum" value=""/>
+    <input type="hidden" id="infoNum" name="num" value=""/>
 </form>
 
 <script>
@@ -100,7 +100,7 @@
 
     function popupChildInfo(event){
         window.open('', 'popup', 'width=600,height=400,scrollbars=yes');
-        $('input[name="infoNum"]').val($(event.currentTarget).children().eq(0).text());
+        $('#infoNum').val($(event.currentTarget).children().eq(0).text());
         form.attr("action", "<c:url value="/children/info"/>");
         form.submit();
     }
