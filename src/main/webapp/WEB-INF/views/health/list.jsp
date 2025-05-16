@@ -6,11 +6,13 @@
             <span style="color: #065F46;"><img alt="" src="${pageContext.request.contextPath}/resources/images/syringe.png" style="height: 40px;" /> 건강검진</span>
         </h2>
 
-        <div class="mb-2 d-flex align-items-end">
-            <input type="button" class="btn btn-outline-primary ms-2" id="addBtn" value="추가" disabled />
-            <input type="button" class="btn btn-outline-danger ms-2" id="delBtn" value="삭제" disabled />
-            <input type="button" class="btn btn-outline-success ms-2" id="saveBtn" value="저장" disabled />
-        </div>
+        <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <div class="mb-2 d-flex align-items-end">
+                <input type="button" class="btn btn-outline-primary ms-2" id="addBtn" value="추가" disabled />
+                <input type="button" class="btn btn-outline-danger ms-2" id="delBtn" value="삭제" disabled />
+                <input type="button" class="btn btn-outline-success ms-2" id="saveBtn" value="저장" disabled />
+            </div>
+        </c:if>
     </div>
 
     <div class="row" style="min-height: 400px; margin-bottom: 10px;">

@@ -15,7 +15,9 @@
                     <label class="input-group-text" for="category">구분</label>
                     <select class="form-select" id="category" name="category">
                         <option selected>-</option>
-                        <option value="notice">공지사항</option>
+                        <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+                            <option value="notice">공지사항</option>
+                        </c:if>
                         <option value="free">자유게시판</option>
                     </select>
                 </div>

@@ -127,10 +127,12 @@
             <tr style="display: none" id="addBtnRow"><td colspan="3"><input type="button" class="btn btn-outline-info w-100" id="addRowBtn" value="+" /></td></tr>
         </table>
 
-        <div class="text-end" style="margin-top: 10px;">
-            <input type="button" class="btn btn-outline-primary no-print" id="modifyBtn" value="수정" />
-            <input type="button" class="btn btn-outline-success" id="saveBtn" value="저장" style="display: none" />
-        </div>
+        <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <div class="text-end" style="margin-top: 10px;">
+                <input type="button" class="btn btn-outline-primary no-print" id="modifyBtn" value="수정" />
+                <input type="button" class="btn btn-outline-success" id="saveBtn" value="저장" style="display: none" />
+            </div>
+        </c:if>
     </div>
 
     <div class="modal fade" id="searchTeacherModal" tabindex="-1" aria-labelledby="searchTeacherModalLabel" aria-hidden="true">

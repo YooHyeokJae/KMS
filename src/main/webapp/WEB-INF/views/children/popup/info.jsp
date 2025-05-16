@@ -60,8 +60,10 @@
     <div class="container">
         <div class="text-end">
             <span class="small text-muted">최종수정일시: <span id="updDate">${fn:replace(childVo.updDate, 'T', ' ')}</span></span>
-            <input type="button" class="btn btn-primary" id="modifyBtn" value="수정" />
-            <input type="button" class="btn btn-primary" id="saveBtn" value="저장" style="display: none;" />
+            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+                <input type="button" class="btn btn-primary" id="modifyBtn" value="수정" />
+                <input type="button" class="btn btn-primary" id="saveBtn" value="저장" style="display: none;" />
+            </c:if>
         </div>
         <table class="table table-primary">
             <tr>

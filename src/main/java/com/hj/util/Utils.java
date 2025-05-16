@@ -86,6 +86,11 @@ public class Utils {
                 }
             }
         }
+        if(baseTime == null){
+            baseDate = now.minusDays(1).format(dateFormatter);
+            baseTime = "2300";
+        }
+
         String type = "json";
 
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
