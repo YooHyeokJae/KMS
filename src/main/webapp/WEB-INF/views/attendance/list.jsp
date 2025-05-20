@@ -231,7 +231,8 @@
     });
 
     $(document).on('click', '.dayCell', function(){
-        if('${sessionScope.loginUser.auth}' !== 'A')    return;
+        let auth = '${sessionScope.loginUser.auth}';
+        if(auth !== 'A' && auth !== 'T')    return;
 
         let $child = $('#child');
         $child[0].dataset.num = $(this)[0].id.split('_')[0];
