@@ -46,7 +46,7 @@
         </h2>
 
         <div class="d-flex align-items-end justify-content-end mb-1">
-            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                 <input type="file" id="insertAlbum" style="display: none;" accept="image/*" multiple />
                 <input type="button" class="btn btn-outline-primary ms-2" value="사진 등록" onclick="{$('#insertAlbum').click()}"/>
             </c:if>

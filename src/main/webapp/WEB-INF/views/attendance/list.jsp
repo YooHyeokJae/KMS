@@ -68,7 +68,7 @@
                         <input type="button" class="btn btn-light ms-3" id="nextMonth" value=">" />
                 </div>
                 <div class="col-4 d-flex align-items-center justify-content-end">
-                    <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+                    <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                             <input type="button" id="allPresent" class="btn btn-outline-info" value="일괄 출석" disabled />
                             <input type="button" id="allAbsent" class="btn btn-outline-warning" value="일괄 결석" disabled />
                     </c:if>

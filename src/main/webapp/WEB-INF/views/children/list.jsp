@@ -8,7 +8,7 @@
         </h2>
 
         <div class="d-flex align-items-end justify-content-end mb-1">
-            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                 <a href="#" class="btn btn-outline-primary ms-2" onclick="insertChild()">원생 등록</a>
                 <a href="#" class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#insertModal">일괄 등록</a>
                 <input type="button" class="btn btn-outline-success ms-2" id="graduateModalOpen" data-bs-toggle="modal" data-bs-target="#graduateModal" value="졸업처리" />

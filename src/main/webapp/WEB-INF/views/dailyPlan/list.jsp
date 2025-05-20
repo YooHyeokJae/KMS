@@ -17,7 +17,7 @@
         </h2>
 
         <div class="d-flex align-items-end justify-content-end mb-2">
-            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                 <input type="button" class="btn btn-info" value="등록" onclick="popupInsertForm(event)" />
             </c:if>
         </div>

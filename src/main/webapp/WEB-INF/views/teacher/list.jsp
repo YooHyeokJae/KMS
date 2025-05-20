@@ -8,7 +8,7 @@
         </h2>
 
         <div class="d-flex align-items-end justify-content-end mb-1">
-            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                 <a href="#" class="btn btn-outline-primary ms-2" onclick="insertTeacher()">교원 등록</a>
             </c:if>
         </div>

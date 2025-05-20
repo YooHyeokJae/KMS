@@ -14,7 +14,7 @@
         </h2>
 
         <div class="d-flex align-items-end justify-content-end mb-2">
-            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                 <a href="<c:url value="/education/recordInsert"/>" class="btn btn-info">등록</a>
             </c:if>
         </div>

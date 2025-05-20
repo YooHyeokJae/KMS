@@ -14,7 +14,7 @@
         </h2>
 
         <div class="d-flex align-items-end justify-content-end mb-2">
-            <c:if test="${sessionScope.loginUser.auth eq 'A'}">
+            <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                 <input type="button" value="글작성" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#uploadModal" />
             </c:if>
         </div>
