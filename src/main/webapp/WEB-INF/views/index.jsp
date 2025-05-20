@@ -261,6 +261,7 @@
                         </div>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="searchChild" placeholder="원생 이름을 입력해주세요."/>
+                            <input type="text" class="form-control d-none" id="teacherId" placeholder="발급받은 교원 ID를 입력해주세요."/>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -474,7 +475,31 @@
             alert('원생과의 관계를 입력해주세요.')
             return false;
         }
-        alert('가입신청이 완료되었습니다.\n승인이 되면 입력해주신 연락처로 완료 문자가 발송됩니다.');
+        if($teacherChkBox[0].checked){
+            console.log('asdasas');
+            let data = {
+                id: $('#teacherId').val(),
+                delYn: 'all'
+            }
+
+            $.ajax({
+                url: '/teacher/searchByCond',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify(data),
+                type: 'post',
+                success: function(result){
+                    console.log(result);
+                    if(result.length < 1){
+                        alert('등록되지 않은 교원번호입니다.');
+                        return false;
+                    }
+                    $('#signUpForm').submit();
+                    return true;
+                }
+            });
+        }
+        alert('가입신청이 완료되었습니다.\n관리자의 승인 후 로그인이 가능합니다.');
+        return true;
     }
 
     $('#dupChk').on('click', function () {
@@ -599,11 +624,21 @@
     });
 
     $teacherChkBox.on('click', function(){
+        let $teacherId = $('#teacherId');
+
         let flag = $(this)[0].checked;
         if(flag){
-            $('#searchChild').prop('disabled', true).val('');
+            $searchChild.prop('disabled', true).val('');
+            $('#childList').html('');
+
+            $searchChild.addClass('d-none');
+            $teacherId.removeClass('d-none');
         }else{
             $('#searchChild').prop('disabled', false);
+            $teacherId.val('');
+
+            $teacherId.addClass('d-none');
+            $searchChild.removeClass('d-none');
         }
     });
 </script>
