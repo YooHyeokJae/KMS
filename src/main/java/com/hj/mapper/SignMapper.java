@@ -9,11 +9,7 @@ import java.util.Map;
 
 @Mapper
 public interface SignMapper {
-    List<ChildVo> searchChild(String keyword);
-
     UserVo getUserByUserId(String userId);
-
-    UserVo login(Map<String,Object> map);
 
     void insertUser(UserVo userVo);
 }

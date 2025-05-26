@@ -77,28 +77,56 @@
 </script>
 
 <script>
-    $('#saveBtn').on('click', function(){
-        const curPw = '${sessionScope.loginUser.password}';
-        const input = prompt("정보를 수정하려면 현재 비밀번호를 입력하세요.");
-        if(curPw === input){
-            let data = {
-                userId: '${sessionScope.loginUser.id}',
-                uName: $('#uName').val(),
-                uEmail: $('#uEmail').val(),
-                uTelNo: $('#uTelNo').val(),
-                userPw: $('#uPw').val()
-            }
 
-            $.ajax({
-                url: '/sign/chagneInfo',
-                contentType: 'application/json;charset=utf-8',
-                data: JSON.stringify(data),
-                type: 'post',
-                success: function(result){
-                    alert('정보 수정이 완료되었습니다.');
-                    location.reload();
-                }
-            });
+    $('#saveBtn').on('click', function(){
+        let uName = $('#uName').val();
+        let uEmail = $('#uEmail').val();
+        let uTelNo = $('#uTelNo').val();
+        let userPw = $('#uPw').val();
+        let userPwChk = $('#uPwChk').val();
+
+        if(userPw !== ''){
+            let passwdRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()\-_=+{};:,<.>]{4,}$/;
+            if (!passwdRegex.test(userPw)){
+                alert('비밀번호는 영어와 숫자를 조합한 4자 이상이어야 합니다.');
+                return false;
+            }
+            if(userPw !== userPwChk){
+                alert('비밀번호 확인 칸이 일치하지 않습니다.');
+                return false;
+            }
         }
+        let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(uEmail)){
+            alert('이메일 형식이 올바르지 않습니다.');
+            return false;
+        }
+
+        const input = prompt("정보를 수정하려면 현재 비밀번호를 입력하세요.");
+        let data = {
+            userId: '${sessionScope.loginUser.id}',
+            curPw: input,
+            uName: uName,
+            uEmail: uEmail,
+            uTelNo: uTelNo,
+            userPw: userPw
+        }
+
+        $.ajax({
+            url: '/sign/chagneInfo',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function(result){
+                if(result === 'success'){
+                    alert('정보 수정을 완료했습니다.\n다시 로그인해주세요.');
+                    location.href = '/';
+                }else if(result === 'wrongPw'){
+                    alert('현재 비밀번호가 일치하지 않습니다.');
+                }else{
+                    alert('정보 수정을 실패했습니다.')
+                }
+            }
+        });
     });
 </script>

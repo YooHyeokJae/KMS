@@ -68,8 +68,7 @@
         <table class="table table-primary">
             <tr>
                 <td rowspan="4" width="26%">
-                    <c:if test="${childVo.profilePath eq null}"><img src="${pageContext.request.contextPath}/resources/images/profile/default.jpg" alt="증명사진" id="thumbnail" style="width: 120px; height: auto; pointer-events: none;" onclick="selectImage()" ></c:if>
-                    <c:if test="${childVo.profilePath ne null}"><img src="${childVo.profilePath}" alt="증명사진" id="thumbnail" style="width: 120px; height: auto; pointer-events: none;" onclick="selectImage()" ></c:if>
+                    <img src="/upload/${childVo.profilePath}" alt="증명사진" id="thumbnail" style="width: 120px; height: auto; pointer-events: none;" onclick="selectImage()" >
                     <input type="file" id="profileImage" style="display: none" />
                 </td>
                 <td width="16%">원생번호</td>

@@ -131,15 +131,20 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <input type="button" value="회원가입" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#signupModal" />
-                            <input type="button" value="ID/PW 찾기" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchIdPwModal" />
+                            <input type="button" value="ID 찾기" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchIdPwModal" />
                         </div>
                     </form>
                 </c:if>
                 <c:if test="${sessionScope.loginUser ne null}">
-                    <div>
-                        <p>${sessionScope.loginUser.name}님 환영합니다.</p>
-                        <a href="<c:url value="/setting/"/>" class="btn btn-primary" id="changeInfo">정보수정</a>
-                        <input type="button" class="btn btn-secondary" id="logout" value="logout" />
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <img src="/upload/${sessionScope.loginUser.profilePath}" alt="childProfile" style="width:150px; height: auto; border-radius: 50%;"/>
+                        </div>
+                        <div class="col-6">
+                            <p>${sessionScope.loginUser.name}님 환영합니다.</p>
+                            <a href="<c:url value="/setting/"/>" class="btn btn-primary" id="changeInfo">정보수정</a>
+                            <input type="button" class="btn btn-secondary" id="logout" value="logout" />
+                        </div>
                     </div>
                 </c:if>
             </div>
@@ -223,7 +228,7 @@
                     <div class="row mb-3">
                         <label for="uPw" class="col-sm-4 col-form-label">비밀번호: </label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="uPw" name="uPw" required />
+                            <input type="password" class="form-control" id="uPw" name="uPw" placeholder="영어와 숫자를 조합한 4자 이상" required />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -289,56 +294,32 @@
     </div>
 </div>
 
-<%-- Id/Pw 찾기 모달 --%>
+<%-- Id 찾기 모달 --%>
 <div class="modal fade" id="searchIdPwModal" tabindex="-1" aria-labelledby="searchIdPwModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="searchIdPwModalLabel">ID/PW 찾기</h1>
+                <h1 class="modal-title fs-5" id="searchIdPwModalLabel">ID 찾기</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-6" style="border-right: 1px solid black;">
-                        <h5>ID 찾기</h5>
-                        <div class="row d-flex align-items-center mb-2">
-                            <div class="col-3"><label for="searchByChildName">원생 명</label></div>
-                            <div class="col-9"><input type="text" class="form-control idSearchParam" id="searchByChildName" /></div>
-                        </div>
-                        <div class="row d-flex align-items-center mb-2">
-                            <div class="col-3"><label for="searchByChildBirth">원생 생일</label></div>
-                            <div class="col-9"><input type="date" class="form-control idSearchParam" id="searchByChildBirth" /></div>
-                        </div>
-                        <div class="row d-flex align-items-center mb-2">
-                            <div class="col-3"><label for="searchByTelNo">전화번호</label></div>
-                            <div class="col-9"><input type="text" class="form-control idSearchParam" id="searchByTelNo" /></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-9 row" id="idResult"></div>
-                            <div class="col-3 d-flex justify-content-end">
-                                <input type="button" class="btn btn-primary" id="searchId" value="찾기" />
-                            </div>
-                        </div>
+                    <div class="row d-flex align-items-center mb-2">
+                        <div class="col-3"><label for="searchByChildName">원생 명</label></div>
+                        <div class="col-9"><input type="text" class="form-control idSearchParam" id="searchByChildName" /></div>
                     </div>
-                    <div class="col-6">
-                        <h5>PW 찾기</h5>
-                        <div class="row d-flex align-items-center mb-2">
-                            <div class="col-3"><label for="searchById">아이디</label></div>
-                            <div class="col-9"><input type="text" class="form-control pwSearchParam" id="searchById" /></div>
-                        </div>
-                        <div class="row d-flex align-items-center mb-2">
-                            <div class="col-3"><label for="searchByName">이름</label></div>
-                            <div class="col-9"><input type="text" class="form-control pwSearchParam" id="searchByName" /></div>
-                        </div>
-                        <div class="row d-flex align-items-center mb-2">
-                            <div class="col-3"><label for="searchByEmail">이메일</label></div>
-                            <div class="col-9"><input type="text" class="form-control pwSearchParam" id="searchByEmail" /></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-9 row" id="pwResult"></div>
-                            <div class="col-3 d-flex justify-content-end">
-                                <input type="button" class="btn btn-primary" id="searchPw" value="찾기" />
-                            </div>
+                    <div class="row d-flex align-items-center mb-2">
+                        <div class="col-3"><label for="searchByChildBirth">원생 생일</label></div>
+                        <div class="col-9"><input type="date" class="form-control idSearchParam" id="searchByChildBirth" /></div>
+                    </div>
+                    <div class="row d-flex align-items-center mb-2">
+                        <div class="col-3"><label for="searchByTelNo">전화번호</label></div>
+                        <div class="col-9"><input type="text" class="form-control idSearchParam" id="searchByTelNo" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10 row" id="idResult"></div>
+                        <div class="col-2 d-flex justify-content-end">
+                            <input type="button" class="btn btn-primary" id="searchId" value="찾기" />
                         </div>
                     </div>
                 </div>
@@ -347,7 +328,7 @@
     </div>
 </div>
 
-<%-- Id/Pw 찾기/정보수정--%>
+<%-- Id 찾기/정보수정--%>
 <script>
     $('#searchByTelNo').on('input', function(event){
         if (event.originalEvent.inputType === 'deleteContentBackward' ) {
@@ -392,50 +373,11 @@
                         html += '<span>' + result[i].id + '</span><br>';
                     }
                     html += '</div>';
+                    html += '<span style="color: red;">비밀번호가 생각나지 않는 경우 관리자에게<br>문의하시면 임시 비밀번호를 발급해드립니다.<br>로그인 후 반드시 비밀번호를 변경해주세요.</span>';
                 }else{
                     html += '<span style="color: red;">일치하는 정보가 없습니다.</span>';
                 }
                 $('#idResult').html(html);
-            }
-        });
-    });
-
-    $('#searchPw').on('click', function(){
-        $('.pwSearchParam').each(function(){
-            if($(this).val() === ""){
-                alert('정보를 입력해주세요.');
-                return false;
-            }
-        });
-
-        let data = {
-            id: $('#searchById').val(),
-            name: $('#searchByName').val(),
-            email: $('#searchByEmail').val()
-        }
-
-        $.ajax({
-            url: '/sign/searchPw',
-            contentType: 'application/json;charset=utf-8',
-            data: JSON.stringify(data),
-            type: 'post',
-            success: function(result){
-                let html = '';
-                if(result.length !== 0){
-                    let pw = result[0].password;
-                    let maskedCnt = Math.floor(pw.length*0.4);
-                    let visibleCnt = pw.length - maskedCnt;
-                    let maskedPart = '*'.repeat(maskedCnt);
-                    let visiblePart = pw.slice(-visibleCnt);
-                    let encryptedPw = maskedPart + visiblePart;
-
-                    html += '<div class="col-5"><span>검색 결과: </span></div>';
-                    html += '<div class="col-7"><span>' + encryptedPw + '</span></div>';
-                    html += '<div><span style="font-size: 11px; color: red;">보안을 위해 40%는 암호화된 상태로 표기됩니다. <br>전체 비밀번호를 확인하고 싶은 경우에는 <br>관리자에게 문의하세요.</span></div>';
-                }else{
-                    html += '<span style="color: red;">일치하는 정보가 없습니다.</span>';
-                }
-                $('#pwResult').html(html);
             }
         });
     });
@@ -467,8 +409,21 @@
     let $teacherChkBox = $('#teacherChkBox');
 
     function validateSignForm() {
+        let $email = $('#uEmail').val();
+        let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        let $password = $('#uPw').val();
+        let passwdRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()\-_=+{};:,<.>]{4,}$/;
+
         if (!dupChk) {
             alert('아이디 중복검사를 해주세요.');
+            return false;
+        }
+        if (!passwdRegex.test($password)){
+            alert('비밀번호는 영어와 숫자를 조합한 4자 이상이어야 합니다.');
+            return false;
+        }
+        if (!emailRegex.test($email)){
+            alert('이메일 형식이 올바르지 않습니다.');
             return false;
         }
         if (!relationChk && !$teacherChkBox[0].checked) {
@@ -585,7 +540,7 @@
         $.ajax({
             url: '/sign/searchChild',
             contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({keyword: keyword}),
+            data: JSON.stringify({name: keyword, graduated: 'N'}),
             type: 'POST',
             success(result) {
                 let listTbl = $('#childList');

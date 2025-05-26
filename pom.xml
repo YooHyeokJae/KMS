@@ -195,6 +195,14 @@
       <version>20231013</version>
     </dependency>
 
+    <!-- 비밀번호 암호화를 위해 Spring Security Core만 사용 -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>5.5.8</version> <!-- 또는 프로젝트에 맞는 버전 -->
+    </dependency>
+
+
   </dependencies>
   <build>
     <finalName>KMS</finalName>

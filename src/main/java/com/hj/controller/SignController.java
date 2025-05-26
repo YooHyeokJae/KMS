@@ -1,5 +1,6 @@
 package com.hj.controller;
 
+import com.hj.service.ChildrenService;
 import com.hj.service.SignService;
 import com.hj.service.UserService;
 import com.hj.vo.ChildVo;
@@ -24,6 +25,8 @@ public class SignController {
     private SignService signService;
     @Resource(name="userService")
     private UserService userService;
+    @Resource(name="childrenService")
+    private ChildrenService childrenService;
 
     @PostMapping("/signup")
     public String signup(@RequestParam Map<String, Object> param) {
@@ -54,8 +57,7 @@ public class SignController {
     @PostMapping("/searchChild")
     @ResponseBody
     public List<ChildVo> searchChild(@RequestBody Map<String, Object> params) {
-        String keyword = (String) params.get("keyword");
-        return this.signService.searchChild(keyword);
+        return this.childrenService.searchByCond(params);
     }
 
     @PostMapping("/login")
@@ -95,9 +97,6 @@ public class SignController {
     @PostMapping("/chagneInfo")
     @ResponseBody
     public String changeInfo(@RequestBody Map<String, Object> params, HttpSession session) {
-        this.userService.changeInfo(params);
-        UserVo userVo = this.signService.login(params);
-        session.setAttribute("loginUser", userVo);
-        return "success";
+        return this.userService.changeInfo(params, session);
     }
 }
