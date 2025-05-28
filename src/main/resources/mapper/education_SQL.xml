@@ -41,7 +41,7 @@
     <select id="getAllDailyPlan" resultType="com.hj.vo.DailyPlanVo">
         SELECT daily_plan.*, teacher.NAME AS INSTRUCTOR_NAME
         FROM daily_plan LEFT JOIN teacher ON (daily_plan.TEACHER_ID = teacher.ID)
-        ORDER BY daily_plan.REG_DATE DESC
+        ORDER BY daily_plan.REG_DATE DESC, daily_plan.NUM DESC
     </select>
 
     <select id="searchTeacherByName" resultType="com.hj.vo.TeacherVo">
@@ -87,7 +87,7 @@
         LEFT JOIN child C ON (AR.CHILD_NUM = C.NUM)
         LEFT JOIN activity A ON (AR.ACTIVITY_NUM = A.NUM)
         WHERE AR.DEL_YN = 'N'
-        ORDER BY AR.REG_DATE DESC
+        ORDER BY AR.REG_DATE DESC, AR.NUM DESC
     </select>
 
     <select id="getNextCounselNum" resultType="int">
@@ -131,7 +131,7 @@
         LEFT JOIN child C ON (H.CHILD_NUM = C.NUM AND C.GRADUATED = 'N')
         WHERE H.CHILD_NUM = #{childNum}
           AND H.DEL_YN = 'N'
-        ORDER BY REG_DATE DESC
+        ORDER BY REG_DATE DESC, NUM DESC
     </select>
 
     <update id="deleteHealthCheckByNum">
@@ -170,7 +170,7 @@
         <if test="activityDate != null and activityDate != ''"> AND D.ACTIVITY_DATE = #{activityDate} </if>
         <if test="instructorName != null and instructorName != ''"> AND D.TEACHER_ID IN (SELECT ID FROM TEACHER WHERE NAME LIKE CONCAT('%', #{instructorName}, '%')) </if>
         <if test="subject != null and subject != ''"> AND D.SUBJECT LIKE CONCAT('%', #{subject}, '%') </if>
-        ORDER BY D.REG_DATE DESC
+        ORDER BY D.REG_DATE DESC, D.NUM DESC
     </select>
 
     <select id="searchRecordByCond" resultType="com.hj.vo.ActivityRecordVo">
@@ -182,7 +182,7 @@
         <if test="num != null and num != ''"> AND AR.NUM LIKE CONCAT('%', #{num}, '%') </if>
         <if test="activityDate != null and activityDate != ''"> AND (SELECT ACTIVITY_DATE FROM daily_plan D WHERE D.NUM = A.PLAN_NUM) = #{activityDate} </if>
         <if test="record != null and record != ''"> AND AR.RECORD LIKE CONCAT('%', #{record}, '%') </if>
-        ORDER BY AR.REG_DATE DESC
+        ORDER BY AR.REG_DATE DESC, AR.NUM DESC
     </select>
 
     <select id="getAttendanceByGrade" resultType="com.hj.vo.AttendanceVo">

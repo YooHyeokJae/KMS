@@ -3,13 +3,13 @@
 <mapper namespace="com.hj.mapper.BoardMapper">
 
     <select id="getList" resultType="com.hj.vo.BoardVo">
-        SELECT board.*, user.NAME AS WRITER_NAME, attach_file.FILE_SIZE AS FILE_SIZE
+        SELECT board.*, user.NICKNAME AS WRITER_NAME, attach_file.FILE_SIZE AS FILE_SIZE
         FROM board
             LEFT JOIN attach_file ON(CONCAT('board/', board.NUM) = attach_file.GLOBAL_CODE AND attach_file.DEL_YN = 'N')
             LEFT JOIN user ON (board.WRITER_ID = user.ID AND user.DEL_YN = 'N')
         WHERE CATEGORY = #{cat}
           AND board.DEL_YN = 'N'
-        ORDER BY board.REG_DATE DESC
+        ORDER BY board.REG_DATE DESC, board.NUM DESC
     </select>
 
     <select id="getNextNum" resultType="int">
@@ -25,18 +25,18 @@
     </update>
 
     <select id="getBoardByNum" resultType="com.hj.vo.BoardVo">
-        SELECT board.*, user.NAME AS WRITER_NAME
+        SELECT board.*, user.NICKNAME AS WRITER_NAME
         FROM board
         LEFT JOIN user ON (board.WRITER_ID = user.ID AND user.DEL_YN = 'N')
         WHERE NUM = #{num}
     </select>
 
     <select id="getReplyListByBoardNum" resultType="com.hj.vo.ReplyVo">
-        SELECT reply.*, user.NAME AS WRITER_NAME
+        SELECT reply.*, user.NICKNAME AS WRITER_NAME
         FROM reply
         LEFT JOIN user ON (reply.WRITER_ID = user.ID AND user.DEL_YN = 'N')
         WHERE BOARD_NUM = #{boardNum} AND reply.DEL_YN = 'N'
-        ORDER BY REG_DATE DESC
+        ORDER BY REG_DATE DESC, NUM DESC
     </select>
 
     <insert id="insertReply">
@@ -44,7 +44,7 @@
     </insert>
 
     <select id="getPrev" resultType="com.hj.vo.BoardVo">
-        SELECT * FROM board WHERE NUM <![CDATA[ < ]]> #{num} AND CATEGORY = #{category} ORDER BY REG_DATE DESC LIMIT 1
+        SELECT * FROM board WHERE NUM <![CDATA[ < ]]> #{num} AND CATEGORY = #{category} ORDER BY REG_DATE DESC, NUM DESC LIMIT 1
     </select>
 
     <select id="getNext" resultType="com.hj.vo.BoardVo">
@@ -60,20 +60,21 @@
     </update>
 
     <select id="getBestByDateOrViewOrLike" resultType="com.hj.vo.BoardVo">
-        SELECT board.*, user.NAME AS WRITER_NAME
+        SELECT board.*, user.NICKNAME AS WRITER_NAME
         FROM board
         LEFT JOIN user ON (board.WRITER_ID = user.ID AND user.DEL_YN = 'N')
         WHERE board.DEL_YN = 'N'
           AND board.CATEGORY = #{category}
         <if test="order eq 'date'">
-            ORDER BY board.REG_DATE DESC LIMIT #{count}
+            ORDER BY board.REG_DATE DESC
         </if>
         <if test="order eq 'view'">
-            ORDER BY board.VIEW_CNT DESC LIMIT #{count}
+            ORDER BY board.VIEW_CNT DESC
         </if>
         <if test="order eq 'like'">
-            ORDER BY board.LIKE_CNT DESC LIMIT #{count}
+            ORDER BY board.LIKE_CNT DESC
         </if>
+        , board.NUM DESC LIMIT #{count}
     </select>
 
     <select id="checkLike" resultType="String">
@@ -108,7 +109,7 @@
     </select>
 
     <select id="searchByCond" resultType="com.hj.vo.BoardVo">
-        SELECT B.*, U.NAME AS WRITER_NAME, AF.FILE_SIZE AS FILE_SIZE
+        SELECT B.*, U.NICKNAME AS WRITER_NAME, AF.FILE_SIZE AS FILE_SIZE
         FROM board B
                  LEFT JOIN attach_file AF ON(CONCAT('board/', B.NUM) = AF.GLOBAL_CODE AND AF.DEL_YN = 'N')
                  LEFT JOIN user U ON (B.WRITER_ID = U.ID AND U.DEL_YN = 'N')
@@ -117,9 +118,9 @@
           <if test="num != null and num != ''"> AND B.NUM LIKE CONCAT('%', #{num}, '%') </if>
           <if test="title != null and title != ''"> AND B.TITLE LIKE CONCAT('%', #{title}, '%') </if>
           <if test="regDate != null and regDate != ''"> AND B.REG_DATE LIKE CONCAT('%', #{regDate}, '%') </if>
-          <if test="writerName != null and writerName != ''"> AND (SELECT NAME FROM USER WHERE B.WRITER_ID = USER.ID) LIKE CONCAT('%', #{writerName}, '%') </if>
+          <if test="writerName != null and writerName != ''"> AND (SELECT NICKNAME FROM USER WHERE B.WRITER_ID = USER.ID) LIKE CONCAT('%', #{writerName}, '%') </if>
           <if test="content != null and content != ''"> AND B.CONTENT LIKE CONCAT('%', #{content}, '%') </if>
-        ORDER BY B.REG_DATE DESC
+        ORDER BY B.REG_DATE DESC, B.NUM DESC
     </select>
 
     <select id="todayQuote" resultType="String">

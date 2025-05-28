@@ -63,7 +63,7 @@
                 </button>
             </div>
             <br>
-            <div class="bestBoard" style="height: 300px;">
+            <div class="bestBoard" style="height: 330px;">
                 <h2 style="border-bottom: 2px solid #333; display: inline-block; padding: 5px 12px; border-radius: 10px;">
                     <span>🔥</span> <span style="color: #ff6b6b;">인기글</span>
                 </h2>
@@ -107,7 +107,6 @@
                     </tbody>
                 </table>
             </div>
-            <hr>
         </div>
 
         <div class="col-4">
@@ -141,7 +140,7 @@
                             <img src="/upload/${sessionScope.loginUser.profilePath}" alt="childProfile" style="width:150px; height: auto; border-radius: 50%;"/>
                         </div>
                         <div class="col-6">
-                            <p>${sessionScope.loginUser.name}님 환영합니다.</p>
+                            <p>${sessionScope.loginUser.nickname}님 환영합니다.</p>
                             <a href="<c:url value="/setting/"/>" class="btn btn-primary" id="changeInfo">정보수정</a>
                             <input type="button" class="btn btn-secondary" id="logout" value="logout" />
                         </div>

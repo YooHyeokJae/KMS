@@ -14,7 +14,7 @@
                 <div class="input-group">
                     <label class="input-group-text" for="category">구분</label>
                     <select class="form-select" id="category" name="category">
-                        <option selected>-</option>
+                        <option value="" selected>-</option>
                         <c:if test="${sessionScope.loginUser.auth eq 'A'}">
                             <option value="notice">공지사항</option>
                         </c:if>
@@ -42,7 +42,7 @@
 
         <div class="text-end">
             <input type="button" class="btn btn-secondary" value="취소" onclick="cansel()" />
-            <input type="submit" class="btn btn-primary" value="작성" />
+            <input type="submit" class="btn btn-primary" value="작성" onclick="{if($('#category').val() === ''){alert('카테고리를 선택해주세요.'); return false;}}"/>
         </div>
     </form>
 </div>

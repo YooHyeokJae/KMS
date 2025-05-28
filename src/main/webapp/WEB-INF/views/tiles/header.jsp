@@ -60,7 +60,7 @@
       <c:if test="${sessionScope.loginUser ne null}">
         <div class="row w-100 h-100 d-flex align-items-center">
           <div class="col-8">
-            <p class="mb-0">${sessionScope.loginUser.name}님 환영합니다.</p>
+            <p class="mb-0">${sessionScope.loginUser.nickname}님 환영합니다.</p>
           </div>
           <div class="col-4">
             <input type="button" class="btn btn-primary" id="logout" value="logout" />

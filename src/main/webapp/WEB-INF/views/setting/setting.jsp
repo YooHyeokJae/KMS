@@ -19,6 +19,10 @@
             <input type="text" class="form-control" id="uName" value="${sessionScope.loginUser.name}" />
         </div>
         <div class="d-flex align-items-center">
+            <label for="uNickname" style="width: 110px;">닉네임</label>
+            <input type="text" class="form-control" id="uNickname" value="${sessionScope.loginUser.nickname}" />
+        </div>
+        <div class="d-flex align-items-center">
             <label for="uEmail" style="width: 110px;">이메일</label>
             <input type="text" class="form-control" id="uEmail" value="${sessionScope.loginUser.email}" />
         </div>
@@ -80,6 +84,7 @@
 
     $('#saveBtn').on('click', function(){
         let uName = $('#uName').val();
+        let uNickname = $('#uNickname').val();
         let uEmail = $('#uEmail').val();
         let uTelNo = $('#uTelNo').val();
         let userPw = $('#uPw').val();
@@ -107,6 +112,7 @@
             userId: '${sessionScope.loginUser.id}',
             curPw: input,
             uName: uName,
+            uNickname: uNickname,
             uEmail: uEmail,
             uTelNo: uTelNo,
             userPw: userPw

@@ -56,9 +56,10 @@
 
     <update id="changeInfo">
         UPDATE user SET NAME = #{uName},
+                        NICKNAME = #{uNickname},
                         EMAIL = #{uEmail},
                         TEL_NO = #{uTelNo}
-        <if test="uPw != ''">, PASSWORD = #{userPw} </if>
+        <if test="userPw != ''">, PASSWORD = #{userPw} </if>
         WHERE ID = #{userId}
     </update>
 </mapper>

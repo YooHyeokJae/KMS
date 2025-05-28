@@ -3,6 +3,8 @@ package com.hj.service;
 import com.hj.mapper.UserMapper;
 import com.hj.util.PasswordEncoder;
 import com.hj.vo.UserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 @Service
 public class UserService {
+    Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Resource(name="userMapper")
     private UserMapper userMapper;
@@ -49,8 +52,11 @@ public class UserService {
         if(PasswordEncoder.matches(curPw, loginUser.getPassword())){
             // 1. 비밀번호 암호화
             String plainPassword = params.get("userPw").toString();
-            String encryptedPassword = PasswordEncoder.hashPassword(plainPassword);
-            params.put("userPw", encryptedPassword);
+            log.info("{}", plainPassword);
+            if(!"".equals(plainPassword)){
+                String encryptedPassword = PasswordEncoder.hashPassword(plainPassword);
+                params.put("userPw", encryptedPassword);
+            }
 
             // 2. 정보 수정
             this.userMapper.changeInfo(params);
