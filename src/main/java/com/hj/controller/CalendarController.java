@@ -51,4 +51,19 @@ public class CalendarController {
         this.calendarService.addEvent(params);
         return "success";
     }
+
+    @PostMapping("/modEvent")
+    @ResponseBody
+    public String modEvent(@RequestBody Map<String, Object> params) {
+        log.info("{}", params);
+        this.calendarService.modEvent(params);
+        return "success";
+    }
+
+    @PostMapping("/delEvent")
+    @ResponseBody
+    public String delEvent(@RequestBody Map<String, Object> params) {
+        this.calendarService.delEvent(params);
+        return "success";
+    }
 }

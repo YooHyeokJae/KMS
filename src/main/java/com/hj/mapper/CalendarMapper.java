@@ -11,4 +11,8 @@ public interface CalendarMapper {
     List<CalendarVo> getEvents(Map<String, Object> params);
 
     void addEvent(Map<String, Object> params);
+
+    void modEvent(Map<String, Object> params);
+
+    void delEvent(Map<String, Object> params);
 }

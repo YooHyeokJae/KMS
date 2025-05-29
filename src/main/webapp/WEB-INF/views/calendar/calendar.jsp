@@ -48,17 +48,45 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="writerId" value="${sessionScope.loginUser.id}" />
-                <input type="text" class="newEventElement" id="newEventTitle" />
-                <input type="date" class="newEventElement" id="newEventStrDate" />
-                <input type="date" class="newEventElement" id="newEventEndDate" />
+                <input type="text" class="eventElement" id="newEventTitle" />
+                <input type="date" class="eventElement" id="newEventStrDate" />
+                <input type="date" class="eventElement" id="newEventEndDate" />
                 <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
                     <input type="radio" id="all" name="gubun" value="ALL" checked><label for="all">전체일정</label>
                     <input type="radio" id="personal" name="gubun" value="PERSONAL"><label for="personal">개인일정</label>
                 </c:if>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="newEventModalReset()">닫기</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="eventModalReset()">닫기</button>
                 <button type="button" class="btn btn-primary" id="addEvent">추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 일정 수정 모달 -->
+<input type="hidden" id="modEventBtn" data-bs-toggle="modal" data-bs-target="#modEventModal" />
+<div class="modal fade" id="modEventModal" tabindex="-1" aria-labelledby="modEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modEventModalLabel">일정 수정</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="writerId" value="${sessionScope.loginUser.id}" />
+                <input type="text" class="eventElement" id="modEventTitle" value="" />
+                <input type="date" class="eventElement" id="modEventStrDate" value="" />
+                <input type="date" class="eventElement" id="modEventEndDate" value="" />
+                <c:if test="${sessionScope.loginUser.auth eq 'A' or sessionScope.loginUser.auth eq 'T'}">
+                    <input type="radio" id="all_mod" name="gubun_mod" value="ALL"><label for="all_mod">전체일정</label>
+                    <input type="radio" id="personal_mod" name="gubun_mod" value="PERSONAL"><label for="personal_mod">개인일정</label>
+                </c:if>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="eventModalReset()">닫기</button>
+                <button type="button" class="btn btn-danger" id="delEvent">삭제</button>
+                <button type="button" class="btn btn-primary" id="modEvent">수정</button>
             </div>
         </div>
     </div>
@@ -67,6 +95,7 @@
 <script>
     let isPanelVisible = false;
     let calendar;
+    let eventId;
 
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendar');
@@ -95,7 +124,7 @@
                     start: "${fn:replace(event.strDate, 'T', ' ')}",
                     end: "${fn:replace(event.endDate, 'T', ' ')}",
                     allDay: true,
-                    <c:if test="${event.gubun eq 'PERSONAL'}">color: "#f27575"</c:if>
+                    <c:if test="${event.gubun eq 'PERSONAL'}">color: "#d97ee7"</c:if>
                 },
                 </c:forEach>
             ],
@@ -107,7 +136,29 @@
                 $('#newEventEndDate').val(endDate.toISOString().split('T')[0]);
             },
             dateClick: openEventList,
-            eventClick: openEventList
+            eventClick: function (info){
+                let event = info.event;
+                eventId = event.id;
+                let auth = '${sessionScope.loginUser.auth}';
+                if(event.backgroundColor !== '#d97ee7'){
+                    if(auth !== 'A' && auth !=='T'){
+                        alert('권한이 없습니다.');
+                        return false;
+                    }
+                }
+
+                $('#modEventTitle').val(event.title);
+                $('#modEventStrDate').val(formatDateToYMD(event.start));
+                let endDate = new Date(event.end);
+                endDate.setDate(endDate.getDate() - 1);
+                $('#modEventEndDate').val(formatDateToYMD(endDate));
+                if(event.backgroundColor === '#d97ee7'){
+                    $('#personal_mod').prop('checked', true);
+                }else{
+                    $('#all_mod').prop('checked', true);
+                }
+                $('#modEventBtn').click();
+            }
         });
         calendar.render();
     });
@@ -178,6 +229,9 @@
             end: endDate.toISOString().split('T')[0],
             allDay: true
         }
+        if(gubun === 'PERSONAL'){
+            data.color = '#d97ee7'
+        }
         $.ajax({
             url: '/calendar/addEvent',
             contentType: 'application/json;charset=utf-8',
@@ -185,13 +239,91 @@
             type: 'post',
             success: function(result){
                 calendar.addEvent(data);
-                newEventModalReset();
+                eventModalReset();
                 $('#newEventModal').modal('hide');
             }
         })
     });
 
-    function newEventModalReset(){
-        $('.newEventElement').val('');
+    function eventModalReset(){
+        $('.eventElement').val('');
     }
+
+    function formatDateToYMD(date) {
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월은 0부터 시작
+        const day = ('0' + date.getDate()).slice(-2);
+        return year + '-' + month + '-' + day;
+    }
+
+    $('#modEvent').on('click', function(){
+        let $radio = $('input[name="gubun_mod"]:checked').val()
+        let gubun = $radio ? $radio : 'PERSONAL';
+        let title = $('#modEventTitle').val();
+        let strDate = $('#modEventStrDate').val();
+        let endDate = new Date($('#modEventEndDate').val());
+        endDate.setDate(endDate.getDate()+1);
+        let color = gubun === 'PERSONAL' ? '#d97ee7' : '';
+        let data = {
+            num: eventId,
+            gubun: gubun,
+            title: title,
+            strDate: strDate,
+            endDate: endDate.toISOString().split('T')[0],
+            allDay: true
+        }
+        if(gubun === 'PERSONAL'){
+            data.color = color
+        }
+
+        $.ajax({
+            url: '/calendar/modEvent',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function(result){
+                console.log(result);
+                // 화면 바꾸기
+                let event = calendar.getEventById(eventId);
+                if(event){
+                    console.log(strDate)
+                    console.log(formatDateToYMD(endDate))
+                    event.setProp('title', title);
+                    event.setProp('color', color);
+                    event.setStart(strDate);
+                    event.setEnd(endDate);
+                    event.setAllDay(true);
+
+                    if (gubun === 'PERSONAL') {
+                        event.setProp('backgroundColor', '#d97ee7');
+                    } else {
+                        event.setProp('backgroundColor', '');
+                    }
+
+                    $('#modEventModal').modal('hide');
+                }
+            }
+        });
+    });
+
+    $('#delEvent').on('click', function(){
+        let data = {
+            num: eventId
+        }
+
+        $.ajax({
+            url: '/calendar/delEvent',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            type: 'post',
+            success: function(result){
+                console.log(result);
+                let event = calendar.getEventById(eventId);
+                if(event){
+                    event.remove();
+                    $('#modEventModal').modal('hide');
+                }
+            }
+        });
+    });
 </script>

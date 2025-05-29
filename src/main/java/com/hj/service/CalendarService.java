@@ -20,4 +20,12 @@ public class CalendarService {
     public void addEvent(Map<String, Object> params) {
         this.calendarMapper.addEvent(params);
     }
+
+    public void modEvent(Map<String, Object> params) {
+        this.calendarMapper.modEvent(params);
+    }
+
+    public void delEvent(Map<String, Object> params) {
+        this.calendarMapper.delEvent(params);
+    }
 }
