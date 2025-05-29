@@ -16,7 +16,7 @@ public interface StatisticsMapper {
 
     List<StatsVo> getStatsByUser();
 
-    List<StatsVo> getStatsByPageUrl();
+    List<StatsVo> getStatsByPageUrl(List<String> exceptionUrlList);
 
     List<StatsVo> getStatsByLogin(Map<String, Object> params);
 }

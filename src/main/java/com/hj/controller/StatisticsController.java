@@ -77,8 +77,13 @@ public class StatisticsController {
         params.put("strDate", str);
         params.put("endDate", end);
 
+        List<String> exceptionUrlList = new ArrayList<>();
+        exceptionUrlList.add("/board/detail%");
+        exceptionUrlList.add("/board/insert%");
+        exceptionUrlList.add("/upload%");
+
         List<StatsVo> statsByUser = this.statisticsService.getStatsByUser();
-        List<StatsVo> statsByPageUrl = this.statisticsService.getStatsByPageUrl();
+        List<StatsVo> statsByPageUrl = this.statisticsService.getStatsByPageUrl(exceptionUrlList);
         List<StatsVo> statsByLogin = this.statisticsService.getStatsByLogin(params);
         model.addAttribute("statsByUser", statsByUser);
         model.addAttribute("statsByPageUrl", statsByPageUrl);

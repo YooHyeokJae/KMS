@@ -21,7 +21,7 @@
         </foreach>
         ) AS y
         LEFT JOIN teacher t
-        ON YEAR(t.REG_DATE) <![CDATA[ <= ]]> y.year
+        ON YEAR(t.ENTRY_DATE) <![CDATA[ <= ]]> y.year
         AND (t.DEL_DATE IS NULL OR YEAR(t.DEL_DATE) > y.year)
         GROUP BY y.year
         ORDER BY y.year
@@ -62,6 +62,10 @@
     <select id="getStatsByPageUrl" resultType="com.hj.vo.StatsVo">
         SELECT PAGE_URL AS GUBUN, COUNT(*) AS CNT
         FROM access_logs
+        WHERE 1=1
+        <foreach item="exceptionUrl" collection="list">
+          AND PAGE_URL NOT LIKE #{exceptionUrl}
+        </foreach>
         GROUP BY GUBUN
         ORDER BY GUBUN
     </select>

@@ -40,8 +40,8 @@ public class StatisticsService {
         return result;
     }
 
-    public List<StatsVo> getStatsByPageUrl() {
-        List<StatsVo> result = this.statisticsMapper.getStatsByPageUrl();
+    public List<StatsVo> getStatsByPageUrl(List<String> exceptionUrlList) {
+        List<StatsVo> result = this.statisticsMapper.getStatsByPageUrl(exceptionUrlList);
         for(StatsVo vo : result) {
             switch (vo.getGubun()){
                 case "/":                          vo.setGubun("메인화면"); break;
