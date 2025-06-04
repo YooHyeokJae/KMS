@@ -52,8 +52,8 @@
                     <ul class="list-group" style="width: 90%;">
                         <li class="list-group-item"><i class="bi bi-house-door"></i> 주소: 대전광역시 서구 관저서로 20</li>
                         <li class="list-group-item"><i class="bi bi-telephone"></i> 전화: 010-5131-4322</li>
-                        <li class="list-group-item"><i class="bi bi-envelope"></i> 이메일: akfn4322@gmail.com</li>
-                        <li class="list-group-item"><i class="bi bi-globe"></i> 웹사이트: <a href="https://yourdomain.com">www.yourdomain.com</a></li>
+                        <li class="list-group-item"><i class="bi bi-envelope"></i> 이메일: yoohj4322@gmail.com</li>
+                        <li class="list-group-item"><i class="bi bi-globe"></i> 웹사이트: <a href="http://kidsville.duckdns.org">kidsville.duckdns.org</a></li>
                     </ul>
                 </div>
             </div>
