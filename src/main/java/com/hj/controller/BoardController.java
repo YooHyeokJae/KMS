@@ -202,17 +202,19 @@ public class BoardController {
             @RequestParam("files") List<MultipartFile> files,
             @RequestParam("descriptions") List<String> descriptions){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd HH_mm_ss");
-        String now = sdf.format(new Date());
+        String now = sdf.format(new Date()).replaceAll(" ", "_");
         int idx = 0;
         for(MultipartFile file : files){
             String originalFileName = file.getOriginalFilename();
             String ext = originalFileName != null ? originalFileName.split("\\.")[1] : "";
+//            String filePath = "";    // 윈도우용
+            String filePath = "/home/pi/upload";    // 리눅스용
             String fileName = "/album/" + now + "(" + idx + ")." + ext;
             String description = descriptions.get(idx++);
             long fileSize = file.getSize();
 
             try{
-                file.transferTo(new File(fileName));
+                file.transferTo(new File(filePath + fileName));
                 AlbumVo albumVo = new AlbumVo(originalFileName, fileName, description, fileSize);
                 this.boardService.insertAlbum(albumVo);
             } catch(Exception e){

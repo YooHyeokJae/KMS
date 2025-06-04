@@ -137,7 +137,7 @@
                 <c:if test="${sessionScope.loginUser ne null}">
                     <div class="row text-center">
                         <div class="col-6">
-                            <img src="/upload/${sessionScope.loginUser.profilePath}" alt="childProfile" style="width:150px; height: auto; border-radius: 50%;"/>
+                            <img src="/upload/${sessionScope.loginUser.profilePath}" alt="profile" style="width:150px; height: auto; border-radius: 50%;"/>
                         </div>
                         <div class="col-6">
                             <p>${sessionScope.loginUser.nickname}님 환영합니다.</p>

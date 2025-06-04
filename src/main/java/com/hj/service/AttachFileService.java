@@ -21,7 +21,8 @@ public class AttachFileService {
     @Resource(name="attachFileMapper")
     private AttachFileMapper attachFileMapper;
 
-    private final String fileDir = "/upload/";
+//    private final String fileDir = "/upload/"; // 윈도우용
+    private final String fileDir = "/home/pi/upload/"; // 리눅스용
 
     public void uploadFile(MultipartFile multipartFile, String globalCode) {
         String ext = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));

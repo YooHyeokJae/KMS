@@ -9,7 +9,8 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--upload 폴더에 바로 접근할 수있도록 빈 등록 필요-->
-    <mvc:resources mapping="/upload/**" location="file:///C:/upload/" />
+<!--    <mvc:resources mapping="/upload/**" location="file:///C:/upload/" />--> <!-- 윈도우용 -->
+    <mvc:resources mapping="/upload/**" location="file:///home/pi/upload/" /> <!-- 리눅스용 -->
 
     <!-- 인터셉터 등록 -->
     <beans:bean id="logInterceptor" class="com.hj.controller.LogController"/>
